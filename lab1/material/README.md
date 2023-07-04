@@ -54,3 +54,11 @@
 
 # Reloading
 1. shift+L for waveform reload in nWave.
+
+# Execution
+- Uses this command under the 02 for synthesis.
+- Since the work station is newer, we uses vcs instead of irun.
+- Dont touch 01_run yet
+```
+    ./02_run_dc
+```
