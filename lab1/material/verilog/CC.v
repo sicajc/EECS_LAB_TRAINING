@@ -59,98 +59,149 @@ module CC(
     end
   end
   //bitonic sorter
+  reg signed[SORTERS_WIDTH-1:0] stage_zero[0:NUM_OF_ELEMENT-1];
+  reg signed[SORTERS_WIDTH-1:0] stage_one[0:NUM_OF_ELEMENT-1];
+  reg signed[SORTERS_WIDTH-1:0] stage_two[0:NUM_OF_ELEMENT-1];
+  reg signed[SORTERS_WIDTH-1:0] stage_three[0:NUM_OF_ELEMENT-1];
+  reg signed[SORTERS_WIDTH-1:0] stage_four[0:NUM_OF_ELEMENT-1];
+  reg signed[SORTERS_WIDTH-1:0] stage_five[0:NUM_OF_ELEMENT-1];
+  reg signed[SORTERS_WIDTH-1:0] stage_six[0:NUM_OF_ELEMENT-1];
+  reg signed[SORTERS_WIDTH-1:0] stage_seven[0:NUM_OF_ELEMENT-1];
+
+
   always @(*)
   begin: BITONIC_SORT
-     // Initilize value
-     for(i=0;i<NUM_OF_ELEMENT;i=i+1)
-     begin
-        sorted_results[i] = sign_ex_values[i];
-     end
+     // Initilize value for all the variables
 
      // stage 0
-     sorted_results[1] = (sorted_results[1]>sorted_results[2]) ? sorted_results[1]:
-     sorted_results[2];
+     for(i=0;i<NUM_OF_ELEMENT;i=i+1)
+     begin
+        stage_zero[i]   = sign_ex_values[i];
+     end
 
-     sorted_results[2] = (sorted_results[1]>sorted_results[2]) ? sorted_results[2]:
-     sorted_results[1];
+     stage_zero[1] = (sign_ex_values[1]>sign_ex_values[2]) ? sign_ex_values[1]:
+     sign_ex_values[2];
 
-     sorted_results[4] = (sorted_results[4]>sorted_results[5]) ? sorted_results[5]:
-     sorted_results[4];
+     stage_zero[2] = (sign_ex_values[1]>sign_ex_values[2]) ? sign_ex_values[2]:
+     sign_ex_values[1];
 
-     sorted_results[5] = (sorted_results[4]>sorted_results[5]) ? sorted_results[4]:
-     sorted_results[5];
+     stage_zero[4] = (sign_ex_values[4]>sign_ex_values[5]) ? sign_ex_values[5]:
+     sign_ex_values[4];
+
+     stage_zero[5] = (sign_ex_values[4]>sign_ex_values[5]) ? sign_ex_values[4]:
+     sign_ex_values[5];
 
      //stage 1
-     sorted_results[0] = (sorted_results[0]>sorted_results[2]) ? sorted_results[0]:
-     sorted_results[2];
+     for(i=0;i<NUM_OF_ELEMENT;i=i+1)
+     begin
+        stage_one[i]   = stage_zero[i];
+     end
 
-     sorted_results[2] = (sorted_results[0]>sorted_results[2]) ? sorted_results[2]:
-     sorted_results[0];
+     stage_one[0] = (stage_zero[0]>stage_zero[2]) ? stage_zero[0]:
+     stage_zero[2];
 
-     sorted_results[3] = (sorted_results[3]>sorted_results[5]) ? sorted_results[5]:
-     sorted_results[3];
+     stage_one[2] = (stage_zero[0]>stage_zero[2]) ? stage_zero[2]:
+     stage_zero[0];
 
-     sorted_results[5] = (sorted_results[3]>sorted_results[5]) ? sorted_results[3]:
-     sorted_results[5];
+     stage_one[3] = (stage_zero[3]>stage_zero[5]) ? stage_zero[5]:
+     stage_zero[3];
+
+     stage_one[5] = (stage_zero[3]>stage_zero[5]) ? stage_zero[3]:
+     stage_zero[5];
 
      //stage 2
-     sorted_results[0] = (sorted_results[0]>sorted_results[1]) ? sorted_results[0]:
-     sorted_results[1];
+     for(i=0;i<NUM_OF_ELEMENT;i=i+1)
+     begin
+        stage_two[i]   = stage_one[i];
+     end
 
-     sorted_results[1] = (sorted_results[0]>sorted_results[1]) ? sorted_results[1]:
-     sorted_results[0];
+     stage_two[0] = (stage_one[0]>stage_one[1]) ? stage_one[0]:
+     stage_one[1];
 
-     sorted_results[3] = (sorted_results[3]>sorted_results[4]) ? sorted_results[4]:
-     sorted_results[3];
+     stage_two[1] = (stage_one[0]>stage_one[1]) ? stage_one[1]:
+     stage_one[0];
 
-     sorted_results[4] = (sorted_results[3]>sorted_results[4]) ? sorted_results[3]:
-     sorted_results[4];
+     stage_two[3] = (stage_one[3]>stage_one[4]) ? stage_one[4]:
+     stage_one[3];
+
+     stage_two[4] = (stage_one[3]>stage_one[4]) ? stage_one[3]:
+     stage_one[4];
 
      //stage 3
-     sorted_results[0] = (sorted_results[0]>sorted_results[4]) ? sorted_results[4]:
-     sorted_results[0];
+     for(i=0;i<NUM_OF_ELEMENT;i=i+1)
+     begin
+        stage_three[i]   = stage_two[i];
+     end
 
-     sorted_results[4] = (sorted_results[0]>sorted_results[4]) ? sorted_results[0]:
-     sorted_results[4];
+     stage_three[0] = (stage_two[0]>stage_two[4]) ? stage_two[4]:
+     stage_two[0];
+
+     stage_three[4] = (stage_two[0]>stage_two[4]) ? stage_two[0]:
+     stage_two[4];
      //stage 4
-     sorted_results[1] = (sorted_results[1]>sorted_results[5]) ? sorted_results[5]:
-     sorted_results[1];
+     for(i=0;i<NUM_OF_ELEMENT;i=i+1)
+     begin
+        stage_four[i]   = stage_three[i];
+     end
 
-     sorted_results[5] = (sorted_results[1]>sorted_results[5]) ? sorted_results[1]:
-     sorted_results[5];
+     stage_four[1] = (stage_three[1]>stage_three[5]) ? stage_three[5]:
+     stage_three[1];
+
+     stage_four[5] = (stage_three[1]>stage_three[5]) ? stage_three[1]:
+     stage_three[5];
 
      //stage 5
-     sorted_results[0] = (sorted_results[0]>sorted_results[2]) ? sorted_results[2]:
-     sorted_results[0];
+     for(i=0;i<NUM_OF_ELEMENT;i=i+1)
+     begin
+        stage_five[i]   = stage_four[i];
+     end
 
-     sorted_results[2] = (sorted_results[0]>sorted_results[2]) ? sorted_results[0]:
-     sorted_results[2];
+     stage_five[0] = (stage_four[0]>stage_four[2]) ? stage_four[2]:
+     stage_four[0];
+
+     stage_five[2] = (stage_four[0]>stage_four[2]) ? stage_four[0]:
+     stage_four[2];
 
      //stage 6
-     sorted_results[1] = (sorted_results[1]>sorted_results[3]) ? sorted_results[3]:
-     sorted_results[1];
+     for(i=0;i<NUM_OF_ELEMENT;i=i+1)
+     begin
+        stage_six[i]   = stage_five[i];
+     end
 
-     sorted_results[3] = (sorted_results[1]>sorted_results[3]) ? sorted_results[1]:
-     sorted_results[3];
+     stage_six[1] = (stage_five[1]>stage_five[3]) ? stage_five[3]:
+     stage_five[1];
+
+     stage_six[3] = (stage_five[1]>stage_five[3]) ? stage_five[1]:
+     stage_five[3];
 
      // stage 7
-     sorted_results[0] = (sorted_results[0]>sorted_results[1]) ? sorted_results[1]:
-     sorted_results[0];
+     for(i=0;i<NUM_OF_ELEMENT;i=i+1)
+     begin
+        stage_seven[i]   = stage_five[i];
+     end
 
-     sorted_results[1] = (sorted_results[0]>sorted_results[1]) ? sorted_results[0]:
-     sorted_results[1];
+     stage_seven[0] = (stage_six[0]>stage_six[1]) ? stage_six[1]:
+     stage_six[0];
 
-     sorted_results[2] = (sorted_results[2]>sorted_results[3]) ? sorted_results[3]:
-     sorted_results[2];
+     stage_seven[1] = (stage_six[0]>stage_six[1]) ? stage_six[0]:
+     stage_six[1];
 
-     sorted_results[3] = (sorted_results[2]>sorted_results[3]) ? sorted_results[2]:
-     sorted_results[3];
+     stage_seven[2] = (stage_six[2]>stage_six[3]) ? stage_six[3]:
+     stage_six[2];
 
-     sorted_results[4] = (sorted_results[4]>sorted_results[5]) ? sorted_results[5]:
-     sorted_results[4];
+     stage_seven[3] = (stage_six[2]>stage_six[3]) ? stage_six[2]:
+     stage_six[3];
 
-     sorted_results[5] = (sorted_results[4]>sorted_results[5]) ? sorted_results[4]:
-     sorted_results[5];
+     stage_seven[4] = (stage_six[4]>stage_six[5]) ? stage_six[5]:
+     stage_six[4];
+
+     stage_seven[5] = (stage_six[4]>stage_six[5]) ? stage_six[4]:
+     stage_six[5];
+
+     for(i=0;i<NUM_OF_ELEMENT;i=i+1)
+     begin
+       sorted_results[i] = stage_seven[i];
+     end
   end
 
   //Ascend or descend of the sorted results
