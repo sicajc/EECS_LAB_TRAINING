@@ -25,11 +25,11 @@ module CC(
   //===============================
   //   wires and regs
   //===============================
-  reg signed[SORTERS_WIDTH-1:0] sign_ex_values[0:NUM_OF_ELEMENT];
-  reg signed[SORTERS_WIDTH-1:0] sorted_results[0:NUM_OF_ELEMENT];
-  reg signed[SORTERS_WIDTH-1:0] ascend_or_descend[0:NUM_OF_ELEMENT];
+  reg signed[SORTERS_WIDTH-1:0] sign_ex_values[0:NUM_OF_ELEMENT-1];
+  reg signed[SORTERS_WIDTH-1:0] sorted_results[0:NUM_OF_ELEMENT-1];
+  reg signed[SORTERS_WIDTH-1:0] ascend_or_descend[0:NUM_OF_ELEMENT-1];
 
-  reg signed[NORM_AND_SHIFT_WIDTH-1:0] cu_normalised[0:NUM_OF_ELEMENT];
+  reg signed[NORM_AND_SHIFT_WIDTH-1:0] cu_normalised[0:NUM_OF_ELEMENT-1];
 
   reg signed[EQ_WIDTH-1:0] equation_result;
 
@@ -42,11 +42,11 @@ module CC(
     if(opt[0]==1'b1)
     begin
         sign_ex_values[0] = $signed({in_n0[3],in_n0});
-        sign_ex_values[1] = $signed({in_n0[3],in_n1});
-        sign_ex_values[2] = $signed({in_n0[3],in_n2});
-        sign_ex_values[3] = $signed({in_n0[3],in_n3});
-        sign_ex_values[4] = $signed({in_n0[3],in_n4});
-        sign_ex_values[5] = $signed({in_n0[3],in_n5});
+        sign_ex_values[1] = $signed({in_n1[3],in_n1});
+        sign_ex_values[2] = $signed({in_n2[3],in_n2});
+        sign_ex_values[3] = $signed({in_n3[3],in_n3});
+        sign_ex_values[4] = $signed({in_n4[3],in_n4});
+        sign_ex_values[5] = $signed({in_n5[3],in_n5});
     end
     else
     begin
