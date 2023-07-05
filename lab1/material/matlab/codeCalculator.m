@@ -19,11 +19,10 @@ function out = codeCalculator(seq, opt1, opt2, equ, T)
     if opt2 == 1
 
         for i = 1:length(sorted_result)
-
             if i == 1
-                cu_normalized(i) = floor(sorted_result(i)*2 + sorted_result(i) / 3);
+                cu_normalized(1) = floor(sorted_result(1)*2 + sorted_result(1) / 3);
             else
-                cu_normalized(i) = floor(sorted_result(i)*2 + sorted_result(i) / 3);
+                cu_normalized(i) = floor(cu_normalized(i-1)*2 + sorted_result(i) / 3);
             end
 
         end
@@ -32,25 +31,20 @@ function out = codeCalculator(seq, opt1, opt2, equ, T)
         % Shift the first number to become 0, others must follows
         if sorted_result(1) > 0
             % -1 for all number until first number is 0
-            for i = 1:sorted_result(1)
                 for j = 1:length(sorted_result)
-                    cu_normalized(j) = cu_normalized(j) - 1;
+                    cu_normalized(j) = cu_normalized(j) - sorted_result(1);
                     % disp("Cu normalized");
                     cu_normalized;
                 end
-            end
 
         else
             % lt 0
             % +1 for all number until first number is 0
-            for i = 1:(-sorted_result(1))
                 for j = 1:length(sorted_result)
-                    cu_normalized(j) = cu_normalized(j) + 1;
+                    cu_normalized(j) = cu_normalized(j) + sorted_result(1);
                     % disp("Cu normalized");
                     cu_normalized;
                 end
-            end
-
         end
 
     end
