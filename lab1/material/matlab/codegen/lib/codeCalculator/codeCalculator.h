@@ -5,7 +5,7 @@
  * File: codeCalculator.h
  *
  * MATLAB Coder version            : 4.0
- * C/C++ source code generated on  : 05-Jul-2023 04:02:40
+ * C/C++ source code generated on  : 05-Jul-2023 11:04:50
  */
 
 #ifndef CODECALCULATOR_H
@@ -16,9 +16,6 @@
 #include <stdlib.h>
 #include "rtwtypes.h"
 #include "codeCalculator_types.h"
-
-/* Type Definitions */
-#include <stdio.h>
 
 /* Function Declarations */
 extern short codeCalculator(const signed char seq[6], double opt1, double opt2,

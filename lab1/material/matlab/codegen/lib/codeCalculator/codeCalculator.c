@@ -5,7 +5,7 @@
  * File: codeCalculator.c
  *
  * MATLAB Coder version            : 4.0
- * C/C++ source code generated on  : 05-Jul-2023 04:02:40
+ * C/C++ source code generated on  : 05-Jul-2023 11:04:50
  */
 
 /* Include Files */
@@ -13,9 +13,6 @@
 #include "rt_nonfinite.h"
 #include "codeCalculator.h"
 #include "sort1.h"
-#include <stdio.h>
-
-/* Type Definitions */
 
 /* Function Definitions */
 
@@ -30,39 +27,40 @@ short codeCalculator(const signed char seq[6], double opt1, double opt2, double
                      equ)
 {
   short out;
-  int i;
+  int yfi;
   signed char iv0[6];
   signed char sorted_result[6];
   double cu_normalized[6];
+  int i;
+  int j;
   double temp_result;
   double v;
 
   /*  No matter signed or unsigned, we all uses the same datapath. */
   /*  sort, this would be implemented using bitonic sorters. */
   if (opt1 == 0.0) {
-    for (i = 0; i < 6; i++) {
-      iv0[i] = seq[i];
+    for (yfi = 0; yfi < 6; yfi++) {
+      iv0[yfi] = seq[yfi];
     }
 
     sort(iv0);
-    for (i = 0; i < 6; i++) {
-      sorted_result[i] = iv0[i];
+    for (yfi = 0; yfi < 6; yfi++) {
+      sorted_result[yfi] = iv0[yfi];
     }
   } else {
-    for (i = 0; i < 6; i++) {
-      iv0[i] = seq[i];
+    for (yfi = 0; yfi < 6; yfi++) {
+      iv0[yfi] = seq[yfi];
     }
 
     b_sort(iv0);
-    for (i = 0; i < 6; i++) {
-      sorted_result[i] = iv0[i];
+    for (yfi = 0; yfi < 6; yfi++) {
+      sorted_result[yfi] = iv0[yfi];
     }
   }
 
-  printf("%s\n", "Sorted Result");
-  fflush(stdout);
-  for (i = 0; i < 6; i++) {
-    cu_normalized[i] = sorted_result[i];
+  /*  disp("Sorted Result"); */
+  for (yfi = 0; yfi < 6; yfi++) {
+    cu_normalized[yfi] = sorted_result[yfi];
   }
 
   /* Cumluation and Normalization */
@@ -72,39 +70,38 @@ short codeCalculator(const signed char seq[6], double opt1, double opt2, double
         cu_normalized[i] = floor((double)(sorted_result[i] * 2 * 4 * 2 +
           sorted_result[i] * 8) * 0.125 / 3.0 * 8.0 * 0.125);
       } else {
-        cu_normalized[i] = floor((cu_normalized[i - 1] * 2.0 * 4.0 * 2.0 +
-          (double)sorted_result[i] * 8.0) * 0.125 / 3.0 * 8.0 * 0.125);
+        cu_normalized[i] = floor((cu_normalized[i - 1] * 2.0 * 8.0 + (double)
+          sorted_result[i] * 8.0) * 0.125 / 3.0 * 8.0 * 0.125);
       }
     }
   } else {
     /*  Shift the first number to become 0, others must follows */
     if (sorted_result[0] > 0) {
       /*  -1 for all number until first number is 0 */
-      while (cu_normalized[0] != 0.0) {
-        for (i = 0; i < 6; i++) {
-          printf("%s\n", "Cu normalized");
-          fflush(stdout);
-          cu_normalized[i]--;
+      for (i = 1; i <= sorted_result[0]; i++) {
+        for (j = 0; j < 6; j++) {
+          /*  disp("Cu normalized"); */
+          cu_normalized[j]--;
         }
       }
     } else {
       /*  lt 0 */
       /*  +1 for all number until first number is 0 */
-      while (cu_normalized[0] != 0.0) {
-        for (i = 0; i < 6; i++) {
-          cu_normalized[i]++;
+      yfi = -sorted_result[0];
+      for (i = 1; i <= yfi; i++) {
+        for (j = 0; j < 6; j++) {
+          /*  disp("Cu normalized"); */
+          cu_normalized[j]++;
         }
       }
     }
   }
 
-  printf("%s\n", "Cumulated and Normalized");
-  fflush(stdout);
-
+  /*  disp("Cumulated and Normalized"); */
   /*  Output equation */
   if (equ == 0.0) {
-    temp_result = floor((cu_normalized[3] * 2.0 + cu_normalized[4] * 4.0 * 2.0) *
-                        0.5 * cu_normalized[5] * 2.0 * 0.5 / 3.0 * 2.0 * 0.5);
+    temp_result = floor((cu_normalized[3] * 4.0 + cu_normalized[4] * 4.0 * 4.0) *
+                        0.25 * cu_normalized[5] * 4.0 * 0.25 / 3.0 * 4.0 * 0.25);
   } else {
     temp_result = cu_normalized[5] * (cu_normalized[1] - cu_normalized[0]);
     if (temp_result < 0.0) {
