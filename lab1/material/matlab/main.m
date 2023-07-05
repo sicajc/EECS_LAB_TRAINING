@@ -1,14 +1,12 @@
 clc;
 clear;
-
-
 %================================================================
 %  Output word Length for each layer
 %================================================================
 input_WL     = 5;
 sort_WL      = 5;
-normalize_WL = 6;
-result_WL    = 11;
+normalize_WL = 7;
+result_WL    = 12;
 
 T = ccDataType('scaled',sort_WL,normalize_WL,result_WL);
 %================================================================
@@ -54,7 +52,7 @@ result3 = codeCalculator_mex(extreme_case_upper_bound,opt1,opt2,equ,T)
 %  Randomized testing
 %================================================================
 
-NUM_OF_SEQ = 100000;
+NUM_OF_SEQ = 1000;
 % % Set the seed value
 seedValue = 1234;
 

@@ -21,9 +21,9 @@ function out = codeCalculator(seq, opt1, opt2, equ, T)
         for i = 1:length(sorted_result)
 
             if i == 1
-                cu_normalized(i) = floor((sorted_result(i) * 2 + sorted_result(i) * 1) / 3);
+                cu_normalized(i) = floor(sorted_result(i)*2 + sorted_result(i) / 3);
             else
-                cu_normalized(i) = floor((cu_normalized(i - 1) * 2 + sorted_result(i) * 1) / 3);
+                cu_normalized(i) = floor(sorted_result(i)*2 + sorted_result(i) / 3);
             end
 
         end
@@ -66,7 +66,8 @@ function out = codeCalculator(seq, opt1, opt2, equ, T)
 
     % Output equation
     if equ == 0
-        result(:) = floor(((cu_normalized(4) + cu_normalized(5) * 4) * cu_normalized(6)) / 3);
+        % This simply performs sign extension
+        result(:) = floor(((cu_normalized(4) + cu_normalized(5)*4) * cu_normalized(6)) / 3);
     else
         temp_result(:) = cu_normalized(6) * (cu_normalized(2) - cu_normalized(1));
         result(:) = abs(temp_result);

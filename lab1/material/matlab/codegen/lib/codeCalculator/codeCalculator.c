@@ -5,7 +5,7 @@
  * File: codeCalculator.c
  *
  * MATLAB Coder version            : 4.0
- * C/C++ source code generated on  : 05-Jul-2023 11:04:50
+ * C/C++ source code generated on  : 05-Jul-2023 11:35:02
  */
 
 /* Include Files */
@@ -66,13 +66,8 @@ short codeCalculator(const signed char seq[6], double opt1, double opt2, double
   /* Cumluation and Normalization */
   if (opt2 == 1.0) {
     for (i = 0; i < 6; i++) {
-      if (1 + i == 1) {
-        cu_normalized[i] = floor((double)(sorted_result[i] * 2 * 4 * 2 +
-          sorted_result[i] * 8) * 0.125 / 3.0 * 8.0 * 0.125);
-      } else {
-        cu_normalized[i] = floor((cu_normalized[i - 1] * 2.0 * 8.0 + (double)
-          sorted_result[i] * 8.0) * 0.125 / 3.0 * 8.0 * 0.125);
-      }
+      cu_normalized[i] = floor(((double)sorted_result[i] * 2.0 * 4.0 + (double)
+        sorted_result[i] / 3.0 * 4.0) * 0.25);
     }
   } else {
     /*  Shift the first number to become 0, others must follows */
@@ -100,8 +95,10 @@ short codeCalculator(const signed char seq[6], double opt1, double opt2, double
   /*  disp("Cumulated and Normalized"); */
   /*  Output equation */
   if (equ == 0.0) {
-    temp_result = floor((cu_normalized[3] * 4.0 + cu_normalized[4] * 4.0 * 4.0) *
-                        0.25 * cu_normalized[5] * 4.0 * 0.25 / 3.0 * 4.0 * 0.25);
+    /*  This simply performs sign extension */
+    temp_result = floor((cu_normalized[3] * 8.0 + cu_normalized[4] * 4.0 * 8.0) *
+                        0.125 * cu_normalized[5] * 8.0 * 0.125 / 3.0 * 8.0 *
+                        0.125);
   } else {
     temp_result = cu_normalized[5] * (cu_normalized[1] - cu_normalized[0]);
     if (temp_result < 0.0) {

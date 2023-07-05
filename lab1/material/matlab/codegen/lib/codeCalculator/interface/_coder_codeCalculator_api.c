@@ -5,7 +5,7 @@
  * File: _coder_codeCalculator_api.c
  *
  * MATLAB Coder version            : 4.0
- * C/C++ source code generated on  : 05-Jul-2023 11:04:50
+ * C/C++ source code generated on  : 05-Jul-2023 11:35:02
  */
 
 /* Include Files */
@@ -180,11 +180,11 @@ static void codeCalculator_once(const emlrtStack *sp)
     0.0, "BinaryPoint", 0.0, "Slope", 1.0, "FixedExponent", 0.0, &emlrtMCI));
   emlrtAssignP(&e_eml_mx, b_numerictype(sp, "DataTypeMode",
     "Scaled double: binary point scaling", "DataType", "ScaledDouble",
-    "WordLength", 11.0, "FractionLength", 0.0, "BinaryPoint", 0.0, "Slope", 1.0,
+    "WordLength", 12.0, "FractionLength", 0.0, "BinaryPoint", 0.0, "Slope", 1.0,
     "FixedExponent", 0.0, &emlrtMCI));
   emlrtAssignP(&d_eml_mx, b_numerictype(sp, "DataTypeMode",
     "Scaled double: binary point scaling", "DataType", "ScaledDouble",
-    "WordLength", 6.0, "FractionLength", 0.0, "BinaryPoint", 0.0, "Slope", 1.0,
+    "WordLength", 7.0, "FractionLength", 0.0, "BinaryPoint", 0.0, "Slope", 1.0,
     "FixedExponent", 0.0, &emlrtMCI));
   emlrtAssignP(&c_eml_mx, b_numerictype(sp, "DataTypeMode",
     "Scaled double: binary point scaling", "DataType", "ScaledDouble",
