@@ -15,7 +15,7 @@ module CC(
   //   PARAMETERS & GENVARS
   //===============================
   parameter SORTERS_WIDTH        = 5;
-  parameter NORM_AND_SHIFT_WIDTH = 6;
+  parameter NORM_AND_SHIFT_WIDTH = 5;
   parameter EQ_WIDTH             = 10;
   parameter NUM_OF_ELEMENT       = 6;
 
@@ -30,6 +30,7 @@ module CC(
   reg signed[SORTERS_WIDTH-1:0] ascend_or_descend[0:NUM_OF_ELEMENT-1];
 
   reg signed[NORM_AND_SHIFT_WIDTH-1:0] cu_normalised[0:NUM_OF_ELEMENT-1];
+  reg signed[NORM_AND_SHIFT_WIDTH-1:0] normalised_result[0:NUM_OF_ELEMENT-1];
 
   reg signed[EQ_WIDTH-1:0] equation_result;
 
@@ -210,7 +211,7 @@ module CC(
     begin: ASCEND_DESCEND
         always @(*)
         begin
-          if(opt[1] == 1'b1)
+          if(opt[1] == 1'b0)
           begin
                 ascend_or_descend[idx] = sorted_results[idx];
           end
@@ -222,57 +223,74 @@ module CC(
     end
   endgenerate
 
+  reg signed[NORM_AND_SHIFT_WIDTH-1:0] normalised_temp[0:NUM_OF_ELEMENT-1];
+  wire first_element_gt_zero_f = ascend_or_descend[0] > 0;
   //Cumulation and Shifter
   always @(*)
   begin:CUMULATION_SHIFT
     if(opt[2] == 1'b1)
     begin
-        //Moving average normalization
-        cu_normalised[0] = ascend_or_descend[0];
 
-        for(i=1;i<NUM_OF_ELEMENT;i=i+1)
-        begin
-            cu_normalised[i] = (cu_normalised[i-1] * $signed(2) + ascend_or_descend[i])/$signed(3);
-        end
+        // for(i=1;i<NUM_OF_ELEMENT;i=i+1)
+        // begin
+        //     normalised_result[i] = (normalised_temp[i-1] * $signed(2) + ascend_or_descend[i])/$signed(3);
+        // end
+
+        //Moving average normalization
+        normalised_result[0] = ascend_or_descend[0];
+
+        normalised_result[1] = (normalised_result[0] * $signed(2) + ascend_or_descend[1]) / $signed(3)  ;
+
+        normalised_result[2] = (normalised_result[1] * $signed(2) + ascend_or_descend[2]) / $signed(3)  ;
+
+        normalised_result[3] = (normalised_result[2] * $signed(2) + ascend_or_descend[3]) / $signed(3)  ;
+
+        normalised_result[4] = (normalised_result[3] * $signed(2) + ascend_or_descend[4]) / $signed(3)  ;
+
+        normalised_result[5] = (normalised_result[4] * $signed(2) + ascend_or_descend[5]) / $signed(3)  ;
+
     end
     else
     begin
         //Shifter
         for(i=0;i<NUM_OF_ELEMENT;i=i+1)
         begin
-            if(ascend_or_descend[0] > $signed(0))
+            if(first_element_gt_zero_f)
             begin
-                cu_normalised[i] = cu_normalised[i] - ascend_or_descend[0];
+                normalised_result[i] = ascend_or_descend[i] - ascend_or_descend[0];
             end
             else
             begin
-                cu_normalised[i] = cu_normalised[i] + ascend_or_descend[0];
+                normalised_result[i] = ascend_or_descend[i] - ascend_or_descend[0];
             end
         end
     end
   end
 
+
+  reg signed[NORM_AND_SHIFT_WIDTH*2:0] equation_temp;
+  reg signed[EQ_WIDTH+1:0] mult_temp;
   //eq
   always @(*)
   begin:EQU
     if(equ == 1'b1)
     begin
-        equation_result = cu_normalised[5] * (cu_normalised[1] - cu_normalised[0]);
+        equation_temp = normalised_result[5] * (normalised_result[1] - normalised_result[0]);
 
-        if(equation_result >= $signed(0))
+        if(equation_temp >= $signed(0))
         begin
-            equation_result = equation_result;
+            equation_result = equation_temp;
         end
         else
         begin
-            equation_result = ~equation_result + $signed('d1);
+            equation_result = ~equation_temp + $signed('d1);
         end
     end
     else
     begin
-        equation_result = cu_normalised[3];
-        equation_result = equation_result + cu_normalised[4] * $signed(4);
-        equation_result = equation_result / $signed(3);
+        equation_temp = normalised_result[3] + normalised_result[4] * $signed(4);
+        mult_temp     = equation_temp * normalised_result[5];
+        equation_result = mult_temp / $signed(3);
     end
   end
 
