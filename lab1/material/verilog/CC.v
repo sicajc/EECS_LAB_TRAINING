@@ -8,7 +8,7 @@ module CC(
     input[3:0] in_n5,
     input[2:0] opt,
     input equ,
-    output signed[9:0] out_n
+    output[9:0] out_n
 );
 
   //===============================
@@ -25,13 +25,13 @@ module CC(
   //===============================
   //   wires and regs
   //===============================
-  signed reg[SORTERS_WIDTH-1:0] sign_ex_values[0:NUM_OF_ELEMENT];
-  signed reg[SORTERS_WIDTH-1:0] sorted_results[0:NUM_OF_ELEMENT];
-  signed reg[SORTERS_WIDTH-1:0] ascend_or_descend[0:NUM_OF_ELEMENT];
+  reg signed[SORTERS_WIDTH-1:0] sign_ex_values[0:NUM_OF_ELEMENT];
+  reg signed[SORTERS_WIDTH-1:0] sorted_results[0:NUM_OF_ELEMENT];
+  reg signed[SORTERS_WIDTH-1:0] ascend_or_descend[0:NUM_OF_ELEMENT];
 
-  signed reg[NORM_AND_SHIFT_WIDTH-1:0] cu_normalised[0:NUM_OF_ELEMENT];
+  reg signed[NORM_AND_SHIFT_WIDTH-1:0] cu_normalised[0:NUM_OF_ELEMENT];
 
-  signed reg[EQ_WIDTH-1:0] equation_result;
+  reg signed[EQ_WIDTH-1:0] equation_result;
 
   //===============================
   //   DESIGN
@@ -155,18 +155,17 @@ module CC(
 
   //Ascend or descend of the sorted results
   generate
-    for(i=0;i<NUM_OF_ELEMENT;i=i+1)
-    begin
+    for(idx=0;idx<NUM_OF_ELEMENT;idx=idx+1)
+    begin: ASCEND_DESCEND
         always @(*)
         begin
           if(opt[1] == 1'b1)
           begin
-            for(i=0;i<NUM_OF_ELEMENT;i=i+1)
-                ascend_or_descend[i] = sorted_results[i];
+                ascend_or_descend[idx] = sorted_results[idx];
           end
           else
           begin
-                ascend_or_descend[i] = sorted_results[5-i]
+                ascend_or_descend[idx] = sorted_results[5-idx];
           end
         end
     end
@@ -174,7 +173,7 @@ module CC(
 
   //Cumulation and Shifter
   always @(*)
-  begin
+  begin:CUMULATION_SHIFT
     if(opt[2] == 1'b1)
     begin
         //Moving average normalization
@@ -204,7 +203,7 @@ module CC(
 
   //eq
   always @(*)
-  begin
+  begin:EQU
     if(equ == 1'b1)
     begin
         equation_result = cu_normalised[5] * (cu_normalised[1] - cu_normalised[0]);
