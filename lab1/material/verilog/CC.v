@@ -1,3 +1,9 @@
+// -----------------------------------------------------------------------------
+// Revision History
+// VERSION      Date          AUTHOR           DESCRIPTION      PERFORMANCE (AREA)
+// 1.0          2023/7/6    JackyYEH                       25846
+
+
 module CC(
 
     input[3:0] in_n0,
@@ -288,6 +294,7 @@ module CC(
     end
     else
     begin
+
         equation_temp = normalised_result[3] + normalised_result[4] * $signed(4);
         mult_temp     = equation_temp * normalised_result[5];
         equation_result = mult_temp / $signed(3);
