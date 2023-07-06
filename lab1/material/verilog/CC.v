@@ -224,7 +224,6 @@ module CC(
   endgenerate
 
   reg signed[NORM_AND_SHIFT_WIDTH-1:0] normalised_temp[0:NUM_OF_ELEMENT-1];
-  wire first_element_gt_zero_f = ascend_or_descend[0] > 0;
   //Cumulation and Shifter
   always @(*)
   begin:CUMULATION_SHIFT
@@ -255,14 +254,7 @@ module CC(
         //Shifter
         for(i=0;i<NUM_OF_ELEMENT;i=i+1)
         begin
-            if(first_element_gt_zero_f)
-            begin
-                normalised_result[i] = ascend_or_descend[i] - ascend_or_descend[0];
-            end
-            else
-            begin
-                normalised_result[i] = ascend_or_descend[i] - ascend_or_descend[0];
-            end
+            normalised_result[i] = ascend_or_descend[i] - ascend_or_descend[0];
         end
     end
   end
