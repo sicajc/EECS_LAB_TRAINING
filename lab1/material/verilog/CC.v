@@ -274,14 +274,21 @@ module CC(
   end
 
 
-  reg signed[NORM_AND_SHIFT_WIDTH*2:0] equation_temp;
-  reg signed[EQ_WIDTH+1:0] mult_temp;
   //eq
+//   reg signed[NORM_AND_SHIFT_WIDTH*2:0] equation_temp;
+//   reg signed[EQ_WIDTH+1:0] mult_temp;
+
+  reg signed[7:0] add1_temp;
+  reg signed[12:0] mult2_temp;
+  reg signed[6:0]  mult1_temp;
+
   always @(*)
   begin:EQU
     if(equ == 1'b1)
     begin
-        equation_temp = normalised_result[5] * (normalised_result[1] - normalised_result[0]);
+        // equation_temp = normalised_result[5] * (normalised_result[1] - normalised_result[0]);
+        add1_temp  = normalised_result[1]- normalised_result[0];
+        mult2_temp = add_temp * normalised_temp[5];
 
         if(equation_temp >= $signed(0))
         begin
@@ -294,10 +301,14 @@ module CC(
     end
     else
     begin
+        mult1_temp = normalised_result[4] * $signed(4);
+        add1_temp  = normalised_result[3] + mult1_temp;
+        mult2_temp = add1_temp * normalised_result[5];
+        equation_result = mult2_temp / $signed(3);
 
-        equation_temp = normalised_result[3] + normalised_result[4] * $signed(4);
-        mult_temp     = equation_temp * normalised_result[5];
-        equation_result = mult_temp / $signed(3);
+        // equation_temp = normalised_result[3] + normalised_result[4] * $signed(4);
+        // mult_temp     = equation_temp * normalised_result[5];
+        // equation_result = mult_temp / $signed(3);
     end
   end
 
