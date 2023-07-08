@@ -78,8 +78,9 @@ module CC(
 
   generate
     for(j=0;j<NUM_OF_ELEMENT;j=j+1)
+    begin: BITONIC_SORT
       always @(*)
-      begin: BITONIC_SORT
+      begin
          // Initilize value for all the variables
 
          // stage 0
@@ -185,6 +186,7 @@ module CC(
 
          sorted_results[j] = stage_seven[j];
       end
+    end
   endgenerate
 
   //Ascend or descend of the sorted results
@@ -251,12 +253,13 @@ module CC(
     end
   end
 
-
+  wire  debug_wire = add1_temp == 'd4 ? 'd1 : 'd0 ;
   //eq
   reg signed[7:0] add1_temp;
   reg signed[12:0] mult2_temp;
   reg signed[6:0]  mult1_temp;
 
+  // Pulls the mult2_temp out for testing.
   always @(*)
   begin:EQU
     if(equ == 1'b1)
