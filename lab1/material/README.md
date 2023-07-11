@@ -16,7 +16,9 @@
 - Resource sharing usage
 - What kind of coding style leads to resource sharing?
 ```
-
+    Code in a way that allows DC to do the resource sharing task for you. Like specify every cases in always block clearly.
+    DC would helps optimization within a single always@* block, and achieve resource sharing for you. As for cross always@* optimization,
+    this might not be the case? Also DC would help you automatically prune out the unnecessary bit width of your data path aru units.
 ```
 
 # Default value
