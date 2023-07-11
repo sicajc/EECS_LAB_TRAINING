@@ -79,7 +79,6 @@ module CC(
   always @(*)
   begin: BITONIC_SORT
      // Initilize value for all the variables
-
      // stage 0
      for(i=0;i<NUM_OF_ELEMENT;i=i+1)
      begin
