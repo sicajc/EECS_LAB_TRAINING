@@ -41,7 +41,7 @@ module  TT(
   //============================
   //   WIRE & FFs
   //============================
-  wire[DATA_WIDTH-1:0] vertex_queue;
+  wire[DATA_WIDTH-1:0] vertex_from_queue;
 
   reg visited_list[0:NUM_OF_STATIONS];
   reg adjacency_matrix[0:NUM_OF_STATIONS][0:NUM_OF_STATIONS];
@@ -49,7 +49,7 @@ module  TT(
   reg [DATA_WIDTH-1:0:0] dst_ff;
   reg [DATA_WIDTH-1:0] v1,v2;
 
-  signed wire[DATA_WIDTH:0] distance_to_vertex;
+  signed wire[DATA_WIDTH:0] distance_to_vertex[0:NUM_OF_STATIONS-1];
   signed reg[DATA_WIDTH-1:0] vertexDistances_list[0:NUM_OF_STATIONS-1];
   //================================================================
   //   DESIGN
@@ -61,7 +61,7 @@ module  TT(
 
 
   wire queue_empty_f = fifo_ptr == 0 && state_BFS;
-  wire dst_found_f   = vertex_queue == dst_ff;
+  wire dst_found_f   = vertex_from_queue == dst_ff;
   reg  check_in_queue_f;
   //========================
   //   CTR
@@ -138,7 +138,7 @@ module  TT(
   end
 
   //======================================
-  //    Distances List and Visted List
+  //   Visted List
   //======================================
   always @(posedge clk or negedge rst_n)
   begin
@@ -146,8 +146,103 @@ module  TT(
     begin
         for(i=0;i<NUM_OF_STATIONS;i=i+1)
         begin
-            vertexDistances_list[i] <= -'d1;
             visited_list[i] <= 1'b1
+        end
+    end
+    else if(state_IDLE)
+    begin
+        for(i=0;i<NUM_OF_STATIONS;i=i+1)
+        begin
+            visited_list[i] <= 1'b1
+        end
+    end
+    else if(state_BFS)
+    begin
+        visited_list[vertex_from_queue] <= 1'b1;
+    end
+    else
+    begin
+        ;
+    end
+  end
+  //======================================
+  //   Distances List
+  //======================================
+  generate
+    for(idx = 0 ;idx < NUM_OF_STATIONS;idx=idx+1)
+    begin: DISTANCES_ADDERS
+        assign distance_to_vertex[idx] = vertexDistances_list[idx] + $signed(1);
+    end
+  endgenerate
+
+  always @(posedge clk or negedge rst_n)
+  begin:DISTANCES_LIST
+    if(~rst_n)
+    begin
+        for(i=0;i<NUM_OF_STATIONS;i=i+1)
+        begin
+            vertexDistances_list[i] <= -'d1;
+        end
+    end
+    else if(state_IDLE)
+    begin
+        for(i=0;i<NUM_OF_STATIONS;i=i+1)
+        begin
+            vertexDistances_list[i] <= -'d1;
+        end
+    end
+    else if(state_BFS)
+    begin
+        // Updating all neighbor distance at once, the inner for of neighbor update block.
+        for(j=0;j<NUM_OF_STATIONS;j=j+1)
+        begin
+            if(adjacency_matrix[vertex_from_queue][j]==1'b1 && visited_list[vertex_from_queue] == 1'b0)
+            begin
+                if(vertexDistances_list[j] == -'d1)
+                begin
+                    vertexDistances_list[j] <= distance_to_vertex[j];
+                end
+                else if(distance_to_vertex[j] < vertexDistances_list[j])
+                begin
+                    vertexDistances_list[j] <= distance_to_vertex[j];
+                end
+                else
+                begin
+                    ;
+                end
+            end
+            else
+            begin
+                ;
+            end
+        end
+    end
+    else
+    begin
+        ;
+    end
+  end
+
+  //======================================
+  //   FIFO
+  //======================================
+  always @(*)
+  begin
+    check_in_queue_f = 1'b0;
+    for(i = 0 ; i<FIFO_WIDTH ; i=i+1)
+    begin
+        check_in_queue_f = ;
+    end
+  end
+
+  always @(posedge clk or negedge rst_n)
+  begin
+    if(~rst_n)
+    begin
+        fifo_ptr <= 0;
+        for(i=0;i<FIFO_WIDTH;i=i+1)
+        begin
+            shifting_queue[i] <= 'd0;
         end
     end
     else
@@ -155,5 +250,9 @@ module  TT(
 
     end
   end
+
+
+
+
 
 endmodule
