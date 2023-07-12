@@ -231,7 +231,16 @@ module  TT(
     check_in_queue_f = 1'b0;
     for(i = 0 ; i<FIFO_WIDTH ; i=i+1)
     begin
-        check_in_queue_f = ;
+        if(adjacency_matrix[vertex_from_queue][i]==1'b1 && visited_list[vertex_from_queue] == 1'b0)
+        begin
+            for(j=0;j<FIFO_WIDTH ; j=j+1)
+            begin
+                if(shifting_queue[j] == i)
+                begin
+
+                end
+            end
+        end
     end
   end
 
