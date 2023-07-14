@@ -1,4 +1,4 @@
-`define C2Q 0.3
+`define C2Q 0.1
 module  TT(
     input clk,
     input rst_n,
@@ -16,12 +16,11 @@ module  TT(
   parameter FIFO_WIDTH      = 12;
   parameter NUM_OF_STATIONS = 16;
 
-  integer idx,depth;
   integer i,j;
   //===============================
   //   States
   //===============================
-  reg[3:0] currentState, nextState;
+  reg[4:0] currentState, nextState;
 
   localparam IDLE                     = 5'b00001;
   localparam RD_DATA                  = 5'b00010;
@@ -49,16 +48,15 @@ module  TT(
   reg visited_list[0:NUM_OF_STATIONS-1];
   reg adjacency_matrix[0:NUM_OF_STATIONS-1][0:NUM_OF_STATIONS-1];
 
-  reg [DATA_WIDTH-1:0] dst_ff;
+  reg [DATA_WIDTH:0] dst_ff;
   reg [DATA_WIDTH-1:0] currentVertex_ff;
 
-  reg [DATA_WIDTH-1:0] neighbor_nxt;
+  reg [DATA_WIDTH:0] neighbor_nxt;
 
-  signed wire[DATA_WIDTH:0]  distance_to_vertex[0:NUM_OF_STATIONS-1];
   // Note -1 means unreachable
-  signed reg[DATA_WIDTH-1:0] vertexDistances_list[0:NUM_OF_STATIONS-1];
+  reg signed[DATA_WIDTH-1:0] vertexDistances_list[0:NUM_OF_STATIONS-1];
 
-  signed wire[DATA_WIDTH:0] distance_to_vertex = vertexDistances_list[currentVertex_ff] + $signed(1);
+  wire signed[DATA_WIDTH:0] distance_to_vertex = vertexDistances_list[currentVertex_ff] + $signed(1);
 
   //================================================================
   //   DESIGN
@@ -75,13 +73,13 @@ module  TT(
 
     for(j=0; j<NUM_OF_STATIONS; j=j+1)
     begin
-        all_zeroes_f = all_zeroes_f & !adjacency_matrix[vertex_from_fifo][j];
+        all_zeroes_f = all_zeroes_f & !adjacency_matrix[currentVertex_ff][j];
     end
   end
 
   wire dst_found_f               = neighbor_nxt == dst_ff && state_VISIT_NEIGHBORS;
-  wire neighbor_traversed_f      = all_zeroes_f && state_BFS_TAKE_VERTEX;
-  reg  vertex_no_neighbors_f     = all_zeroes_f && state_VISIT_NEIGHBORS;
+  wire neighbor_traversed_f      = all_zeroes_f && state_VISIT_NEIGHBORS;
+//   wire  vertex_no_neighbors_f     = all_zeroes_f && state_BFS_TAKE_VERTEX;
   wire neighbor_is_valid_f       = adjacency_matrix[currentVertex_ff][neighbor_nxt] == 1 &&
                                    visited_list[neighbor_nxt] == 0 && state_VISIT_NEIGHBORS;
 
@@ -118,7 +116,7 @@ module  TT(
       end
       BFS_TAKE_VERTEX :
       begin
-        nextState            = fifo_empty_f ? DONE : (vertex_no_neighbors_f ? BFS_TAKE_VERTEX: VISIT_NEIGHBORS);
+        nextState            = fifo_empty_f ? DONE : VISIT_NEIGHBORS;
       end
       VISIT_NEIGHBORS :
       begin
@@ -136,7 +134,7 @@ module  TT(
   end
 
   //=============================
-  //   ADJACENCY MATRIX
+  //   ADJACENCY MATRIX & DST_FF
   //=============================
   always @(posedge clk or negedge rst_n)
   begin:ADJACENCY_MATRIX
@@ -152,9 +150,20 @@ module  TT(
                 adjacency_matrix[i][j] <= 1'b0;
             end
         end
+
+        dst_ff <= 16;
     end
     else if(state_IDLE)
     begin
+        if(in_valid)
+        begin
+            dst_ff <= destination;
+        end
+        else
+        begin
+            dst_ff <= 16;
+        end
+
         for(i= 0; i < NUM_OF_STATIONS;i=i+1)
         begin
             for(j=0;j<NUM_OF_STATIONS;j=j+1)
@@ -225,19 +234,26 @@ module  TT(
     begin
         for(i=0;i<NUM_OF_STATIONS;i=i+1)
         begin
-            vertexDistances_list[i] <= -'d1;
+            vertexDistances_list[i] <= $signed(-'d1);
         end
     end
     else if(state_IDLE)
     begin
-        for(i=0;i<NUM_OF_STATIONS;i=i+1)
+        if(in_valid)
         begin
-            vertexDistances_list[i] <= -'d1;
+            vertexDistances_list[source] <= 0;
+        end
+        else
+        begin
+            for(i=0;i<NUM_OF_STATIONS;i=i+1)
+            begin
+                vertexDistances_list[i] <= $signed(-'d1);
+            end
         end
     end
     else if(state_VISIT_NEIGHBORS && neighbor_is_valid_f)
     begin
-        if(vertexDistances_list[neighbor_nxt] == -'d1)
+        if(vertexDistances_list[neighbor_nxt] == $signed(-'d1))
         begin
             vertexDistances_list[neighbor_nxt] <= distance_to_vertex;
         end
@@ -261,10 +277,10 @@ module  TT(
   //======================================
   always @(*)
   begin:NEXT_NEIGHBOR
-    neighbor_nxt = 0;
+    neighbor_nxt = 17;
     for(j=0;j<NUM_OF_STATIONS;j=j+1)
     begin
-        if(adjacency_matrix[j] == 1)
+        if(adjacency_matrix[currentVertex_ff][j] == 1)
         begin
            neighbor_nxt = j;
         end
@@ -277,7 +293,7 @@ module  TT(
   always @(*)
   begin:NEIGHBOR_NOT_IN_FIFO
     neighbor_not_in_fifo_f = 1;
-    for(i=0;i<NUM_OF_STATIONS;i=i+1)
+    for(i=0;i<FIFO_WIDTH;i=i+1)
     begin
         if(fifo[i] == neighbor_nxt)
         begin
@@ -301,14 +317,26 @@ module  TT(
 
         currentVertex_ff <= 0;
     end
-    else if(state_IDLE && in_valid)
+    else if(state_IDLE)
     begin
-        fifo_ptr <= fifo_ptr + 1;
-        fifo[0]  <= source;
+
+        if(in_valid)
+        begin
+            fifo_ptr <= fifo_ptr + 1;
+            fifo[0]  <= source;
+        end
+        else
+        begin
+            fifo_ptr <= 0;
+            for(j=0;j<FIFO_WIDTH;j=j+1)
+            begin
+                fifo[j] <= 0;
+            end
+        end
 
         currentVertex_ff <= 0;
     end
-    else if(state_BFS_TAKE_VERTEX)
+    else if(state_BFS_TAKE_VERTEX && ~fifo_empty_f)
     begin
         fifo_ptr <= fifo_ptr - 1;
         // Shifting out fifo
@@ -338,7 +366,7 @@ module  TT(
   //   DONE
   //======================================
   always @(posedge clk or negedge rst_n)
-  begin:DONE
+  begin:OUTPUT
     //synopsys_translate_off
     # `C2Q;
     //synopsys_translate_on
@@ -356,13 +384,13 @@ module  TT(
     begin
         out_valid <= 1'b1;
 
-        if(distance_to_vertex[dst_ff] == -'d1)
+        if(vertexDistances_list[dst_ff] == $signed(-'d1))
         begin
             cost      <= 0;
         end
         else
         begin
-            cost      <= distance_to_vertex[dst_ff];
+            cost      <= vertexDistances_list[dst_ff];
         end
     end
     else
