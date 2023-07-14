@@ -280,9 +280,9 @@ module  TT(
     neighbor_nxt = 17;
     for(j=0;j<NUM_OF_STATIONS;j=j+1)
     begin
-        if(adjacency_matrix[currentVertex_ff][j] == 1)
+        if(adjacency_matrix[currentVertex_ff][NUM_OF_STATIONS-j-1] == 1)
         begin
-           neighbor_nxt = j;
+           neighbor_nxt = NUM_OF_STATIONS-j-1;
         end
     end
   end
