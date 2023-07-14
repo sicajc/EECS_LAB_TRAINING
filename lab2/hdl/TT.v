@@ -38,7 +38,7 @@ module  TT(
   //  FIFO
   //============================
   reg[4:0] fifo_ptr;
-  reg[DATA_WIDTH-1:0] fifo[0:FIFO_WIDTH-1];
+  reg[DATA_WIDTH:0] fifo[0:FIFO_WIDTH-1];
 
   //============================
   //   WIRE & FFs
@@ -54,7 +54,7 @@ module  TT(
   reg [DATA_WIDTH:0] neighbor_nxt;
 
   // Note -1 means unreachable
-  reg signed[DATA_WIDTH-1:0] vertexDistances_list[0:NUM_OF_STATIONS-1];
+  reg signed[DATA_WIDTH:0] vertexDistances_list[0:NUM_OF_STATIONS-1];
 
   wire signed[DATA_WIDTH:0] distance_to_vertex = vertexDistances_list[currentVertex_ff] + $signed(1);
 
@@ -312,10 +312,10 @@ module  TT(
         fifo_ptr <= 0;
         for(j=0;j<FIFO_WIDTH;j=j+1)
         begin
-            fifo[j] <= 0;
+            fifo[j] <= 18;
         end
 
-        currentVertex_ff <= 0;
+        currentVertex_ff <= 18;
     end
     else if(state_IDLE)
     begin
@@ -330,17 +330,17 @@ module  TT(
             fifo_ptr <= 0;
             for(j=0;j<FIFO_WIDTH;j=j+1)
             begin
-                fifo[j] <= 0;
+                fifo[j] <= 18;
             end
         end
 
-        currentVertex_ff <= 0;
+        currentVertex_ff <= 18;
     end
     else if(state_BFS_TAKE_VERTEX && ~fifo_empty_f)
     begin
         fifo_ptr <= fifo_ptr - 1;
         // Shifting out fifo
-        fifo[FIFO_WIDTH-1] <= 0;
+        fifo[FIFO_WIDTH-1] <= 18;
 
         for(j=1;j<FIFO_WIDTH;j=j+1)
         begin
