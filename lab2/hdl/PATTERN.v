@@ -41,8 +41,8 @@ integer total_latency;
 
 
 initial begin
-  f_in  = $fopen("C:/Users/jacky/Desktop/EECS_LAB_TRAINING/EECS_LAB_TRAINING/lab2/hdl/demo_input.txt", "r");
-  f_ans = $fopen("C:/Users/jacky/Desktop/EECS_LAB_TRAINING/EECS_LAB_TRAINING/lab2/hdl/demo_ans.txt", "r");
+  f_in  = $fopen("C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab2/hdl/demo_input.txt", "r");
+  f_ans = $fopen("C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab2/hdl/demo_ans.txt", "r");
   reset_task;
   a = $fscanf(f_in, "%d", patnum);
 

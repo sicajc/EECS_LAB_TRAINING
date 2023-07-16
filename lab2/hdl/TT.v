@@ -2,7 +2,7 @@
 // Revision History
 // VERSION      Date          AUTHOR           DESCRIPTION                    PERFORMANCE (AREA + CYCLE)
 // 1.0          2023/7/13    JackyYEH                                                55644 + 21543
-// 1.1          2023/7/16    JackyYEH       Changing in fifo function
+// 1.1          2023/7/16    JackyYEH       Changing in fifo function                56252 + 21531
 
 module  TT(
     input clk,
@@ -18,7 +18,7 @@ module  TT(
   //   PARAMETER
   //===============================
   parameter DATA_WIDTH      = 4;
-  parameter FIFO_WIDTH      = 12;
+  parameter FIFO_WIDTH      = 16;
   parameter NUM_OF_STATIONS = 16;
 
   integer i,j;
@@ -310,6 +310,9 @@ module  TT(
 //   end
   always @(posedge clk or negedge rst_n)
   begin: IN_FIFO_TABLE
+    //synopsys_translate_off
+    # `C2Q;
+    //synopsys_translate_on
     if(~rst_n)
     begin
         in_fifo_table <= 16'b1111_1111_1111_1111;
@@ -330,9 +333,14 @@ module  TT(
 
   always @(*)
   begin:NEIGHBOR_NOT_IN_FIFO
-    neighbor_not_in_fifo_f = 1;
-
-    neighbor_not_in_fifo_f = in_fifo_table[neighbor_nxt];
+    if(neighbor_nxt == 17)
+    begin
+        neighbor_not_in_fifo_f = 0;
+    end
+    else
+    begin
+        neighbor_not_in_fifo_f = in_fifo_table[neighbor_nxt];
+    end
   end
 
 
