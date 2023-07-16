@@ -1,4 +1,9 @@
 `define C2Q 0.1
+// Revision History
+// VERSION      Date          AUTHOR           DESCRIPTION                    PERFORMANCE (AREA + CYCLE)
+// 1.0          2023/7/13    JackyYEH                                                55644 + 21543
+// 1.1          2023/7/16    JackyYEH       Changing in fifo function
+
 module  TT(
     input clk,
     input rst_n,
@@ -57,6 +62,8 @@ module  TT(
   reg signed[DATA_WIDTH:0] vertexDistances_list[0:NUM_OF_STATIONS-1];
 
   wire signed[DATA_WIDTH:0] distance_to_vertex = vertexDistances_list[currentVertex_ff] + $signed(1);
+
+  reg[NUM_OF_STATIONS-1:0] in_fifo_table;
 
   //================================================================
   //   DESIGN
@@ -290,17 +297,44 @@ module  TT(
   //======================================
   //   FIFO & Current Vertex
   //======================================
+//   always @(*)
+//   begin:NEIGHBOR_NOT_IN_FIFO
+//     neighbor_not_in_fifo_f = 1;
+//     for(i=0;i<FIFO_WIDTH;i=i+1)
+//     begin
+//         if(fifo[i] == neighbor_nxt)
+//         begin
+//            neighbor_not_in_fifo_f = 0;
+//         end
+//     end
+//   end
+  always @(posedge clk or negedge rst_n)
+  begin: IN_FIFO_TABLE
+    if(~rst_n)
+    begin
+        in_fifo_table <= 16'b1111_1111_1111_1111;
+    end
+    else if(state_IDLE)
+    begin
+        in_fifo_table <= 16'b1111_1111_1111_1111;
+    end
+    else if(state_VISIT_NEIGHBORS && neighbor_is_valid_f)
+    begin
+        in_fifo_table[neighbor_nxt] <= 0;
+    end
+    else
+    begin
+        ;
+    end
+  end
+
   always @(*)
   begin:NEIGHBOR_NOT_IN_FIFO
     neighbor_not_in_fifo_f = 1;
-    for(i=0;i<FIFO_WIDTH;i=i+1)
-    begin
-        if(fifo[i] == neighbor_nxt)
-        begin
-           neighbor_not_in_fifo_f = 0;
-        end
-    end
+
+    neighbor_not_in_fifo_f = in_fifo_table[neighbor_nxt];
   end
+
 
   always @(posedge clk or negedge rst_n)
   begin:FIFO
