@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="TESTBED_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="TESTBED" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000000 us"></ZoomStartTime>
+      <ZoomEndTime time="326.461167 us"></ZoomEndTime>
+      <Cursor1Time time="105.790868 us"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="327"></NameColumnWidth>
+      <ValueColumnWidth column_width="285"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="27" />
+   <wave_markers>
+      <marker time="15452500" label="" />
+      <marker time="52225346" label="" />
+   </wave_markers>
+   <wvobject fp_name="/TESTBED/u_TT/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/rst_n" type="logic">
+      <obj_property name="ElementShortName">rst_n</obj_property>
+      <obj_property name="ObjectShortName">rst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/in_valid" type="logic">
+      <obj_property name="ElementShortName">in_valid</obj_property>
+      <obj_property name="ObjectShortName">in_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/source" type="array">
+      <obj_property name="ElementShortName">source[3:0]</obj_property>
+      <obj_property name="ObjectShortName">source[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/destination" type="array">
+      <obj_property name="ElementShortName">destination[3:0]</obj_property>
+      <obj_property name="ObjectShortName">destination[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/out_valid" type="logic">
+      <obj_property name="ElementShortName">out_valid</obj_property>
+      <obj_property name="ObjectShortName">out_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/cost" type="array">
+      <obj_property name="ElementShortName">cost[3:0]</obj_property>
+      <obj_property name="ObjectShortName">cost[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/state_IDLE" type="logic">
+      <obj_property name="ElementShortName">state_IDLE</obj_property>
+      <obj_property name="ObjectShortName">state_IDLE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/state_RD_DATA" type="logic">
+      <obj_property name="ElementShortName">state_RD_DATA</obj_property>
+      <obj_property name="ObjectShortName">state_RD_DATA</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/state_BFS_TAKE_VERTEX" type="logic">
+      <obj_property name="ElementShortName">state_BFS_TAKE_VERTEX</obj_property>
+      <obj_property name="ObjectShortName">state_BFS_TAKE_VERTEX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/state_VISIT_NEIGHBORS" type="logic">
+      <obj_property name="ElementShortName">state_VISIT_NEIGHBORS</obj_property>
+      <obj_property name="ObjectShortName">state_VISIT_NEIGHBORS</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/state_DONE" type="logic">
+      <obj_property name="ElementShortName">state_DONE</obj_property>
+      <obj_property name="ObjectShortName">state_DONE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/dst_ff" type="array">
+      <obj_property name="ElementShortName">dst_ff[4:0]</obj_property>
+      <obj_property name="ObjectShortName">dst_ff[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/currentVertex_ff" type="array">
+      <obj_property name="ElementShortName">currentVertex_ff[3:0]</obj_property>
+      <obj_property name="ObjectShortName">currentVertex_ff[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/fifo_ptr" type="array">
+      <obj_property name="ElementShortName">fifo_ptr[4:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo_ptr[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/fifo" type="array">
+      <obj_property name="ElementShortName">fifo[0:11][4:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo[0:11][4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/vertex_from_fifo" type="array">
+      <obj_property name="ElementShortName">vertex_from_fifo[3:0]</obj_property>
+      <obj_property name="ObjectShortName">vertex_from_fifo[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/visited_list" type="array">
+      <obj_property name="ElementShortName">visited_list[0:15]</obj_property>
+      <obj_property name="ObjectShortName">visited_list[0:15]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/adjacency_matrix" type="array">
+      <obj_property name="ElementShortName">adjacency_matrix[0:15][0:15]</obj_property>
+      <obj_property name="ObjectShortName">adjacency_matrix[0:15][0:15]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/neighbor_nxt" type="array">
+      <obj_property name="ElementShortName">neighbor_nxt[4:0]</obj_property>
+      <obj_property name="ObjectShortName">neighbor_nxt[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/distance_to_vertex" type="array">
+      <obj_property name="ElementShortName">distance_to_vertex[4:0]</obj_property>
+      <obj_property name="ObjectShortName">distance_to_vertex[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/fifo_empty_f" type="logic">
+      <obj_property name="ElementShortName">fifo_empty_f</obj_property>
+      <obj_property name="ObjectShortName">fifo_empty_f</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/fifo_full_f" type="logic">
+      <obj_property name="ElementShortName">fifo_full_f</obj_property>
+      <obj_property name="ObjectShortName">fifo_full_f</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/dst_found_f" type="logic">
+      <obj_property name="ElementShortName">dst_found_f</obj_property>
+      <obj_property name="ObjectShortName">dst_found_f</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/neighbor_traversed_f" type="logic">
+      <obj_property name="ElementShortName">neighbor_traversed_f</obj_property>
+      <obj_property name="ObjectShortName">neighbor_traversed_f</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/neighbor_is_valid_f" type="logic">
+      <obj_property name="ElementShortName">neighbor_is_valid_f</obj_property>
+      <obj_property name="ObjectShortName">neighbor_is_valid_f</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_TT/neighbor_not_in_fifo_f" type="logic">
+      <obj_property name="ElementShortName">neighbor_not_in_fifo_f</obj_property>
+      <obj_property name="ObjectShortName">neighbor_not_in_fifo_f</obj_property>
+   </wvobject>
+</wave_config>

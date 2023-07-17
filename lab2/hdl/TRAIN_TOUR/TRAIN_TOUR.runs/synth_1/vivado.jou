@@ -3,8 +3,8 @@
 # SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
 # IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
 # SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
-# Start of session at: Fri Jul 14 21:58:27 2023
-# Process ID: 9180
+# Start of session at: Sat Jul 15 00:34:24 2023
+# Process ID: 14308
 # Current directory: C:/Users/jacky/Desktop/EECS_LAB_TRAINING/EECS_LAB_TRAINING/lab2/hdl/TRAIN_TOUR/TRAIN_TOUR.runs/synth_1
 # Command line: vivado.exe -log TT.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source TT.tcl
 # Log file: C:/Users/jacky/Desktop/EECS_LAB_TRAINING/EECS_LAB_TRAINING/lab2/hdl/TRAIN_TOUR/TRAIN_TOUR.runs/synth_1/TT.vds
