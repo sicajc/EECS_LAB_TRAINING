@@ -1,0 +1,222 @@
+
+*** Running vivado
+    with args -log TT.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source TT.tcl
+
+
+ECHO is off.
+ECHO is off.
+
+****** Vivado v2023.1 (64-bit)
+  **** SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
+  **** IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+  **** SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source TT.tcl -notrace
+Command: read_checkpoint -auto_incremental -incremental C:/Users/jacky/Desktop/EECS_LAB_TRAINING/EECS_LAB_TRAINING/lab2/hdl/TRAIN_TOUR/TRAIN_TOUR.srcs/utils_1/imports/synth_1/TT.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from C:/Users/jacky/Desktop/EECS_LAB_TRAINING/EECS_LAB_TRAINING/lab2/hdl/TRAIN_TOUR/TRAIN_TOUR.srcs/utils_1/imports/synth_1/TT.dcp for incremental synthesis
+INFO: [Vivado 12-7989] Please ensure there are no constraint changes
+Command: synth_design -top TT -part xc7k70tfbv676-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7k70t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7k70t'
+INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
+INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 1788
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:01 ; elapsed = 00:00:03 . Memory (MB): peak = 890.406 ; gain = 411.582
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'TT' [C:/Users/jacky/Desktop/EECS_LAB_TRAINING/EECS_LAB_TRAINING/lab2/hdl/TT.v:2]
+INFO: [Synth 8-6155] done synthesizing module 'TT' (0#1) [C:/Users/jacky/Desktop/EECS_LAB_TRAINING/EECS_LAB_TRAINING/lab2/hdl/TT.v:2]
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:02 ; elapsed = 00:00:06 . Memory (MB): peak = 1061.621 ; gain = 582.797
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:02 ; elapsed = 00:00:06 . Memory (MB): peak = 1061.621 ; gain = 582.797
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7k70tfbv676-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:02 ; elapsed = 00:00:06 . Memory (MB): peak = 1061.621 ; gain = 582.797
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7k70tfbv676-1
+INFO: [Synth 8-802] inferred FSM for state register 'currentState_reg' in module 'TT'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+*
+                    IDLE |                            00001 |                            00001
+                 RD_DATA |                            00010 |                            00010
+         BFS_TAKE_VERTEX |                            00100 |                            00100
+         VISIT_NEIGHBORS |                            01000 |                            01000
+                    DONE |                            10000 |                            10000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3898] No Re-encoding of one hot register 'currentState_reg' in module 'TT'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:02 ; elapsed = 00:00:11 . Memory (MB): peak = 1207.512 ; gain = 728.688
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input    5 Bit       Adders := 3     
++---Registers : 
+	                5 Bit    Registers := 30    
+	                4 Bit    Registers := 1     
+	                1 Bit    Registers := 273   
++---Muxes : 
+	   2 Input    5 Bit        Muxes := 33    
+	   6 Input    5 Bit        Muxes := 1     
+	   2 Input    4 Bit        Muxes := 4     
+	   2 Input    3 Bit        Muxes := 1     
+	   2 Input    2 Bit        Muxes := 1     
+	   3 Input    1 Bit        Muxes := 16    
+	   2 Input    1 Bit        Muxes := 2214  
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 240 (col length:80)
+BRAMs: 270 (col length: RAMB18 80 RAMB36 40)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:05 ; elapsed = 00:00:21 . Memory (MB): peak = 1378.051 ; gain = 899.227
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:05 ; elapsed = 00:00:22 . Memory (MB): peak = 1378.938 ; gain = 900.113
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:05 ; elapsed = 00:00:22 . Memory (MB): peak = 1378.938 ; gain = 900.113
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:06 ; elapsed = 00:00:25 . Memory (MB): peak = 1378.938 ; gain = 900.113
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:06 ; elapsed = 00:00:25 . Memory (MB): peak = 1378.938 ; gain = 900.113
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:06 ; elapsed = 00:00:25 . Memory (MB): peak = 1378.938 ; gain = 900.113
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:06 ; elapsed = 00:00:25 . Memory (MB): peak = 1378.938 ; gain = 900.113
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:06 ; elapsed = 00:00:25 . Memory (MB): peak = 1378.938 ; gain = 900.113
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:06 ; elapsed = 00:00:25 . Memory (MB): peak = 1378.938 ; gain = 900.113
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+------+------+
+|      |Cell  |Count |
++------+------+------+
+|1     |BUFG  |     1|
+|2     |LUT1  |     3|
+|3     |LUT2  |    76|
+|4     |LUT3  |   210|
+|5     |LUT4  |    63|
+|6     |LUT5  |   212|
+|7     |LUT6  |   474|
+|8     |MUXF7 |    41|
+|9     |MUXF8 |    19|
+|10    |FDCE  |   329|
+|11    |FDPE  |   107|
+|12    |IBUF  |    11|
+|13    |OBUF  |     5|
++------+------+------+
+
+Report Instance Areas: 
++------+---------+-------+------+
+|      |Instance |Module |Cells |
++------+---------+-------+------+
+|1     |top      |       |  1551|
++------+---------+-------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:06 ; elapsed = 00:00:25 . Memory (MB): peak = 1378.938 ; gain = 900.113
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:06 ; elapsed = 00:00:25 . Memory (MB): peak = 1378.938 ; gain = 900.113
+Synthesis Optimization Complete : Time (s): cpu = 00:00:06 ; elapsed = 00:00:25 . Memory (MB): peak = 1378.938 ; gain = 900.113
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.010 . Memory (MB): peak = 1390.945 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 60 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+WARNING: [Netlist 29-101] Netlist 'TT' is not ideal for floorplanning, since the cellview 'TT' contains a large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1394.621 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete | Checksum: 60ff7496
+INFO: [Common 17-83] Releasing license: Synthesis
+20 Infos, 2 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:07 ; elapsed = 00:00:27 . Memory (MB): peak = 1394.621 ; gain = 922.473
+INFO: [Common 17-1381] The checkpoint 'C:/Users/jacky/Desktop/EECS_LAB_TRAINING/EECS_LAB_TRAINING/lab2/hdl/TRAIN_TOUR/TRAIN_TOUR.runs/synth_1/TT.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file TT_utilization_synth.rpt -pb TT_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Sat Jul 15 00:34:56 2023...

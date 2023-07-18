@@ -30,7 +30,6 @@
 ## Dis
 - Metastable reset might occurs.
 
-
 # Generate for loop
 - always get replicated multiple times.
 ```verilog
@@ -46,3 +45,7 @@
         end
     endgenerate
 ```
+
+# Unknown apperance
+- To prevent unknown, block the input with other conditional statement.
+- Trace the gate-level simulation to search for the unknown source within the circuit.

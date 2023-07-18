@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# Vivado v2023.1 (64-bit)
+# SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
+# IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+# SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+# Start of session at: Sat Jul 15 00:35:03 2023
+# Process ID: 7696
+# Current directory: C:/Users/jacky/Desktop/EECS_LAB_TRAINING/EECS_LAB_TRAINING/lab2/hdl/TRAIN_TOUR/TRAIN_TOUR.runs/impl_1
+# Command line: vivado.exe -log TT.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source TT.tcl -notrace
+# Log file: C:/Users/jacky/Desktop/EECS_LAB_TRAINING/EECS_LAB_TRAINING/lab2/hdl/TRAIN_TOUR/TRAIN_TOUR.runs/impl_1/TT.vdi
+# Journal file: C:/Users/jacky/Desktop/EECS_LAB_TRAINING/EECS_LAB_TRAINING/lab2/hdl/TRAIN_TOUR/TRAIN_TOUR.runs/impl_1\vivado.jou
+# Running On: LAPTOP-JJHABV97, OS: Windows, CPU Frequency: 2496 MHz, CPU Physical cores: 10, Host memory: 16803 MB
+#-----------------------------------------------------------
+source TT.tcl -notrace

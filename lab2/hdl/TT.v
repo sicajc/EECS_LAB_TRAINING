@@ -13,7 +13,6 @@ module  TT(
     output reg out_valid,
     output reg[3:0] cost
 );
-
   //===============================
   //   PARAMETER
   //===============================
