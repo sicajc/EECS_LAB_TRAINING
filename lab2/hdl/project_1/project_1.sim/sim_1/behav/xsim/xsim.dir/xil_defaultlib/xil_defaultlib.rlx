@@ -4,5 +4,5 @@ Jun 10 2021
 20:04:57
 C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab2/hdl/PATTERN.v,1689506296,verilog,,C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab2/hdl/TT.v,,PATTERN,,,,,,,,
 C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab2/hdl/TESTBED.v,1689503652,verilog,,,C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab2/hdl/PATTERN.v,TESTBED,,,,,,,,
-C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab2/hdl/TT.v,1689510669,verilog,,C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab2/hdl/TESTBED.v,,TT,,,,,,,,
+C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab2/hdl/TT.v,1689517531,verilog,,C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab2/hdl/TESTBED.v,,TT;adder,,,,,,,,
 C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab2/hdl/project_1/project_1.sim/sim_1/behav/xsim/glbl.v,1623370582,verilog,,,,glbl,,,,,,,,
