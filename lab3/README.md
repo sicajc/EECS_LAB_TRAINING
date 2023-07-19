@@ -15,12 +15,20 @@
 - Floating point units are needed for the HW.
 - Sigmoid activation function and floating point IPs are needed for solving the HW.
 
-
-## CNN
--
-
 ## Cycle time adjustment
 - When adjusting clock cycle time, remember to adjust both 02_SYN tcl file CYCLE TIME and PATTERN CYCLETIME.
 
 ## Design
 - If you want to test the clock cycle time of IP, instantiate the IP using another module, then synthesize it to test its extreme clock delay.
+
+
+
+## Design Procedure
+1. Test the algorithm correctness using python or matlab first with some simple examples that is tracable.
+
+3. Convert the algorithm into Single cycle machine implementation.
+4. Draw the block diagram of this single cycle machine implementations.
+5. Seek for resource sharing opportunities.
+6. Rederive the single cycle machine with resource sharing.
+7. Pipeline the design.
+8. Start testing.
