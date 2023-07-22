@@ -1,4 +1,7 @@
 `define C2Q 0.0
+// Trying other optimization
+// 1. Add more pipeline registers.
+// 2. Uses Pipelined multipliers and div.
 module NN(
            // Input signals
            clk,
