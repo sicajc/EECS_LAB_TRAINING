@@ -28,7 +28,7 @@ parameter inst_ieee_compliance = 1;
 parameter inst_arch = 1;
 
 // DIV
-parameter faithful_round = 1;
+parameter faithful_round = 0;
 
 // CMP
 
@@ -967,7 +967,7 @@ wire[DATA_WIDTH-1:0] fp_act2_sub_result;
 wire[DATA_WIDTH-1:0] fp_act2_add_result;
 wire[DATA_WIDTH-1:0] fp_act2_div_result;
 wire[DATA_WIDTH-1:0] fp_div_in = (opt_ff == 2'b10) ? FP_ONE : fp_act2_sub_result;
-wire[DATA_WIDTH-1:0] fp_add_in = (opt_ff == 2'b10) ? FP_ONE : result_act1Exp_act2WB_pipe;
+wire[DATA_WIDTH-1:0] fp_add_in = (opt_ff == 2'b10) ? FP_ONE : pos_exp_act1_act2_pipe;
 
 DW_fp_sub_inst
     #(
