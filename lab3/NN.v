@@ -1,4 +1,4 @@
-`define C2Q 0.3
+`define C2Q 0.0
 module NN(
            // Input signals
            clk,
@@ -17,6 +17,7 @@ module NN(
            out_valid,
            out
        );
+
 //---------------------------------------------------------------------
 //   PARAMETER
 //---------------------------------------------------------------------
@@ -27,7 +28,7 @@ parameter inst_ieee_compliance = 1;
 parameter inst_arch = 1;
 
 // DIV
-parameter faithful_round = 0;
+parameter faithful_round = 1;
 
 // CMP
 
@@ -820,21 +821,21 @@ wire act0_stage_fp_cmp_out;
 reg[DATA_WIDTH-1:0]  result_act0_act1_pipe;
 
 
-DW_fp_add_inst
-    #(
-        .sig_width       (inst_sig_width),
-        .exp_width       (inst_exp_width),
-        .ieee_compliance (inst_ieee_compliance)
-    )
-    u_DW_fp_add_ACT0(
-        .inst_a      (mac_sum      ),
-        .inst_b      (FP_ONE      ),
-        .inst_rnd    (3'b000   ),
-        .z_inst      (act0_stage_fp_add_out      ),
-        .status_inst ( )
-    );
+// DW_fp_add_inst
+//     #(
+//         .sig_width       (inst_sig_width),
+//         .exp_width       (inst_exp_width),
+//         .ieee_compliance (inst_ieee_compliance)
+//     )
+//     u_DW_fp_add_ACT0(
+//         .inst_a      (mac_sum      ),
+//         .inst_b      (FP_ONE      ),
+//         .inst_rnd    (3'b000   ),
+//         .z_inst      (act0_stage_fp_add_out      ),
+//         .status_inst ( )
+//     );
 
-// Read the document
+
 DW_fp_cmp_inst
     #(
         .sig_width       (inst_sig_width),
@@ -891,9 +892,9 @@ begin:RESULT_ACT0_ACT1_PIPE
             2'b01:
                 result_act0_act1_pipe <= act0_stage_fp_cmp_out ? mac_sum : act0_stage_fp_mult_out;
             2'b10:
-                result_act0_act1_pipe <= act0_stage_fp_add_out;
+                result_act0_act1_pipe <= mac_sum;
             2'b11:
-                result_act0_act1_pipe <= act0_stage_fp_add_out;
+                result_act0_act1_pipe <= mac_sum;
             default:
                 result_act0_act1_pipe <= FP_ZERO;
         endcase
@@ -905,8 +906,10 @@ end
 //    ACT1_EXP STAGE
 //============================
 wire[DATA_WIDTH-1:0] negation = {~result_act0_act1_pipe[31],result_act0_act1_pipe[30:0]};
-wire[DATA_WIDTH-1:0] act1_exp_result;
+wire[DATA_WIDTH-1:0] act1_neg_exp_result;
+wire[DATA_WIDTH-1:0] act1_pos_exp_result;
 reg[DATA_WIDTH-1:0]  result_act1Exp_act2WB_pipe;
+reg[DATA_WIDTH-1:0]  pos_exp_act1_act2_pipe;
 
 DW_fp_exp_inst
     #(
@@ -915,9 +918,22 @@ DW_fp_exp_inst
         .inst_ieee_compliance (inst_ieee_compliance ),
         .inst_arch            (inst_arch            )
     )
-    u_DW_fp_exp(
+    u_DW_fp_exp1(
         .inst_a      (negation      ),
-        .z_inst      (act1_exp_result      ),
+        .z_inst      (act1_neg_exp_result      ),
+        .status_inst ( )
+    );
+
+DW_fp_exp_inst
+    #(
+        .inst_sig_width       (inst_sig_width       ),
+        .inst_exp_width       (inst_exp_width       ),
+        .inst_ieee_compliance (inst_ieee_compliance ),
+        .inst_arch            (inst_arch            )
+    )
+    u_DW_fp_exp2(
+        .inst_a      (result_act0_act1_pipe    ),
+        .z_inst      (act1_pos_exp_result      ),
         .status_inst ( )
     );
 
@@ -929,15 +945,18 @@ begin
     if(~rst_n)
     begin
         result_act1Exp_act2WB_pipe <= FP_ZERO;
+        pos_exp_act1_act2_pipe <= 0;
     end
     else if(state_IDLE)
     begin
         result_act1Exp_act2WB_pipe <= 0;
+        pos_exp_act1_act2_pipe <= 0;
     end
     else
     begin
         result_act1Exp_act2WB_pipe <= (opt_ff == 2'b00 || opt_ff == 2'b01) ?
-                                   result_act0_act1_pipe : act1_exp_result;
+                                   result_act0_act1_pipe : act1_neg_exp_result;
+        pos_exp_act1_act2_pipe <= act1_pos_exp_result;
     end
 end
 
@@ -947,7 +966,8 @@ end
 wire[DATA_WIDTH-1:0] fp_act2_sub_result;
 wire[DATA_WIDTH-1:0] fp_act2_add_result;
 wire[DATA_WIDTH-1:0] fp_act2_div_result;
-wire[DATA_WIDTH-1:0] fp_div_in = (opt_ff == 2'b01) ? FP_ONE : fp_act2_sub_result;
+wire[DATA_WIDTH-1:0] fp_div_in = (opt_ff == 2'b10) ? FP_ONE : fp_act2_sub_result;
+wire[DATA_WIDTH-1:0] fp_add_in = (opt_ff == 2'b10) ? FP_ONE : result_act1Exp_act2WB_pipe;
 
 DW_fp_sub_inst
     #(
@@ -956,7 +976,7 @@ DW_fp_sub_inst
         .ieee_compliance (inst_ieee_compliance )
     )
     u_DW_fp_sub_ACT2(
-        .inst_a      (FP_ONE      ),
+        .inst_a      (pos_exp_act1_act2_pipe          ),
         .inst_b      (result_act1Exp_act2WB_pipe      ),
         .inst_rnd    (3'b000    ),
         .z_inst      (fp_act2_sub_result      ),
@@ -971,7 +991,7 @@ DW_fp_add_inst
     )
     u_DW_fp_add_ACT2(
         .inst_a      (result_act1Exp_act2WB_pipe      ),
-        .inst_b      (FP_ONE      ),
+        .inst_b      (fp_add_in      ),
         .inst_rnd    (3'b000    ),
         .z_inst      (fp_act2_add_result      ),
         .status_inst ( )
@@ -1022,7 +1042,7 @@ begin
     end
     else
     begin
-       shuffled_img_wr = fp_act2_div_result;
+        shuffled_img_wr = fp_act2_div_result;
     end
 end
 
