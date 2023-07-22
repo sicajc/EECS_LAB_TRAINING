@@ -35,7 +35,7 @@ parameter faithful_round = 0;
 parameter DATA_WIDTH = 32;
 parameter PADDED_IMAGE_WIDTH = 6;
 parameter KERNAL_WIDTH = 3;
-parameter IMAGE_WIDTH = inst_sig_width+inst_exp_width + 1;
+parameter IMAGE_WIDTH = 4;
 
 // Integers
 integer i,j,k;
@@ -48,7 +48,7 @@ input [inst_sig_width+inst_exp_width:0] Image1, Image2, Image3;
 input [inst_sig_width+inst_exp_width:0] Kernel1, Kernel2, Kernel3;
 input [1:0] Opt;
 output reg	out_valid;
-output reg [inst_sig_width+inst_exp_width:0] out;
+output reg [DATA_WIDTH-1:0] out;
 
 //---------------------------------------------------------------------
 //   Registers
@@ -597,6 +597,7 @@ begin
 
     end
 end
+
 //========================
 //   KERNALS
 //========================
@@ -778,7 +779,7 @@ localparam FP_POINT_ONE = 32'h3dcccccd;
 
 wire[DATA_WIDTH-1:0] act0_stage_fp_add_out;
 wire[DATA_WIDTH-1:0] act0_stage_fp_mult_out;
-wire[DATA_WIDTH-1:0] act0_stage_fp_cmp_out;
+wire act0_stage_fp_cmp_out;
 reg[DATA_WIDTH-1:0]  result_act0_act1_pipe;
 
 
@@ -806,15 +807,15 @@ DW_fp_cmp_inst
     u_DW_fp_cmp_inst(
         .inst_a         (mac_sum         ),
         .inst_b         (FP_ZERO         ),
-        .inst_zctr      (inst_zctr      ),
-        .aeqb_inst      (aeqb_inst      ),
-        .altb_inst      (altb_inst      ),
+        .inst_zctr      (      ),
+        .aeqb_inst      (      ),
+        .altb_inst      (      ),
         .agtb_inst      (act0_stage_fp_cmp_out),
-        .unordered_inst (unordered_inst ),
-        .z0_inst        (z0_inst        ),
-        .z1_inst        (z1_inst        ),
-        .status0_inst   (status0_inst   ),
-        .status1_inst   (status1_inst   )
+        .unordered_inst ( ),
+        .z0_inst        (        ),
+        .z1_inst        (        ),
+        .status0_inst   (   ),
+        .status1_inst   (   )
     );
 
 DW_fp_mult_inst
@@ -832,7 +833,7 @@ DW_fp_mult_inst
         .status_inst ( )
     );
 
-always @(posedge rst_n or negedge rst_n)
+always @(posedge clk or negedge rst_n)
 begin:RESULT_ACT0_ACT1_PIPE
     //synopsys_translate_off
     # `C2Q;
@@ -880,7 +881,7 @@ DW_fp_exp_inst
     u_DW_fp_exp(
         .inst_a      (negation      ),
         .z_inst      (act1_exp_result      ),
-        .status_inst (status_inst )
+        .status_inst ( )
     );
 
 always @(posedge clk or negedge rst_n)
@@ -1016,7 +1017,29 @@ begin
         end
     end
 end
-
+//====================
+//   OUT and out_valid
+//====================
+wire[2:0] shuffled_img_i = nn_cnt/8;
+wire[2:0] shuffled_img_j = nn_cnt%8;
+always @(posedge clk or negedge rst_n)
+begin
+    if(~rst_n)
+    begin
+        out_valid <= 0;
+        out <= 0;
+    end
+    else if(state_IDLE)
+    begin
+        out_valid<=0;
+        out<=0;
+    end
+    else if(state_DONE)
+    begin
+        out_valid <= 1;
+        out <= shuffled_img[shuffled_img_i][shuffled_img_j];
+    end
+end
 
 
 endmodule
