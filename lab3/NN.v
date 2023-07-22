@@ -101,23 +101,19 @@ begin:CTR_PIPELINES
     if(~rst_n)
     begin
         //row
-        row_ptr_mac1_mac2_pipe <= 0;
         row_ptr_mac2_pixelSumACT0_pipe <= 0;
         row_ptr_pixelSumACT0_expACT1_pipe <= 0;
         row_ptr_expACT1_wbDivACT2_pipe <= 0;
         //col
-        col_ptr_mac1_mac2_pipe <= 0 ;
         col_ptr_mac2_pixelSumACT0_pipe <= 0 ;
         col_ptr_pixelSumACT0_expACT1_pipe <= 0 ;
         col_ptr_expACT1_wbDivACT2_pipe <= 0 ;
         //w_en
-        w_en_mac1_mac2_pipe <= 0;
         w_en_mac2_pixelSumACT0_pipe <= 0;
         w_en_pixelSumACT0_expACT1_pipe <= 0;
         w_en_expACT1_wbDivACT2_pipe <= 0;
 
         //kernalNum pipe
-        kernalNum_mac1_mac2_pipe <= 0;
         kernalNum_mac2_pixelSumACT0_pipe <= 0;
         kernalNum_pixelSumACT0_expACT1_pipe <= 0;
         kernalNum_expACT1_wbDivACT2_pipe <= 0;
@@ -125,24 +121,20 @@ begin:CTR_PIPELINES
     else
     begin
         //row
-        row_ptr_mac1_mac2_pipe <= row_ptr;
-        row_ptr_mac2_pixelSumACT0_pipe <= row_ptr_mac1_mac2_pipe;
+        row_ptr_mac2_pixelSumACT0_pipe <= row_ptr;
         row_ptr_pixelSumACT0_expACT1_pipe <= row_ptr_mac2_pixelSumACT0_pipe;
         row_ptr_expACT1_wbDivACT2_pipe <= row_ptr_pixelSumACT0_expACT1_pipe;
         //col
-        col_ptr_mac1_mac2_pipe <= col_ptr;
-        col_ptr_mac2_pixelSumACT0_pipe <= col_ptr_mac1_mac2_pipe ;
+        col_ptr_mac2_pixelSumACT0_pipe <= col_ptr ;
         col_ptr_pixelSumACT0_expACT1_pipe <= col_ptr_mac2_pixelSumACT0_pipe;
         col_ptr_expACT1_wbDivACT2_pipe <= col_ptr_pixelSumACT0_expACT1_pipe;
         //w_en
-        w_en_mac1_mac2_pipe <= w_en;
-        w_en_mac2_pixelSumACT0_pipe <= w_en_mac1_mac2_pipe;
+        w_en_mac2_pixelSumACT0_pipe <= w_en;
         w_en_pixelSumACT0_expACT1_pipe <= w_en_mac2_pixelSumACT0_pipe;
         w_en_expACT1_wbDivACT2_pipe <= w_en_pixelSumACT0_expACT1_pipe;
 
         //kernalNum pipe
-        kernalNum_mac1_mac2_pipe <= kernalNum_cnt;
-        kernalNum_mac2_pixelSumACT0_pipe <= kernalNum_mac1_mac2_pipe;
+        kernalNum_mac2_pixelSumACT0_pipe <= kernalNum_cnt;
         kernalNum_pixelSumACT0_expACT1_pipe <= kernalNum_mac2_pixelSumACT0_pipe;
         kernalNum_expACT1_wbDivACT2_pipe <= kernalNum_pixelSumACT0_expACT1_pipe;
     end
@@ -158,9 +150,9 @@ wire[1:0] img_i = nn_cnt / 4;
 wire[1:0] img_j = nn_cnt % 4;
 
 // Incorrect value
-wire[1:0] kernal_i = nn_cnt/3;
+wire[1:0] kernal_i = (nn_cnt/3) % 3;
 wire[1:0] kernal_j = nn_cnt % 3;
-wire[1:0] kernal_NO = nn_cnt / 16;
+wire[1:0] kernal_NO = nn_cnt / 9;
 
 //---------------------------------------------------------------------
 //   State parameters
@@ -336,6 +328,9 @@ end
 
 always @(posedge clk or negedge rst_n)
 begin
+    //synopsys_translate_off
+    # `C2Q;
+    //synopsys_translate_on
     if(~rst_n)
     begin
         all_img_sent_ff_f <= 0;
@@ -370,15 +365,9 @@ begin
     end
     else if(state_RD_KERNAL)
     begin
-        // CORRECT HERE
-        if(in_valid_k)
+        if(nextState == PROCESSING)
         begin
-
-        end
-        else
-        begin
-            row_ptr <= 0;
-            col_ptr <= 0;
+            w_en <= 1;
         end
     end
     else if(state_PROCESSING)
@@ -668,10 +657,6 @@ begin
             kernal2[kernal_NO][kernal_i][kernal_j] <= Kernel2;
             kernal3[kernal_NO][kernal_i][kernal_j] <= Kernel3;
         end
-        else
-        begin
-
-        end
     end
     else
     begin
@@ -696,13 +681,13 @@ wire[4:0] row_21 = row_ptr + 2;
 wire[4:0] row_22 = row_ptr + 2;
 
 wire[4:0] col_00 = col_ptr;
-wire[4:0] col_01 = col_ptr;
-wire[4:0] col_02 = col_ptr;
-wire[4:0] col_10 = col_ptr + 1;
+wire[4:0] col_01 = col_ptr+1;
+wire[4:0] col_02 = col_ptr+2;
+wire[4:0] col_10 = col_ptr;
 wire[4:0] col_11 = col_ptr + 1;
-wire[4:0] col_12 = col_ptr + 1;
-wire[4:0] col_20 = col_ptr + 2;
-wire[4:0] col_21 = col_ptr + 2;
+wire[4:0] col_12 = col_ptr + 2;
+wire[4:0] col_20 = col_ptr;
+wire[4:0] col_21 = col_ptr + 1;
 wire[4:0] col_22 = col_ptr + 2;
 
 
@@ -945,6 +930,10 @@ begin
     begin
         result_act1Exp_act2WB_pipe <= FP_ZERO;
     end
+    else if(state_IDLE)
+    begin
+        result_act1Exp_act2WB_pipe <= 0;
+    end
     else
     begin
         result_act1Exp_act2WB_pipe <= (opt_ff == 2'b00 || opt_ff == 2'b01) ?
@@ -1023,6 +1012,20 @@ wire[7:0] kernal2_shuffled_offset_col = shuffled_img_offset_col;
 wire[7:0] kernal3_shuffled_offset_row = shuffled_img_offset_row+1;
 wire[7:0] kernal3_shuffled_offset_col = shuffled_img_offset_col+1;
 
+reg[DATA_WIDTH-1:0] shuffled_img_wr;
+
+always @(*)
+begin
+    if(opt_ff == 2'd00 || opt_ff == 2'd01)
+    begin
+        shuffled_img_wr = result_act1Exp_act2WB_pipe;
+    end
+    else
+    begin
+       shuffled_img_wr = fp_act2_div_result;
+    end
+end
+
 
 
 always @(posedge clk or negedge rst_n)
@@ -1062,27 +1065,27 @@ begin
                 2'd0:
                 begin
                     shuffled_img[kernal0_shuffled_offset_row][kernal0_shuffled_offset_col] <=
-                    result_act1Exp_act2WB_pipe;
+                    shuffled_img_wr;
                 end
                 2'd1:
                 begin
                     shuffled_img[kernal1_shuffled_offset_row][kernal1_shuffled_offset_col] <=
-                    result_act1Exp_act2WB_pipe;
+                    shuffled_img_wr;
                 end
                 2'd2:
                 begin
                     shuffled_img[kernal2_shuffled_offset_row][kernal2_shuffled_offset_col] <=
-                    result_act1Exp_act2WB_pipe;
+                    shuffled_img_wr;
                 end
                 2'd3:
                 begin
                     shuffled_img[kernal3_shuffled_offset_row][kernal3_shuffled_offset_col] <=
-                    result_act1Exp_act2WB_pipe;
+                    shuffled_img_wr;
                 end
                 default:
                 begin
-                    shuffled_img[row_ptr_expACT1_wbDivACT2_pipe][col_ptr_expACT1_wbDivACT2_pipe] <=
-                    result_act1Exp_act2WB_pipe;
+                    shuffled_img[0][0] <=
+                    shuffled_img_wr;
                 end
             endcase
         end
@@ -1092,11 +1095,14 @@ end
 //====================
 //   OUT and out_valid
 //====================
-wire[2:0] shuffled_img_i = state_DONE ? nn_cnt/8 : 0;
+wire[2:0] shuffled_img_i = state_DONE ? (nn_cnt/8) %8 : 0;
 wire[2:0] shuffled_img_j = state_DONE ? nn_cnt%8 : 0;
 
 always @(posedge clk or negedge rst_n)
 begin
+    //synopsys_translate_off
+    # `C2Q;
+    //synopsys_translate_on
     if(~rst_n)
     begin
         out_valid <= 0;
@@ -1301,7 +1307,7 @@ parameter inst_sig_width = 10;
 
 parameter inst_exp_width = 5;
 
-parameter inst_ieee_compliance = 0;
+parameter inst_ieee_compliance = 1;
 
 parameter inst_arch = 2;
 
