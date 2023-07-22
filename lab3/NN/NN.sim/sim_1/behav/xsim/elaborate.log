@@ -1,0 +1,14 @@
+Vivado Simulator v2021.1
+Copyright 1986-1999, 2001-2021 Xilinx, Inc. All Rights Reserved.
+Running: D:/Vivado/Vivado/2021.1/bin/unwrapped/win64.o/xelab.exe -wto 9f0d1e51f9414c9da85874a59fedcc31 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot NN_behav xil_defaultlib.NN xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+ERROR: [VRFC 10-2063] Module <DW_fp_sum3> not found while processing module instance <U1> [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v:1192]
+ERROR: [VRFC 10-2063] Module <DW_fp_add> not found while processing module instance <U1> [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v:1281]
+ERROR: [VRFC 10-2063] Module <DW_fp_cmp> not found while processing module instance <U1> [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v:1264]
+ERROR: [VRFC 10-2063] Module <DW_fp_mult> not found while processing module instance <U1> [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v:1173]
+ERROR: [VRFC 10-2063] Module <DW_fp_exp> not found while processing module instance <U1> [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v:1216]
+ERROR: [VRFC 10-2063] Module <DW_fp_sub> not found while processing module instance <U1> [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v:1296]
+ERROR: [VRFC 10-2063] Module <DW_fp_div> not found while processing module instance <U1> [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v:1240]
+ERROR: [XSIM 43-3322] Static elaboration of top level Verilog design unit(s) in library work failed.

@@ -21,14 +21,17 @@
 ## Design
 - If you want to test the clock cycle time of IP, instantiate the IP using another module, then synthesize it to test its extreme clock delay.
 
-
-
 ## Design Procedure
 1. Test the algorithm correctness using python or matlab first with some simple examples that is tracable.
-
 3. Convert the algorithm into Single cycle machine implementation.
 4. Draw the block diagram of this single cycle machine implementations.
 5. Seek for resource sharing opportunities.
 6. Rederive the single cycle machine with resource sharing.
 7. Pipeline the design.
 8. Start testing.
+
+
+# Notes
+- Checking the size of multiplier and exponential IP is crucial for performance reduction, so that trade off can be made.
+- One 32-bit Fp_mult has an area of about 44000. And with CP of around 8 ns
+- One 32-bit Fp_exp has an are of about

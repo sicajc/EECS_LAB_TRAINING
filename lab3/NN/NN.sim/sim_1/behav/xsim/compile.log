@@ -1,0 +1,22 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module NN
+INFO: [VRFC 10-2458] undeclared symbol inst_zctr, assumed default net type wire [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v:808]
+INFO: [VRFC 10-2458] undeclared symbol aeqb_inst, assumed default net type wire [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v:809]
+INFO: [VRFC 10-2458] undeclared symbol altb_inst, assumed default net type wire [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v:810]
+INFO: [VRFC 10-2458] undeclared symbol agtb_inst, assumed default net type wire [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v:811]
+INFO: [VRFC 10-2458] undeclared symbol unordered_inst, assumed default net type wire [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v:812]
+INFO: [VRFC 10-2458] undeclared symbol z0_inst, assumed default net type wire [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v:813]
+INFO: [VRFC 10-2458] undeclared symbol z1_inst, assumed default net type wire [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v:814]
+INFO: [VRFC 10-2458] undeclared symbol status0_inst, assumed default net type wire [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v:815]
+INFO: [VRFC 10-2458] undeclared symbol status1_inst, assumed default net type wire [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v:816]
+INFO: [VRFC 10-2458] undeclared symbol status_inst, assumed default net type wire [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN.v:882]
+INFO: [VRFC 10-311] analyzing module MAC
+INFO: [VRFC 10-311] analyzing module DW_fp_mult_inst
+INFO: [VRFC 10-311] analyzing module DW_fp_sum3_inst
+INFO: [VRFC 10-311] analyzing module DW_fp_exp_inst
+INFO: [VRFC 10-311] analyzing module DW_fp_div_inst
+INFO: [VRFC 10-311] analyzing module DW_fp_cmp_inst
+INFO: [VRFC 10-311] analyzing module DW_fp_add_inst
+INFO: [VRFC 10-311] analyzing module DW_fp_sub_inst
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab3/NN/NN.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
