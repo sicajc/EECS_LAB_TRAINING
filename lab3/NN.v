@@ -115,6 +115,12 @@ begin:CTR_PIPELINES
         w_en_mac2_pixelSumACT0_pipe <= 0;
         w_en_pixelSumACT0_expACT1_pipe <= 0;
         w_en_expACT1_wbDivACT2_pipe <= 0;
+
+        //kernalNum pipe
+        kernalNum_mac1_mac2_pipe <= 0;
+        kernalNum_mac2_pixelSumACT0_pipe <= 0;
+        kernalNum_pixelSumACT0_expACT1_pipe <= 0;
+        kernalNum_expACT1_wbDivACT2_pipe <= 0;
     end
     else
     begin
@@ -133,6 +139,12 @@ begin:CTR_PIPELINES
         w_en_mac2_pixelSumACT0_pipe <= w_en_mac1_mac2_pipe;
         w_en_pixelSumACT0_expACT1_pipe <= w_en_mac2_pixelSumACT0_pipe;
         w_en_expACT1_wbDivACT2_pipe <= w_en_pixelSumACT0_expACT1_pipe;
+
+        //kernalNum pipe
+        kernalNum_mac1_mac2_pipe <= kernalNum_cnt;
+        kernalNum_mac2_pixelSumACT0_pipe <= kernalNum_mac1_mac2_pipe;
+        kernalNum_pixelSumACT0_expACT1_pipe <= kernalNum_mac2_pixelSumACT0_pipe;
+        kernalNum_expACT1_wbDivACT2_pipe <= kernalNum_pixelSumACT0_expACT1_pipe;
     end
 end
 
@@ -233,6 +245,7 @@ begin: NXT_STATE
         end
     endcase
 end
+
 //========================
 //   opt
 //========================
@@ -393,6 +406,9 @@ end
 //========================
 //   Padded Imgs
 //========================
+wire[2:0] img_offset_i = img_i + 1;
+wire[2:0] img_offset_j = img_j + 1;
+
 always @(posedge clk or negedge rst_n)
 begin
     //synopsys_translate_off
@@ -519,69 +535,69 @@ begin
                     begin
                         // (0,j) -> (1,j+1)
                         //        > (0,j+1)
-                        padded_img1[1][img_j+1] <= Image1;
-                        padded_img1[1][img_j+1] <= Image1;
+                        padded_img1[1][img_offset_j] <= Image1;
+                        padded_img1[0][img_offset_j] <= Image1;
 
-                        padded_img2[1][img_j+1] <= Image2;
-                        padded_img2[1][img_j+1] <= Image2;
+                        padded_img2[1][img_offset_j] <= Image2;
+                        padded_img2[0][img_offset_j] <= Image2;
 
-                        padded_img3[1][img_j+1] <= Image3;
-                        padded_img3[1][img_j+1] <= Image3;
+                        padded_img3[1][img_offset_j] <= Image3;
+                        padded_img3[0][img_offset_j] <= Image3;
                     end
                     else if(img_j == 0)
                     begin
                         // (i,0) -> (i+1,1)
                         //        > (i+1,0)
-                        padded_img1[img_i+1][1] <= Image1;
-                        padded_img1[img_i+1][0] <= Image1;
+                        padded_img1[img_offset_i][1] <= Image1;
+                        padded_img1[img_offset_i][0] <= Image1;
 
-                        padded_img2[img_i+1][1] <= Image2;
-                        padded_img2[img_i+1][0] <= Image2;
+                        padded_img2[img_offset_i][1] <= Image2;
+                        padded_img2[img_offset_i][0] <= Image2;
 
-                        padded_img3[img_i+1][1] <= Image3;
-                        padded_img3[img_i+1][0] <= Image3;
+                        padded_img3[img_offset_i][1] <= Image3;
+                        padded_img3[img_offset_i][0] <= Image3;
                     end
                     else if(img_i == 3)
                     begin
                         // (3,j) -> (4,j+1)
                         //        > (5,j+1)
-                        padded_img1[4][img_j+1] <= Image1;
-                        padded_img1[5][img_j+1] <= Image1;
+                        padded_img1[4][img_offset_j] <= Image1;
+                        padded_img1[5][img_offset_j] <= Image1;
 
-                        padded_img2[4][img_j+1] <= Image2;
-                        padded_img2[5][img_j+1] <= Image2;
+                        padded_img2[4][img_offset_j] <= Image2;
+                        padded_img2[5][img_offset_j] <= Image2;
 
-                        padded_img3[4][img_j+1] <= Image3;
-                        padded_img3[5][img_j+1] <= Image3;
+                        padded_img3[4][img_offset_j] <= Image3;
+                        padded_img3[5][img_offset_j] <= Image3;
                     end
                     else if(img_j == 3)
                     begin
                         // (i,3) -> (i+1,4)
                         //        > (i+1,5)
-                        padded_img1[img_i+1][4] <= Image1;
-                        padded_img1[img_i+1][5] <= Image1;
+                        padded_img1[img_offset_i][4] <= Image1;
+                        padded_img1[img_offset_i][5] <= Image1;
 
-                        padded_img2[img_i+1][4] <= Image2;
-                        padded_img2[img_i+1][5] <= Image2;
+                        padded_img2[img_offset_i][4] <= Image2;
+                        padded_img2[img_offset_i][5] <= Image2;
 
-                        padded_img3[img_i+1][4] <= Image3;
-                        padded_img3[img_i+1][5] <= Image3;
+                        padded_img3[img_offset_i][4] <= Image3;
+                        padded_img3[img_offset_i][5] <= Image3;
                     end
                     else
                     begin
                         // other cases.
-                        padded_img1[img_i+1][img_j+1] <= Image1;
+                        padded_img1[img_offset_i][img_offset_j] <= Image1;
 
-                        padded_img2[img_i+1][img_j+1] <= Image2;
+                        padded_img2[img_offset_i][img_offset_j] <= Image2;
 
-                        padded_img3[img_i+1][img_j+1] <= Image3;
+                        padded_img3[img_offset_i][img_offset_j] <= Image3;
                     end
                 end
                 2'b10,2'b11:
                 begin // Zero padding
-                    padded_img1[img_i+1][img_j+1] <= Image1;
-                    padded_img2[img_i+1][img_j+1] <= Image2;
-                    padded_img3[img_i+1][img_j+1] <= Image3;
+                    padded_img1[img_offset_i][img_offset_j] <= Image1;
+                    padded_img2[img_offset_i][img_offset_j] <= Image2;
+                    padded_img3[img_offset_i][img_offset_j] <= Image3;
                 end
                 default:
                 begin
@@ -653,6 +669,26 @@ end
 wire[DATA_WIDTH-1:0] mac_outputs[0:2];
 wire[DATA_WIDTH-1:0] mac_sum;
 
+wire[4:0] row_00;
+wire[4:0] row_01;
+wire[4:0] row_02;
+wire[4:0] row_10 = row_ptr + 1;
+wire[4:0] row_11 = row_ptr + 1;
+wire[4:0] row_12 = row_ptr + 1;
+wire[4:0] row_20 = row_ptr + 2;
+wire[4:0] row_21 = row_ptr + 2;
+wire[4:0] row_22 = row_ptr + 2;
+
+wire[4:0] col_00;
+wire[4:0] col_01;
+wire[4:0] col_02;
+wire[4:0] col_10 = col_ptr + 1;
+wire[4:0] col_11 = col_ptr + 1;
+wire[4:0] col_12 = col_ptr + 1;
+wire[4:0] col_20 = col_ptr + 2;
+wire[4:0] col_21 = col_ptr + 2;
+wire[4:0] col_22 = col_ptr + 2;
+
 
 MAC#(
        .DATA_WIDTH      (DATA_WIDTH      ),
@@ -665,15 +701,15 @@ MAC#(
    u_MAC1(
        .clk(clk),
        .rst_n(rst_n),
-       .pixel0       (padded_img1[row_ptr][col_ptr]),
-       .pixel1       (padded_img1[row_ptr][col_ptr+1]),
-       .pixel2       (padded_img1[row_ptr][col_ptr+2]),
-       .pixel3       (padded_img1[row_ptr+1][col_ptr]),
-       .pixel4       (padded_img1[row_ptr+1][col_ptr+1]),
-       .pixel5       (padded_img1[row_ptr+1][col_ptr+2]),
-       .pixel6       (padded_img1[row_ptr+2][col_ptr]),
-       .pixel7       (padded_img1[row_ptr+2][col_ptr+1]),
-       .pixel8       (padded_img1[row_ptr+2][col_ptr+2]),
+       .pixel0       (padded_img1[row_00][col_00]),
+       .pixel1       (padded_img1[row_01][col_01]),
+       .pixel2       (padded_img1[row_02][col_02]),
+       .pixel3       (padded_img1[row_10][col_10]),
+       .pixel4       (padded_img1[row_11][col_11]),
+       .pixel5       (padded_img1[row_12][col_12]),
+       .pixel6       (padded_img1[row_20][col_20]),
+       .pixel7       (padded_img1[row_21][col_21]),
+       .pixel8       (padded_img1[row_22][col_22]),
 
        .kernal0      (kernal1[kernalNum_cnt][0][0]),
        .kernal1      (kernal1[kernalNum_cnt][0][1]),
@@ -698,15 +734,15 @@ MAC#(
    u_MAC2(
        .clk(clk),
        .rst_n(rst_n),
-       .pixel0       (padded_img2[row_ptr][col_ptr]),
-       .pixel1       (padded_img2[row_ptr][col_ptr+1]),
-       .pixel2       (padded_img2[row_ptr][col_ptr+2]),
-       .pixel3       (padded_img2[row_ptr+1][col_ptr]),
-       .pixel4       (padded_img2[row_ptr+1][col_ptr+1]),
-       .pixel5       (padded_img2[row_ptr+1][col_ptr+2]),
-       .pixel6       (padded_img2[row_ptr+2][col_ptr]),
-       .pixel7       (padded_img2[row_ptr+2][col_ptr+1]),
-       .pixel8       (padded_img2[row_ptr+2][col_ptr+2]),
+       .pixel0       (padded_img2[row_00][col_00]),
+       .pixel1       (padded_img2[row_01][col_01]),
+       .pixel2       (padded_img2[row_02][col_02]),
+       .pixel3       (padded_img2[row_10][col_10]),
+       .pixel4       (padded_img2[row_11][col_11]),
+       .pixel5       (padded_img2[row_12][col_12]),
+       .pixel6       (padded_img2[row_20][col_20]),
+       .pixel7       (padded_img2[row_21][col_21]),
+       .pixel8       (padded_img2[row_22][col_22]),
 
        .kernal0      (kernal2[kernalNum_cnt][0][0]),
        .kernal1      (kernal2[kernalNum_cnt][0][1]),
@@ -731,15 +767,15 @@ MAC#(
    u_MAC3(
        .clk(clk),
        .rst_n(rst_n),
-       .pixel0       (padded_img3[row_ptr][col_ptr]),
-       .pixel1       (padded_img3[row_ptr][col_ptr+1]),
-       .pixel2       (padded_img3[row_ptr][col_ptr+2]),
-       .pixel3       (padded_img3[row_ptr+1][col_ptr]),
-       .pixel4       (padded_img3[row_ptr+1][col_ptr+1]),
-       .pixel5       (padded_img3[row_ptr+1][col_ptr+2]),
-       .pixel6       (padded_img3[row_ptr+2][col_ptr]),
-       .pixel7       (padded_img3[row_ptr+2][col_ptr+1]),
-       .pixel8       (padded_img3[row_ptr+2][col_ptr+2]),
+       .pixel0       (padded_img3[row_00][col_00]),
+       .pixel1       (padded_img3[row_01][col_01]),
+       .pixel2       (padded_img3[row_02][col_02]),
+       .pixel3       (padded_img3[row_10][col_10]),
+       .pixel4       (padded_img3[row_11][col_11]),
+       .pixel5       (padded_img3[row_12][col_12]),
+       .pixel6       (padded_img3[row_20][col_20]),
+       .pixel7       (padded_img3[row_21][col_21]),
+       .pixel8       (padded_img3[row_22][col_22]),
 
        .kernal0      (kernal3[kernalNum_cnt][0][0]),
        .kernal1      (kernal3[kernalNum_cnt][0][1]),
@@ -954,6 +990,25 @@ DW_fp_div_inst
 //============================
 //    Shuffled img
 //============================
+wire[7:0] shuffled_img_offset_row = row_ptr_expACT1_wbDivACT2_pipe*2;
+wire[7:0] shuffled_img_offset_col = col_ptr_expACT1_wbDivACT2_pipe*2;
+
+wire[7:0] kernal0_shuffled_offset_row = shuffled_img_offset_row;
+wire[7:0] kernal0_shuffled_offset_col = shuffled_img_offset_col;
+
+
+wire[7:0] kernal1_shuffled_offset_row = shuffled_img_offset_row;
+wire[7:0] kernal1_shuffled_offset_col = shuffled_img_offset_col+1;
+
+
+wire[7:0] kernal2_shuffled_offset_row = shuffled_img_offset_row+1;
+wire[7:0] kernal2_shuffled_offset_col = shuffled_img_offset_col;
+
+wire[7:0] kernal3_shuffled_offset_row = shuffled_img_offset_row+1;
+wire[7:0] kernal3_shuffled_offset_col = shuffled_img_offset_col+1;
+
+
+
 always @(posedge clk or negedge rst_n)
 begin
     //synopsys_translate_off
@@ -990,22 +1045,22 @@ begin
             case(kernalNum_expACT1_wbDivACT2_pipe)
                 2'd0:
                 begin
-                    shuffled_img[row_ptr_expACT1_wbDivACT2_pipe*2][col_ptr_expACT1_wbDivACT2_pipe*2] <=
+                    shuffled_img[kernal0_shuffled_offset_row][kernal0_shuffled_offset_col] <=
                     result_act1Exp_act2WB_pipe;
                 end
                 2'd1:
                 begin
-                    shuffled_img[row_ptr_expACT1_wbDivACT2_pipe*2][col_ptr_expACT1_wbDivACT2_pipe*2+1] <=
+                    shuffled_img[kernal1_shuffled_offset_row][kernal1_shuffled_offset_col] <=
                     result_act1Exp_act2WB_pipe;
                 end
                 2'd2:
                 begin
-                    shuffled_img[row_ptr_expACT1_wbDivACT2_pipe*2+1][col_ptr_expACT1_wbDivACT2_pipe*2] <=
+                    shuffled_img[kernal2_shuffled_offset_row][kernal2_shuffled_offset_col] <=
                     result_act1Exp_act2WB_pipe;
                 end
                 2'd3:
                 begin
-                    shuffled_img[row_ptr_expACT1_wbDivACT2_pipe*2+1][col_ptr_expACT1_wbDivACT2_pipe*2+1] <=
+                    shuffled_img[kernal3_shuffled_offset_row][kernal3_shuffled_offset_col] <=
                     result_act1Exp_act2WB_pipe;
                 end
                 default:
