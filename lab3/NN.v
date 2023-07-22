@@ -156,7 +156,9 @@ reg[1:0] opt_ff;
 reg[7:0] nn_cnt;
 wire[1:0] img_i = nn_cnt / 4;
 wire[1:0] img_j = nn_cnt % 4;
-wire[1:0] kernal_i = nn_cnt / 3;
+
+// Incorrect value
+wire[1:0] kernal_i = nn_cnt/3;
 wire[1:0] kernal_j = nn_cnt % 3;
 wire[1:0] kernal_NO = nn_cnt / 16;
 
@@ -184,11 +186,16 @@ wire rd_img_done_f       = nn_cnt == 15;
 
 wire rd_kernal_done_f    = nn_cnt == 35;
 
-wire nn_processed_done_f = row_ptr_expACT1_wbDivACT2_pipe == 3 && row_ptr_expACT1_wbDivACT2_pipe == 3
+wire nn_processed_done_f = row_ptr_expACT1_wbDivACT2_pipe == 3 && col_ptr_expACT1_wbDivACT2_pipe == 3
      && kernalNum_expACT1_wbDivACT2_pipe == 3;
 
 wire output_done_f = nn_cnt == 63;
 
+wire img_right_bound_reach_f  = col_ptr == 3;
+wire img_bottom_bound_reach_f = row_ptr == 3;
+wire one_img_sent_completed_f     = img_right_bound_reach_f && img_bottom_bound_reach_f;
+wire all_img_sent_done_f = one_img_sent_completed_f && kernalNum_cnt == 3;
+reg  all_img_sent_ff_f;
 
 //---------------------------------------------------------------------
 //   Declare for Module & IP
@@ -325,11 +332,7 @@ end
 //=================================
 //   ROW_PTR, COL_PTR, KERNAL_CNT
 //=================================
-wire img_right_bound_reach_f  = col_ptr == 3;
-wire img_bottom_bound_reach_f = row_ptr == 3;
-wire one_img_sent_completed_f     = img_right_bound_reach_f && img_bottom_bound_reach_f;
-wire all_img_sent_done_f = one_img_sent_completed_f && kernalNum_cnt == 3;
-reg  all_img_sent_ff_f;
+
 
 always @(posedge clk or negedge rst_n)
 begin
@@ -365,9 +368,22 @@ begin
         col_ptr <= 0;
         kernalNum_cnt <= 0;
     end
+    else if(state_RD_KERNAL)
+    begin
+        // CORRECT HERE
+        if(in_valid_k)
+        begin
+
+        end
+        else
+        begin
+            row_ptr <= 0;
+            col_ptr <= 0;
+        end
+    end
     else if(state_PROCESSING)
     begin
-        if(all_img_sent_done_f || all_img_sent_done_f)
+        if(all_img_sent_ff_f || all_img_sent_done_f)
         begin
             w_en <= 0;
             row_ptr <= 0;
@@ -669,9 +685,9 @@ end
 wire[DATA_WIDTH-1:0] mac_outputs[0:2];
 wire[DATA_WIDTH-1:0] mac_sum;
 
-wire[4:0] row_00;
-wire[4:0] row_01;
-wire[4:0] row_02;
+wire[4:0] row_00 = row_ptr;
+wire[4:0] row_01 = row_ptr;
+wire[4:0] row_02 = row_ptr;
 wire[4:0] row_10 = row_ptr + 1;
 wire[4:0] row_11 = row_ptr + 1;
 wire[4:0] row_12 = row_ptr + 1;
@@ -679,9 +695,9 @@ wire[4:0] row_20 = row_ptr + 2;
 wire[4:0] row_21 = row_ptr + 2;
 wire[4:0] row_22 = row_ptr + 2;
 
-wire[4:0] col_00;
-wire[4:0] col_01;
-wire[4:0] col_02;
+wire[4:0] col_00 = col_ptr;
+wire[4:0] col_01 = col_ptr;
+wire[4:0] col_02 = col_ptr;
 wire[4:0] col_10 = col_ptr + 1;
 wire[4:0] col_11 = col_ptr + 1;
 wire[4:0] col_12 = col_ptr + 1;
@@ -987,6 +1003,7 @@ DW_fp_div_inst
         .z_inst      (fp_act2_div_result      ),
         .status_inst ( )
     );
+
 //============================
 //    Shuffled img
 //============================
@@ -999,7 +1016,6 @@ wire[7:0] kernal0_shuffled_offset_col = shuffled_img_offset_col;
 
 wire[7:0] kernal1_shuffled_offset_row = shuffled_img_offset_row;
 wire[7:0] kernal1_shuffled_offset_col = shuffled_img_offset_col+1;
-
 
 wire[7:0] kernal2_shuffled_offset_row = shuffled_img_offset_row+1;
 wire[7:0] kernal2_shuffled_offset_col = shuffled_img_offset_col;
@@ -1072,11 +1088,13 @@ begin
         end
     end
 end
+
 //====================
 //   OUT and out_valid
 //====================
-wire[2:0] shuffled_img_i = nn_cnt/8;
-wire[2:0] shuffled_img_j = nn_cnt%8;
+wire[2:0] shuffled_img_i = state_DONE ? nn_cnt/8 : 0;
+wire[2:0] shuffled_img_j = state_DONE ? nn_cnt%8 : 0;
+
 always @(posedge clk or negedge rst_n)
 begin
     if(~rst_n)
