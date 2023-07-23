@@ -70,34 +70,47 @@ reg[DATA_WIDTH-1:0] shuffled_img[0:IMAGE_WIDTH*2-1][0:IMAGE_WIDTH*2-1];
 // row ptrs
 reg[3:0] row_ptr;
 
+reg[3:0] row_ptr_mac0_mac1_pipe;
 reg[3:0] row_ptr_mac1_mac2_pipe;
 reg[3:0] row_ptr_mac2_pixelSumACT0_pipe;
+reg[3:0] row_ptr_pixelSum_pipe;
 reg[3:0] row_ptr_pixelSumACT0_expACT1_pipe;
 reg[3:0] row_ptr_expACT1_wbDivACT2_pipe;
+reg[3:0] row_ptr_expACT1_wbDivACT2_pipe2;
 
 // Column ptrs
 reg[3:0] col_ptr;
 
+reg[3:0] col_ptr_mac0_mac1_pipe;
 reg[3:0] col_ptr_mac1_mac2_pipe;
 reg[3:0] col_ptr_mac2_pixelSumACT0_pipe;
+reg[3:0] col_ptr_pixelSum_pipe;
 reg[3:0] col_ptr_pixelSumACT0_expACT1_pipe;
 reg[3:0] col_ptr_expACT1_wbDivACT2_pipe;
+reg[3:0] col_ptr_expACT1_wbDivACT2_pipe2;
 
 // KernalNums
 reg[2:0] kernalNum_cnt;
 
+reg[2:0] kernalNum_mac0_mac1_pipe;
 reg[2:0] kernalNum_mac1_mac2_pipe;
 reg[2:0] kernalNum_mac2_pixelSumACT0_pipe;
+reg[2:0] kernalNum_pixelSum_pipe;
 reg[2:0] kernalNum_pixelSumACT0_expACT1_pipe;
 reg[2:0] kernalNum_expACT1_wbDivACT2_pipe;
+reg[2:0] kernalNum_expACT1_wbDivACT2_pipe2;
+
 
 //w_en
 reg w_en;
 
+reg w_en_mac0_mac1_pipe;
 reg w_en_mac1_mac2_pipe;
 reg w_en_mac2_pixelSumACT0_pipe;
+reg w_en_pixelSum_pipe;
 reg w_en_pixelSumACT0_expACT1_pipe;
 reg w_en_expACT1_wbDivACT2_pipe;
+reg w_en_expACT1_wbDivACT2_pipe2;
 
 
 always @(posedge clk or negedge rst_n)
@@ -105,42 +118,77 @@ begin:CTR_PIPELINES
     if(~rst_n)
     begin
         //row
+        row_ptr_mac0_mac1_pipe <= 0;
+        row_ptr_mac1_mac2_pipe <= 0;
         row_ptr_mac2_pixelSumACT0_pipe <= 0;
+        row_ptr_pixelSum_pipe         <= 0;
         row_ptr_pixelSumACT0_expACT1_pipe <= 0;
         row_ptr_expACT1_wbDivACT2_pipe <= 0;
+        row_ptr_expACT1_wbDivACT2_pipe2 <= 0;
         //col
+        col_ptr_mac0_mac1_pipe <= 0;
+        col_ptr_mac1_mac2_pipe <= 0;
+        col_ptr_pixelSum_pipe <= 0;
         col_ptr_mac2_pixelSumACT0_pipe <= 0 ;
         col_ptr_pixelSumACT0_expACT1_pipe <= 0 ;
         col_ptr_expACT1_wbDivACT2_pipe <= 0 ;
-        //w_en
-        w_en_mac2_pixelSumACT0_pipe <= 0;
-        w_en_pixelSumACT0_expACT1_pipe <= 0;
-        w_en_expACT1_wbDivACT2_pipe <= 0;
+        col_ptr_expACT1_wbDivACT2_pipe2 <= 0;
+
 
         //kernalNum pipe
+        kernalNum_mac0_mac1_pipe           <= 0;
+        kernalNum_mac1_mac2_pipe         <= 0;
+        kernalNum_pixelSum_pipe          <= 0;
         kernalNum_mac2_pixelSumACT0_pipe <= 0;
         kernalNum_pixelSumACT0_expACT1_pipe <= 0;
         kernalNum_expACT1_wbDivACT2_pipe <= 0;
+        kernalNum_expACT1_wbDivACT2_pipe2 <= 0;
+         //w_en
+        w_en_mac0_mac1_pipe          <= 0;
+        w_en_mac1_mac2_pipe <= 0;
+        w_en_pixelSum_pipe         <= 0;
+        w_en_mac2_pixelSumACT0_pipe <= 0;
+        w_en_pixelSumACT0_expACT1_pipe <= 0;
+        w_en_expACT1_wbDivACT2_pipe <= 0;
+        w_en_expACT1_wbDivACT2_pipe2 <= 0;
     end
     else
     begin
         //row
-        row_ptr_mac2_pixelSumACT0_pipe <= row_ptr;
+        row_ptr_mac0_mac1_pipe <= row_ptr;
+        row_ptr_mac1_mac2_pipe <= row_ptr_mac0_mac1_pipe;
+        row_ptr_pixelSum_pipe          <= row_ptr_mac1_mac2_pipe;
+        row_ptr_mac2_pixelSumACT0_pipe <= row_ptr_pixelSum_pipe;
         row_ptr_pixelSumACT0_expACT1_pipe <= row_ptr_mac2_pixelSumACT0_pipe;
         row_ptr_expACT1_wbDivACT2_pipe <= row_ptr_pixelSumACT0_expACT1_pipe;
+        row_ptr_expACT1_wbDivACT2_pipe2 <= row_ptr_expACT1_wbDivACT2_pipe;
         //col
-        col_ptr_mac2_pixelSumACT0_pipe <= col_ptr ;
+        col_ptr_mac0_mac1_pipe <= col_ptr;
+        col_ptr_mac1_mac2_pipe <= col_ptr_mac0_mac1_pipe;
+        col_ptr_pixelSum_pipe <= col_ptr_mac1_mac2_pipe;
+        col_ptr_mac2_pixelSumACT0_pipe <= col_ptr_pixelSum_pipe ;
         col_ptr_pixelSumACT0_expACT1_pipe <= col_ptr_mac2_pixelSumACT0_pipe;
         col_ptr_expACT1_wbDivACT2_pipe <= col_ptr_pixelSumACT0_expACT1_pipe;
+        col_ptr_expACT1_wbDivACT2_pipe2 <= col_ptr_expACT1_wbDivACT2_pipe;
+
         //w_en
-        w_en_mac2_pixelSumACT0_pipe <= w_en;
+        w_en_mac0_mac1_pipe          <= w_en;
+        w_en_mac1_mac2_pipe <= w_en_mac0_mac1_pipe;
+        w_en_pixelSum_pipe         <= w_en_mac1_mac2_pipe;
+        w_en_mac2_pixelSumACT0_pipe <= w_en_mac1_mac2_pipe;
         w_en_pixelSumACT0_expACT1_pipe <= w_en_mac2_pixelSumACT0_pipe;
         w_en_expACT1_wbDivACT2_pipe <= w_en_pixelSumACT0_expACT1_pipe;
+        w_en_expACT1_wbDivACT2_pipe2 <= w_en_expACT1_wbDivACT2_pipe;
 
         //kernalNum pipe
-        kernalNum_mac2_pixelSumACT0_pipe <= kernalNum_cnt;
+        kernalNum_mac0_mac1_pipe           <= kernalNum_cnt;
+        kernalNum_mac1_mac2_pipe         <= kernalNum_mac0_mac1_pipe;
+        kernalNum_pixelSum_pipe          <= kernalNum_mac1_mac2_pipe;
+        kernalNum_mac2_pixelSumACT0_pipe <= kernalNum_pixelSum_pipe;
         kernalNum_pixelSumACT0_expACT1_pipe <= kernalNum_mac2_pixelSumACT0_pipe;
         kernalNum_expACT1_wbDivACT2_pipe <= kernalNum_pixelSumACT0_expACT1_pipe;
+        kernalNum_expACT1_wbDivACT2_pipe2 <= kernalNum_expACT1_wbDivACT2_pipe;
+
     end
 end
 
@@ -182,8 +230,8 @@ wire rd_img_done_f       = nn_cnt == 15;
 
 wire rd_kernal_done_f    = nn_cnt == 35;
 
-wire nn_processed_done_f = row_ptr_expACT1_wbDivACT2_pipe == 3 && col_ptr_expACT1_wbDivACT2_pipe == 3
-     && kernalNum_expACT1_wbDivACT2_pipe == 3;
+wire nn_processed_done_f = row_ptr_expACT1_wbDivACT2_pipe2 == 3 && col_ptr_expACT1_wbDivACT2_pipe2 == 3
+     && kernalNum_expACT1_wbDivACT2_pipe2 == 3;
 
 wire output_done_f = nn_cnt == 63;
 
@@ -673,6 +721,7 @@ end
 //==========================================
 wire[DATA_WIDTH-1:0] mac_outputs[0:2];
 wire[DATA_WIDTH-1:0] mac_sum;
+reg[DATA_WIDTH-1:0]  mac_result_pipe;
 
 wire[4:0] row_00 = row_ptr;
 wire[4:0] row_01 = row_ptr;
@@ -810,6 +859,18 @@ DW_fp_sum3_inst
         .status_inst ( )
     );
 
+always @(posedge clk or negedge rst_n)
+begin
+    if(~rst_n)
+    begin
+        mac_result_pipe <= 0;
+    end
+    else
+    begin
+       mac_result_pipe <= mac_sum;
+    end
+end
+
 
 //============================
 //    PIXELSUM ACT0 STAGE
@@ -846,7 +907,7 @@ DW_fp_cmp_inst
         .ieee_compliance (inst_ieee_compliance)
     )
     u_DW_fp_cmp_inst(
-        .inst_a         (mac_sum         ),
+        .inst_a         (mac_result_pipe         ),
         .inst_b         (FP_ZERO         ),
         .inst_zctr      (      ),
         .aeqb_inst      (      ),
@@ -867,7 +928,7 @@ DW_fp_mult_inst
         .en_ubr_flag     (en_ubr_flag     )
     )
     u_DW_fp_mult_inst(
-        .inst_a      (mac_sum      ),
+        .inst_a      (mac_result_pipe      ),
         .inst_b      (FP_POINT_ONE      ),
         .inst_rnd    (3'b000    ),
         .z_inst      (act0_stage_fp_mult_out      ),
@@ -891,13 +952,13 @@ begin:RESULT_ACT0_ACT1_PIPE
     begin
         case(opt_ff)
             2'b00:
-                result_act0_act1_pipe <= act0_stage_fp_cmp_out ? mac_sum : FP_ZERO;
+                result_act0_act1_pipe <= act0_stage_fp_cmp_out ? mac_result_pipe : FP_ZERO;
             2'b01:
-                result_act0_act1_pipe <= act0_stage_fp_cmp_out ? mac_sum : act0_stage_fp_mult_out;
+                result_act0_act1_pipe <= act0_stage_fp_cmp_out ? mac_result_pipe : act0_stage_fp_mult_out;
             2'b10:
-                result_act0_act1_pipe <= mac_sum;
+                result_act0_act1_pipe <= mac_result_pipe;
             2'b11:
-                result_act0_act1_pipe <= mac_sum;
+                result_act0_act1_pipe <= mac_result_pipe;
             default:
                 result_act0_act1_pipe <= FP_ZERO;
         endcase
@@ -964,13 +1025,16 @@ begin
 end
 
 //==============================================================================
-//    ACT2_DIV_WB STAGE
+//    ACT2_DIV_WB STAGE, 2 Stages pipelines
 //==============================================================================
 wire[DATA_WIDTH-1:0] fp_act2_sub_result;
 wire[DATA_WIDTH-1:0] fp_act2_add_result;
 wire[DATA_WIDTH-1:0] fp_act2_div_result;
-wire[DATA_WIDTH-1:0] fp_div_in = (opt_ff == 2'b10) ? FP_ONE : fp_act2_sub_result;
+wire[DATA_WIDTH-1:0] fp_div_in = (opt_ff == 2'b10) ? FP_ONE : fp_sub_result_pipe;
 wire[DATA_WIDTH-1:0] fp_add_in = (opt_ff == 2'b10) ? FP_ONE : pos_exp_act1_act2_pipe;
+reg [DATA_WIDTH-1:0] fp_add_result_pipe;
+reg [DATA_WIDTH-1:0] fp_sub_result_pipe;
+reg [DATA_WIDTH-1:0] pos_exp_act1_act2_pipe2;
 
 DW_fp_sub_inst
     #(
@@ -985,6 +1049,21 @@ DW_fp_sub_inst
         .z_inst      (fp_act2_sub_result      ),
         .status_inst ( )
     );
+
+always @(posedge clk or negedge rst_n) begin
+    if(~rst_n)
+    begin
+        fp_add_result_pipe <= 0;
+        fp_sub_result_pipe <= 0;
+        pos_exp_act1_act2_pipe2 <= 0;
+    end
+    else
+    begin
+        fp_add_result_pipe <= fp_act2_add_result;
+        fp_sub_result_pipe <= fp_act2_sub_result;
+        pos_exp_act1_act2_pipe2 <= pos_exp_act1_act2_pipe;
+    end
+end
 
 DW_fp_add_inst
     #(
@@ -1010,7 +1089,7 @@ DW_fp_div_inst
     )
     u_DW_fp_div_ACT2(
         .inst_a      (fp_div_in      ),
-        .inst_b      (fp_act2_add_result      ),
+        .inst_b      (fp_add_result_pipe      ),
         .inst_rnd    (3'b000    ),
         .z_inst      (fp_act2_div_result      ),
         .status_inst ( )
@@ -1019,8 +1098,8 @@ DW_fp_div_inst
 //============================
 //    Shuffled img
 //============================
-wire[7:0] shuffled_img_offset_row = row_ptr_expACT1_wbDivACT2_pipe*2;
-wire[7:0] shuffled_img_offset_col = col_ptr_expACT1_wbDivACT2_pipe*2;
+wire[7:0] shuffled_img_offset_row = row_ptr_expACT1_wbDivACT2_pipe2*2;
+wire[7:0] shuffled_img_offset_col = col_ptr_expACT1_wbDivACT2_pipe2*2;
 
 wire[7:0] kernal0_shuffled_offset_row = shuffled_img_offset_row;
 wire[7:0] kernal0_shuffled_offset_col = shuffled_img_offset_col;
@@ -1082,9 +1161,9 @@ begin
     end
     else if(state_PROCESSING)
     begin
-        if(w_en_expACT1_wbDivACT2_pipe)
+        if(w_en_expACT1_wbDivACT2_pipe2)
         begin
-            case(kernalNum_expACT1_wbDivACT2_pipe)
+            case(kernalNum_expACT1_wbDivACT2_pipe2)
                 2'd0:
                 begin
                     shuffled_img[kernal0_shuffled_offset_row][kernal0_shuffled_offset_col] <=
@@ -1181,7 +1260,7 @@ endmodule
         output reg[DATA_WIDTH-1:0] macResult_ff
 
     );
-
+integer i;
 genvar idx;
 genvar jdx;
 
@@ -1190,6 +1269,8 @@ wire[DATA_WIDTH-1:0] kernals[0:8];
 wire[DATA_WIDTH-1:0] mults_result[0:8];
 wire[DATA_WIDTH-1:0] partial_sum[0:2];
 wire[DATA_WIDTH-1:0] mac_result;
+reg[DATA_WIDTH-1:0]  mults_result_pipe[0:8];
+reg[DATA_WIDTH-1:0] partial_sum_pipe[0:2];
 
 assign pixels[0] = pixel0;
 assign pixels[1] = pixel1;
@@ -1225,12 +1306,33 @@ generate
     end
 endgenerate
 
+always @(posedge clk or negedge rst_n)
+begin
+    if(~rst_n)
+    begin
+        for(i=0;i<9;i=i+1)
+        begin
+            mults_result_pipe[i] <= 0;
+        end
+    end
+    else
+    begin
+        for(i=0;i<9;i=i+1)
+        begin
+            mults_result_pipe[i] <= mults_result[i];
+        end
+    end
+end
+
+
+
+
 // 3x 3 inputs fp adders
 DW_fp_sum3_inst #(sig_width,exp_width,ieee_compliance,inst_arch_type)
                 u_DW_fp_sum3_inst1(
-                    .inst_a   ( mults_result[0]),
-                    .inst_b   ( mults_result[1]),
-                    .inst_c   ( mults_result[2]   ),
+                    .inst_a   ( mults_result_pipe[0]),
+                    .inst_b   ( mults_result_pipe[1]),
+                    .inst_c   ( mults_result_pipe[2]   ),
                     .inst_rnd ( 3'b000 ),
                     .z_inst   ( partial_sum[0]   ),
                     .status_inst  (   )
@@ -1238,9 +1340,9 @@ DW_fp_sum3_inst #(sig_width,exp_width,ieee_compliance,inst_arch_type)
 
 DW_fp_sum3_inst #(sig_width,exp_width,ieee_compliance,inst_arch_type)
                 u_DW_fp_sum3_inst2(
-                    .inst_a   ( mults_result[3]),
-                    .inst_b   ( mults_result[4]),
-                    .inst_c   ( mults_result[5]   ),
+                    .inst_a   ( mults_result_pipe[3]),
+                    .inst_b   ( mults_result_pipe[4]),
+                    .inst_c   ( mults_result_pipe[5]   ),
                     .inst_rnd ( 3'b000 ),
                     .z_inst   ( partial_sum[1]),
                     .status_inst  (   )
@@ -1248,19 +1350,35 @@ DW_fp_sum3_inst #(sig_width,exp_width,ieee_compliance,inst_arch_type)
 
 DW_fp_sum3_inst #(sig_width,exp_width,ieee_compliance,inst_arch_type)
                 u_DW_fp_sum3_inst3(
-                    .inst_a   ( mults_result[6]),
-                    .inst_b   ( mults_result[7]),
-                    .inst_c   ( mults_result[8]   ),
+                    .inst_a   ( mults_result_pipe[6]),
+                    .inst_b   ( mults_result_pipe[7]),
+                    .inst_c   ( mults_result_pipe[8]   ),
                     .inst_rnd ( 3'b000 ),
                     .z_inst   ( partial_sum[2]),
                     .status_inst  (   )
                 );
+
+always @(posedge clk or negedge rst_n) begin
+    if(~rst_n)
+    begin
+        for(i=0;i<3;i=i+1)
+        begin
+           partial_sum_pipe[i] <= 0;
+        end
+    end
+    else
+    begin
+        partial_sum_pipe[i]<=partial_sum[i];
+    end
+end
+
+
 // 3 input fp adders
 DW_fp_sum3_inst #(sig_width,exp_width,ieee_compliance,inst_arch_type)
                 u_DW_fp_sum3_inst(
-                    .inst_a   ( partial_sum[0]),
-                    .inst_b   ( partial_sum[1]),
-                    .inst_c   ( partial_sum[2]   ),
+                    .inst_a   ( partial_sum_pipe[0]),
+                    .inst_b   ( partial_sum_pipe[1]),
+                    .inst_c   ( partial_sum_pipe[2]   ),
                     .inst_rnd ( 3'b000 ),
                     .z_inst   ( mac_result  ),
                     .status_inst  (   )

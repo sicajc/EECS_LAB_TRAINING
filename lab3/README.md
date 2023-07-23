@@ -36,6 +36,7 @@
 - One 32-bit Fp_mult has an area of about 44000. And with CP of around 8 ns
 - One 32-bit Fp_exp has an are of about
 - Please first check if you have mistype the value or misconnecting the wire in your design!
+- Floating adders and subtracters are actually larger than floating point mult and div, also has longer CP.
 
 # When design is large
 1. If the design is way too large, putting the design onto fpga can greatly reduce the simulation time.
