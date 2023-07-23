@@ -175,7 +175,7 @@ begin:CTR_PIPELINES
         w_en_mac0_mac1_pipe          <= w_en;
         w_en_mac1_mac2_pipe <= w_en_mac0_mac1_pipe;
         w_en_pixelSum_pipe         <= w_en_mac1_mac2_pipe;
-        w_en_mac2_pixelSumACT0_pipe <= w_en_mac1_mac2_pipe;
+        w_en_mac2_pixelSumACT0_pipe <= w_en_pixelSum_pipe;
         w_en_pixelSumACT0_expACT1_pipe <= w_en_mac2_pixelSumACT0_pipe;
         w_en_expACT1_wbDivACT2_pipe <= w_en_pixelSumACT0_expACT1_pipe;
         w_en_expACT1_wbDivACT2_pipe2 <= w_en_expACT1_wbDivACT2_pipe;
@@ -1030,11 +1030,11 @@ end
 wire[DATA_WIDTH-1:0] fp_act2_sub_result;
 wire[DATA_WIDTH-1:0] fp_act2_add_result;
 wire[DATA_WIDTH-1:0] fp_act2_div_result;
-wire[DATA_WIDTH-1:0] fp_div_in = (opt_ff == 2'b10) ? FP_ONE : fp_sub_result_pipe;
-wire[DATA_WIDTH-1:0] fp_add_in = (opt_ff == 2'b10) ? FP_ONE : pos_exp_act1_act2_pipe;
 reg [DATA_WIDTH-1:0] fp_add_result_pipe;
 reg [DATA_WIDTH-1:0] fp_sub_result_pipe;
 reg [DATA_WIDTH-1:0] pos_exp_act1_act2_pipe2;
+wire[DATA_WIDTH-1:0] fp_div_in = (opt_ff == 2'b10) ? FP_ONE : fp_sub_result_pipe;
+wire[DATA_WIDTH-1:0] fp_add_in = (opt_ff == 2'b10) ? FP_ONE : pos_exp_act1_act2_pipe;
 
 DW_fp_sub_inst
     #(
@@ -1061,7 +1061,7 @@ always @(posedge clk or negedge rst_n) begin
     begin
         fp_add_result_pipe <= fp_act2_add_result;
         fp_sub_result_pipe <= fp_act2_sub_result;
-        pos_exp_act1_act2_pipe2 <= pos_exp_act1_act2_pipe;
+        pos_exp_act1_act2_pipe2 <= result_act1Exp_act2WB_pipe;
     end
 end
 
@@ -1120,7 +1120,7 @@ always @(*)
 begin
     if(opt_ff == 2'd00 || opt_ff == 2'd01)
     begin
-        shuffled_img_wr = result_act1Exp_act2WB_pipe;
+        shuffled_img_wr = pos_exp_act1_act2_pipe2;
     end
     else
     begin
@@ -1368,7 +1368,10 @@ always @(posedge clk or negedge rst_n) begin
     end
     else
     begin
-        partial_sum_pipe[i]<=partial_sum[i];
+        for(i=0;i<3;i=i+1)
+        begin
+            partial_sum_pipe[i]<=partial_sum[i];
+        end
     end
 end
 
