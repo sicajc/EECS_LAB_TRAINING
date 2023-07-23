@@ -2,6 +2,7 @@
 // Trying other optimization
 // 1. Add more pipeline registers.
 // 2. Uses Pipelined multipliers and div.
+// Performance v1.2 4.33845 x e10
 module NN(
            // Input signals
            clk,
@@ -201,7 +202,6 @@ reg[7:0] nn_cnt;
 wire[1:0] img_i = nn_cnt / 4;
 wire[1:0] img_j = nn_cnt % 4;
 
-// Incorrect value
 wire[1:0] kernal_i = (nn_cnt/3) % 3;
 wire[1:0] kernal_j = nn_cnt % 3;
 wire[1:0] kernal_NO = nn_cnt / 9;
