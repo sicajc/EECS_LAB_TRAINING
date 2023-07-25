@@ -73,11 +73,11 @@ end
 
 ## Function
 - Pack common COMBINATIONAL OPERATION into 1, which is synthesizable!
+- Having single one return value, has only input arguments, however returns a single value through the function name.
 
 
 ## Writing testbench recommended book
 - Writing testbench
-
 
 # Bus functional model
 ## Input
@@ -128,3 +128,57 @@ initial begin
 - The  @ 55 specify when writing file into dram, it starts writing value into address 55 of the pseudoDRAM declared within your testbench.
 
 ![memory](./memory_reading.png)
+
+# Random testing v.s direct testing
+- Random testing might not be able to meet all corner cases.
+
+## Procedure
+- Directed -> Broadly constrainted random -> Narrowly constrain randomization -> Direct testing for extreme corner cases.
+
+## CLK
+- Before reset , remember to force clk, after reset, release the clk.
+
+## Random
+- $random produces 32-bit signed value.
+
+## urandom_range()
+- This cannot be used within our work station! use $random or $uranom instead.
+
+# Generation of pattern
+- Uses unsigned operation instead of signed operation, otherwise signed operation might be negated after some value processing the result might not be your expected value.
+- Unsigned operation in one of the operator makes whole result becomes unsigned.
+```verilog
+    wire signed[DATA_WIDTH-1:0] a,result;
+    result = a * $signed(value);
+```
+
+# $fscanf
+- fscnf search for typed pattern within your testbench, here it searches for op1 & opa2.
+```verilog
+
+    rc = $fscanf(file1,"opa1=%d opa2=%d",opa1,opa2);
+```
+
+# $fdisplay
+- Allows for reading out value from a pattern perspective.
+
+
+
+# always@ v.s. initial
+- always@(condition) is executed only after meeting the condition.
+- initial is always executed concurrently.
+
+# $finish
+- Remember to add finish for pattern testing termination.
+
+# === v.s. ==
+- Within pattern === checks unknown x, high impedence z and valuse.
+- For ==, this is not the case.
+
+# TimeScale
+- The value would get truncated by precision specified by the user.
+```
+    `timescale unit/precision
+    e.g. 10ns/100ps
+    delay #5.738 ns -> 57.4ns
+```
