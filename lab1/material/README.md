@@ -64,3 +64,8 @@
 ```
     ./02_run_dc
 ```
+
+# High level language programming in combinational block
+- Style of programming in an always@* block can mimic the high level programming language? See if you can uses for loop. ww
+- Since blocking assignment is in essence, high level programming, by doing so, complex logic can be coded out, let's try out.
+- Programming in a high level way is possible, but the HW cost is significant, since dc would unfold the whole circuit for you.

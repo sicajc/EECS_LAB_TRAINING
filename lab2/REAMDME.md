@@ -31,7 +31,7 @@
 - Metastable reset might occurs.
 
 # Generate for loop
-- always get replicated multiple times.
+- always block here gets replicated multiple times.
 ```verilog
 
     genvar i;
@@ -49,3 +49,8 @@
 # Unknown apperance
 - To prevent unknown, block the input with other conditional statement.
 - Trace the gate-level simulation to search for the unknown source within the circuit.
+
+# Algorithm design
+- Whenever you try to create an algorithm, first code it out using High-level language to ensure that the procedure you claimed is correct.
+- After coding out and tested the baseline model, try to optimize it in terms of logic, HW efficiency. Create as many for loop as possible.
+- Unfolding technique can be used for for loop too, do not forget that, in HW this can achieve great performance. Cross iteration unfolding. An example is for QR cordic, the cordic turns 4 times in a single iteration.

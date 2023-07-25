@@ -37,6 +37,14 @@
 - One 32-bit Fp_exp has an are of about
 - Please first check if you have mistype the value or misconnecting the wire in your design!
 - Floating adders and subtracters are actually larger than floating point mult and div, also has longer CP.
+- Remember to add delays to all your sequential blocks if you want to simulate your design with delays included.
+
+
+## Designing pipeline processors
+1. When designing pipeline design, first build a single cycle machine implementation, with controls and datapath included.
+2. Analyze the possible bottleneck in your design, in this case, div.
+3. Start drawing pipelined cutsets, then name the stages correctly.
+4. fp_div > fp_exp > fp_3add > fp_add > fp_sub > fp_mult in terms of critical paths.
 
 # When design is large
 1. If the design is way too large, putting the design onto fpga can greatly reduce the simulation time.

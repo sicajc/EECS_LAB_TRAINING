@@ -330,7 +330,7 @@ end
 //   CNTS
 //========================
 always @(posedge clk or negedge rst_n)
-begin
+begin: NN_CNT
     //synopsys_translate_off
     # `C2Q;
     //synopsys_translate_on
@@ -379,7 +379,7 @@ end
 
 
 always @(posedge clk or negedge rst_n)
-begin
+begin:ALL_IMG_SENT_FF_F
     //synopsys_translate_off
     # `C2Q;
     //synopsys_translate_on
@@ -396,8 +396,9 @@ begin
         all_img_sent_ff_f <= 1;
     end
 end
+
 always @(posedge clk or negedge rst_n)
-begin
+begin:PTRS_SUB_CTR
     //synopsys_translate_off
     # `C2Q;
     //synopsys_translate_on
@@ -467,7 +468,7 @@ wire[2:0] img_offset_i = img_i + 1;
 wire[2:0] img_offset_j = img_j + 1;
 
 always @(posedge clk or negedge rst_n)
-begin
+begin:PADDED_IMGS
     //synopsys_translate_off
     # `C2Q;
     //synopsys_translate_on
@@ -675,7 +676,7 @@ end
 //   KERNALS
 //========================
 always @(posedge clk or negedge rst_n)
-begin
+begin:KERNALS
     //synopsys_translate_off
     # `C2Q;
     //synopsys_translate_on
@@ -860,7 +861,7 @@ DW_fp_sum3_inst
     );
 
 always @(posedge clk or negedge rst_n)
-begin
+begin:MAC_RESULT_PIPE
     if(~rst_n)
     begin
         mac_result_pipe <= 0;
@@ -1002,7 +1003,7 @@ DW_fp_exp_inst
     );
 
 always @(posedge clk or negedge rst_n)
-begin
+begin:ACT1_ACT2_PIPE
     //synopsys_translate_off
     # `C2Q;
     //synopsys_translate_on
@@ -1050,7 +1051,8 @@ DW_fp_sub_inst
         .status_inst ( )
     );
 
-always @(posedge clk or negedge rst_n) begin
+always @(posedge clk or negedge rst_n)
+begin:ACT2_DIV_WB_pipe
     if(~rst_n)
     begin
         fp_add_result_pipe <= 0;
@@ -1117,7 +1119,7 @@ wire[7:0] kernal3_shuffled_offset_col = shuffled_img_offset_col+1;
 reg[DATA_WIDTH-1:0] shuffled_img_wr;
 
 always @(*)
-begin
+begin:SHUFFLED_IMG_WR
     if(opt_ff == 2'd00 || opt_ff == 2'd01)
     begin
         shuffled_img_wr = pos_exp_act1_act2_pipe2;
@@ -1131,7 +1133,7 @@ end
 
 
 always @(posedge clk or negedge rst_n)
-begin
+begin:SHUFFLED_IMG
     //synopsys_translate_off
     # `C2Q;
     //synopsys_translate_on
@@ -1201,7 +1203,7 @@ wire[2:0] shuffled_img_i = state_DONE ? (nn_cnt/8) %8 : 0;
 wire[2:0] shuffled_img_j = state_DONE ? nn_cnt%8 : 0;
 
 always @(posedge clk or negedge rst_n)
-begin
+begin:OUTPUT_BLOCK
     //synopsys_translate_off
     # `C2Q;
     //synopsys_translate_on
@@ -1307,7 +1309,7 @@ generate
 endgenerate
 
 always @(posedge clk or negedge rst_n)
-begin
+begin:MULTS_RESULT_PIPES
     if(~rst_n)
     begin
         for(i=0;i<9;i=i+1)
@@ -1358,7 +1360,7 @@ DW_fp_sum3_inst #(sig_width,exp_width,ieee_compliance,inst_arch_type)
                     .status_inst  (   )
                 );
 
-always @(posedge clk or negedge rst_n) begin
+always @(posedge clk or negedge rst_n) begin:PARRALLEL_SUM_PIPES
     if(~rst_n)
     begin
         for(i=0;i<3;i=i+1)
@@ -1389,7 +1391,7 @@ DW_fp_sum3_inst #(sig_width,exp_width,ieee_compliance,inst_arch_type)
 
 // Ouput buffer
 always @(posedge clk or negedge rst_n)
-begin
+begin:MAC_RESULT_FF
     //synopsys_translate_off
     # `C2Q;
     //synopsys_translate_on
