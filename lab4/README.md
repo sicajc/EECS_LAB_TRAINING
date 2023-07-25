@@ -80,9 +80,13 @@ end
 
 
 # Bus functional model
+- Extremely useful testbench model when you are trying to perform master and slave writing and reading.
+
+![bus_functional_model](./bus_functional_model.png)
+
 ## Input
 - READ()
-- WRITE()
+- WRITE()mj05
 - DATA
 - VALID
 
@@ -128,3 +132,21 @@ initial begin
 - The  @ 55 specify when writing file into dram, it starts writing value into address 55 of the pseudoDRAM declared within your testbench.
 
 ![memory](./memory_reading.png)
+
+# Procedure
+## Algorithm
+1. From the spec, produce a NxN array.
+2. Interleaved this NxN array even coordinates with walls and odd coordinates with path.
+3. Surround this NxN array with another layer of wall so that boundary condition can be handled.
+4. Use DFS recursive algorithm to break the wall randomly, and generate the maze.
+5. Solve the maze using Dead-end filling algorithm.
+6. Write out the input test vectors and the golden output into 2 seperate files.
+
+## TB
+1. Generate the TB structure, follow the rules and refer to senior's design.
+2. Test your testbench against the coded design of seniors. If pass move forward.
+
+## HW architecture
+1. Transform the dead-end filling algorithm into HW architecture.
+2. Note, preprocessing can be done on the maze to simplify boundary checking condition.
+3. Also remember that the path must be recorded for this maze traveling problem.
