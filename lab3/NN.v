@@ -2,7 +2,8 @@
 // Trying other optimization
 // 1. Add more pipeline registers.
 // 2. Uses Pipelined multipliers and div.
-// Performance v1.2 4.33845 x e10
+// Performance v1.2 , 4.33845 x e10.
+// CYCLE_PERIOD* (LATENCY + 500) * LATENCY : 71 , AREA: 3798994.996687, CYCLE_PERIOD:20
 module NN(
            // Input signals
            clk,
@@ -144,7 +145,7 @@ begin:CTR_PIPELINES
         kernalNum_pixelSumACT0_expACT1_pipe <= 0;
         kernalNum_expACT1_wbDivACT2_pipe <= 0;
         kernalNum_expACT1_wbDivACT2_pipe2 <= 0;
-         //w_en
+        //w_en
         w_en_mac0_mac1_pipe          <= 0;
         w_en_mac1_mac2_pipe <= 0;
         w_en_pixelSum_pipe         <= 0;
@@ -868,7 +869,7 @@ begin:MAC_RESULT_PIPE
     end
     else
     begin
-       mac_result_pipe <= mac_sum;
+        mac_result_pipe <= mac_sum;
     end
 end
 
@@ -1052,7 +1053,7 @@ DW_fp_sub_inst
     );
 
 always @(posedge clk or negedge rst_n)
-begin:ACT2_DIV_WB_pipe
+begin
     if(~rst_n)
     begin
         fp_add_result_pipe <= 0;
@@ -1360,12 +1361,13 @@ DW_fp_sum3_inst #(sig_width,exp_width,ieee_compliance,inst_arch_type)
                     .status_inst  (   )
                 );
 
-always @(posedge clk or negedge rst_n) begin:PARRALLEL_SUM_PIPES
+always @(posedge clk or negedge rst_n)
+begin
     if(~rst_n)
     begin
         for(i=0;i<3;i=i+1)
         begin
-           partial_sum_pipe[i] <= 0;
+            partial_sum_pipe[i] <= 0;
         end
     end
     else
