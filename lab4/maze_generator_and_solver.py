@@ -96,28 +96,13 @@ def maze_generator():
     return maze
 
 def thereIsDeadend(maze_padded):
+    # If there is deadend, mark it as 3
     for y in range(1,MAZE_SIZE+1):
         for x in range(1,MAZE_SIZE+1):
-            cnt = 0
+            if maze_padded[y][x] == 3:
+                return True
 
-            # Try all directions
-            if(maze_padded[y-1][x] == 0):
-                # north
-                cnt = cnt + 1
-            if(maze_padded[y+1][x] == 0):
-                # south
-                cnt = cnt + 1
-            if(maze_padded[y][x+1] == 0):
-                # east
-                cnt = cnt + 1
-            if(maze_padded[y][x-1] == 0):
-                # west
-                cnt = cnt + 1
-
-            if cnt == 3 and maze_padded[y][x] != 0:
-                if not (x == 1 and y == 1):
-                    if not (x==MAZE_SIZE and y == MAZE_SIZE):
-                        return True
+    return False
 
 
     return False
@@ -164,8 +149,6 @@ def wallPadding(maze):
     return maze_padded
 
 def SearchDeadEndsMarkJunctions(maze_padded):
-    deadends = []
-
     # Search for dead ends and junctions
     for y in range(1,MAZE_SIZE+1):
         for x in range(1,MAZE_SIZE+1):
@@ -188,51 +171,54 @@ def SearchDeadEndsMarkJunctions(maze_padded):
             if cnt == 3 and maze_padded[y][x] != 0:
                 if not (x == 1 and y == 1):
                     if not (x==MAZE_SIZE and y == MAZE_SIZE):
-                        # maze_padded[y][x] = 7
-                        deadends.append([y,x])
+                        maze_padded[y][x] = 3
 
             if isJunction(maze_padded,y,x) == True:
                 maze_padded[y][x] = 2
 
-    return deadends
 
+def fillDeadEnds(maze_padded):
+    # Traversing the maze to search for deadends marked in maze
+    # For every position in the maze, check for deadends.
+    for y in range(1, MAZE_SIZE+1):
+        for x in range(1, MAZE_SIZE+1):
+            if maze_padded[y][x] == 3:
+               if( (y!=1 or x != 1) and (y != MAZE_SIZE or x != MAZE_SIZE)):
+                    y_ptr = y
+                    x_ptr = x
 
-def fillDeadEnds(maze_padded,deadends):
-    for deadend in deadends:
-      y = deadend[0]
-      x = deadend[1]
+                    # Search for junctions
+                    while maze_padded[y_ptr][x_ptr] != 2:
+                        # Dont fill up the src and destination
+                        if y_ptr == 1 and x_ptr == 1:
+                            break
+                        if y_ptr == MAZE_SIZE and x_ptr == MAZE_SIZE:
+                            break
 
+                        # Fill the current node, including the deadend marker.
+                        maze_padded[y_ptr][x_ptr] = 0
 
-      # Searching for junction
-      while maze_padded[y][x] != 2:
-         if y == 1 and x == 1:
-             break
-         if y == MAZE_SIZE and x == MAZE_SIZE:
-             break
+                        # Try directions
+                        if(maze_padded[y_ptr-1][x_ptr] == 1 or maze_padded[y_ptr-1][x_ptr] == 2):
+                            # north
+                            y_ptr = y_ptr-1
+                            x_ptr = x_ptr
+                        elif(maze_padded[y_ptr+1][x_ptr] == 1 or maze_padded[y_ptr+1][x_ptr] == 2):
+                            # south
+                            y_ptr = y_ptr+1
+                            x_ptr = x_ptr
+                        elif(maze_padded[y_ptr][x_ptr+1] == 1 or maze_padded[y_ptr][x_ptr+1] == 2):
+                            # east
+                            y_ptr = y_ptr
+                            x_ptr = x_ptr+1
+                        elif(maze_padded[y_ptr][x_ptr-1] == 1 or maze_padded[y_ptr][x_ptr-1] == 2):
+                            # west
+                            y_ptr = y_ptr
+                            x_ptr = x_ptr-1
 
-         # Fill the current node
-         maze_padded[y][x] = 0
-         # Try all directions
-         if(maze_padded[y-1][x] == 1 or maze_padded[y-1][x] == 2):
-             # north
-             y = y-1
-             x = x
-         elif(maze_padded[y+1][x] == 1 or maze_padded[y+1][x] == 2):
-             # south
-             y = y+1
-             x = x
-         elif(maze_padded[y][x+1] == 1 or maze_padded[y][x+1] == 2):
-             # east
-             y = y
-             x = x+1
-         elif(maze_padded[y][x-1] == 1 or maze_padded[y][x-1] == 2):
-             # west
-             y = y
-             x = x-1
-
-    # Remove all the junctions
-    for y in range(1,MAZE_SIZE+1):
-        for x in range(1,MAZE_SIZE+1):
+    # Remove all the junctions after filling
+    for y in range(1, MAZE_SIZE+1):
+        for x in range(1, MAZE_SIZE+1):
             if maze_padded[y][x] == 2:
                 maze_padded[y][x] = 1
 
@@ -240,16 +226,20 @@ def fillDeadEnds(maze_padded,deadends):
 
 def maze_solver(maze):
     # Give maze, return a path from src to dst
+    # 1. First wallPadding the maze to get rid of the boundary condition
     maze_padded = wallPadding(maze)
 
-    # Perform dead end filling algorithm until there is no more deadends
+    # Perform dead end filling algorithm
+    # Must first search for Dead Ends and mark those junctions
+    SearchDeadEndsMarkJunctions(maze_padded)
+
     while thereIsDeadend(maze_padded) == True:
-        deadends = SearchDeadEndsMarkJunctions(maze_padded)
-        maze_padded = fillDeadEnds(maze_padded, deadends)
+        fillDeadEnds(maze_padded)
+        SearchDeadEndsMarkJunctions(maze_padded)
+
 
     # Walk the path and record the directions
     path = []
-
     y = 1
     x = 1
 
@@ -289,18 +279,18 @@ file_input  = open("./pattern/input.txt","w")
 file_output = open("./pattern/output.txt","w")
 file_maze_result = open("./pattern/maze_result.txt","w")
 
-file_input.write(  "NUM_OF_PAT: "+ str(NUM_OF_MAZE) + "\n\n")
-file_output.write(  "NUM_OF_PAT: "+ str(NUM_OF_MAZE) + "\n\n")
-file_maze_result.write(  "NUM_OF_PAT: "+ str(NUM_OF_MAZE) + "\n\n")
+file_input.write(  "//NUM_OF_PAT: "+ str(NUM_OF_MAZE) + "\n\n")
+file_output.write(  "//NUM_OF_PAT: "+ str(NUM_OF_MAZE) + "\n\n")
+file_maze_result.write(  "//NUM_OF_PAT: "+ str(NUM_OF_MAZE) + "\n\n")
 
 
 
 for idx in range(NUM_OF_MAZE):
     maze = copy.deepcopy(maze_generator())
 
-    file_input.write("PATTERN NO: " + str(idx) + "\n")
-    file_output.write("PATTERN NO: " + str(idx) + "\n")
-    file_maze_result.write("PATTERN NO: " + str(idx) + "\n")
+    file_input.write("//PATTERN NO: " + str(idx) + "\n")
+    file_output.write("//PATTERN NO: " + str(idx) + "\n")
+    file_maze_result.write("//PATTERN NO: " + str(idx) + "\n")
 
     # Write into input file
     for i in range(MAZE_SIZE):
@@ -318,7 +308,8 @@ for idx in range(NUM_OF_MAZE):
         file_output.write(str(dir))
         file_output.write(" ")
 
-    file_output.write("\n\n")
+    file_output.write("E\n")
+    file_output.write("\n")
 
     # Write into maze result
     for i in range(MAZE_SIZE+2):
