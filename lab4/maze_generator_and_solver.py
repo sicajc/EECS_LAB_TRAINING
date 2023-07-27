@@ -183,6 +183,7 @@ def fillDeadEnds(maze_padded):
     for y in range(1, MAZE_SIZE+1):
         for x in range(1, MAZE_SIZE+1):
             if maze_padded[y][x] == 3:
+               # Src and dst should not be deadends
                if( (y!=1 or x != 1) and (y != MAZE_SIZE or x != MAZE_SIZE)):
                     y_ptr = y
                     x_ptr = x
@@ -230,7 +231,7 @@ def maze_solver(maze):
     maze_padded = wallPadding(maze)
 
     # Perform dead end filling algorithm
-    # Must first search for Dead Ends and mark those junctions
+    # Must first search for Dead Ends and mark those deadends and junctions
     SearchDeadEndsMarkJunctions(maze_padded)
 
     while thereIsDeadend(maze_padded) == True:

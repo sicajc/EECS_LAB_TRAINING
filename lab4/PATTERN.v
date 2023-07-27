@@ -42,6 +42,7 @@ input [1:0] out;
 integer a,b, c, i,j, gap, pat_input_file,pat_golden_out_file;
 integer PATNUM;
 integer MAZE_SIZE = 17;
+integer golden_checked_flag;
 integer total_cycles;
 integer total_pat;
 integer patcount;
@@ -132,15 +133,24 @@ task check_ans ;
     begin
         if (out_valid===1)
         begin
+            // Another method is using fscanf to detect the char E
             // Do string processing to check for end of line in the string
-            c = $fgets(golden_ans,pat_input_file);
-            $display("String read in:\n",c);
-            $display("%s",c);
-            $display("Length of string: ",$size(c));
+            // c = $fgets(golden_ans,pat_input_file);
+            // $display("String read in:\n",c);
+            // $display("%s",c);
+            // $display("Length of string: ",$size(c));
+            c = $fscanf(pat_input_file,"%d",golden_out);
+            golden_checked_flag = 0;
 
             // If out valid if high
-            while(out_valid===1 && golden_ans[j] != "\n")
+            while(out_valid===1)
             begin
+                if(golden_out == "E")
+                begin
+                    golden_checked_flag = 1;
+                    break;
+                end
+
                 golden_out = golden_ans[j];
 
                 if (out!==golden_out)
@@ -160,6 +170,20 @@ task check_ans ;
                 j=j+1;
                 @(negedge clk);
             end
+        end
+
+        if(golden_checked_flag == 0)
+        begin
+            fail;
+            // Spec. 7
+            // When out_valid is pulled up and there exists a solution for the grid, out should be correct, and out_valid is limited to be high for 15 cycles.
+            $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
+            $display ("                                                                SPEC 7 FAIL!                                                                ");
+            $display ("                                            The out should be Correct when out valid is high                                                ");
+            $display ("                                                 There are still more Answers to check                                                      ");
+            $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
+            repeat(5)  @(negedge clk);
+            $finish;
         end
     end
 endtask
