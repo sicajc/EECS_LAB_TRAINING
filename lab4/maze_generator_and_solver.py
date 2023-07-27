@@ -202,6 +202,8 @@ def fillDeadEnds(maze_padded,deadends):
       y = deadend[0]
       x = deadend[1]
 
+
+      # Searching for junction
       while maze_padded[y][x] != 2:
          if y == 1 and x == 1:
              break
