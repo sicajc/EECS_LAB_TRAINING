@@ -280,18 +280,10 @@ file_input  = open("./pattern/input.txt","w")
 file_output = open("./pattern/output.txt","w")
 file_maze_result = open("./pattern/maze_result.txt","w")
 
-file_input.write(  "//NUM_OF_PAT: "+ str(NUM_OF_MAZE) + "\n\n")
-file_output.write(  "//NUM_OF_PAT: "+ str(NUM_OF_MAZE) + "\n\n")
-file_maze_result.write(  "//NUM_OF_PAT: "+ str(NUM_OF_MAZE) + "\n\n")
-
-
+file_input.write(  "NUM_OF_PAT: "+ str(NUM_OF_MAZE) + "\n\n")
 
 for idx in range(NUM_OF_MAZE):
     maze = copy.deepcopy(maze_generator())
-
-    file_input.write("//PATTERN NO: " + str(idx) + "\n")
-    file_output.write("//PATTERN NO: " + str(idx) + "\n")
-    file_maze_result.write("//PATTERN NO: " + str(idx) + "\n")
 
     # Write into input file
     for i in range(MAZE_SIZE):
@@ -305,11 +297,12 @@ for idx in range(NUM_OF_MAZE):
 
     golden_path,maze_traced = maze_solver(maze)
 
+    file_output.write(str(len(golden_path)) + "\n")
     for dir in golden_path:
         file_output.write(str(dir))
         file_output.write(" ")
 
-    file_output.write("E\n")
+    file_output.write("\n")
     file_output.write("\n")
 
     # Write into maze result

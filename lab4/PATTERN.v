@@ -7,6 +7,7 @@
 //   Module Name : PATTERN
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //############################################################################
+`define RTL
 
 `ifdef RTL
     `timescale 1ns/10ps
@@ -39,7 +40,8 @@ input [1:0] out;
 //================================================================
 //  parameters & integer
 //================================================================
-integer a,b, c, i,j, gap, pat_input_file,pat_golden_out_file;
+integer a,c, i,j, gap, pat_input_file,pat_golden_out_file;
+integer SEED = 1234;
 integer PATNUM;
 integer MAZE_SIZE = 17;
 integer golden_checked_flag;
@@ -47,8 +49,9 @@ integer total_cycles;
 integer total_pat;
 integer patcount;
 integer cycles;
+integer idx_in_pat;
+integer num_of_value_pat;
 integer color_stage = 0, color, r = 5, g = 0, b = 0;
-string golden_ans;
 //================================================================
 //  wire & registers
 //================================================================
@@ -64,8 +67,8 @@ initial
 //================================================================
 initial
 begin
-    pat_input_file      = $fopen("C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/pattern/input.txt", "r");
-    pat_golden_out_file = $fopen("C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/pattern/output.txt", "r");
+    pat_input_file      = $fopen("C:/Users/jacky/Desktop/EECS_LAB_TRAINING/EECS_LAB_TRAINING/lab4/pattern/input.txt", "r");
+    pat_golden_out_file = $fopen("C:/Users/jacky/Desktop/EECS_LAB_TRAINING/EECS_LAB_TRAINING/lab4/pattern/output.txt", "r");
 
     a = $fscanf(pat_input_file, "NUM_OF_PAT: %d\n\n", PATNUM);
 
@@ -133,25 +136,12 @@ task check_ans ;
     begin
         if (out_valid===1)
         begin
-            // Another method is using fscanf to detect the char E
-            // Do string processing to check for end of line in the string
-            // c = $fgets(golden_ans,pat_input_file);
-            // $display("String read in:\n",c);
-            // $display("%s",c);
-            // $display("Length of string: ",$size(c));
-            c = $fscanf(pat_input_file,"%d",golden_out);
-            golden_checked_flag = 0;
-
-            // If out valid if high
-            while(out_valid===1)
+            idx_in_pat = 0;
+            c = $fscanf(pat_golden_out_file,"%d\n",num_of_value_pat);
+            // If out valid is high
+            while(out_valid===1 && idx_in_pat !== num_of_value_pat)
             begin
-                if(golden_out == "E")
-                begin
-                    golden_checked_flag = 1;
-                    break;
-                end
-
-                golden_out = golden_ans[j];
+                c = $fscanf(pat_golden_out_file,"%d",golden_out);
 
                 if (out!==golden_out)
                 begin
@@ -161,29 +151,29 @@ task check_ans ;
                     $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
                     $display ("                                                                SPEC 7 FAIL!                                                                ");
                     $display ("                                            The out should be Correct when out valid is high                                                ");
-                    $display ("                                            Your output of %d moves is: %d , Golden_ans : %d                                                ",j,out,golden_out);
+                    $display ("                                            Your output of %d moves is: %d , Golden_ans : %d                                                ",idx_in_pat,out,golden_out);
                     $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
                     repeat(5)  @(negedge clk);
                     $finish;
                 end
 
-                j=j+1;
+                idx_in_pat = idx_in_pat + 1;
                 @(negedge clk);
             end
-        end
 
-        if(golden_checked_flag == 0)
-        begin
-            fail;
-            // Spec. 7
-            // When out_valid is pulled up and there exists a solution for the grid, out should be correct, and out_valid is limited to be high for 15 cycles.
-            $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
-            $display ("                                                                SPEC 7 FAIL!                                                                ");
-            $display ("                                            The out should be Correct when out valid is high                                                ");
-            $display ("                                                 There are still more Answers to check                                                      ");
-            $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
-            repeat(5)  @(negedge clk);
-            $finish;
+            if(idx_in_pat !== num_of_value_pat)
+            begin
+                    fail;
+                    // Spec. 7
+                    // When out_valid is pulled up and there exists a solution for the grid, out should be correct, and out_valid is limited to be high for 15 cycles.
+                    $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
+                    $display ("                                                                SPEC 7 FAIL!                                                                ");
+                    $display ("                                      The out should be Correct when out valid is high there should be more moves                           ");
+                    $display ("                                            Your output of %d moves is: %d , Golden_ans : %d                                                ",idx_in_pat,out,golden_out);
+                    $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
+                    repeat(5)  @(negedge clk);
+                    $finish;
+            end
         end
     end
 endtask
@@ -259,11 +249,9 @@ task maze_task ;
                     $finish;
                 end
                 //Feed value in at negedge
-                a = $fscanf(pat_input_file, "PATTERN NO: 0\n");
-                a = $fscanf(pat_input_file, "%d ", in);
+                a = $fscanf(pat_input_file, "%d\n",in);
                 @(negedge clk);
             end
-            a = $fscanf(pat_input_file,"\n");
         end
         in_valid = 0 ;
         in = 1'bx ;
@@ -275,9 +263,9 @@ endtask
 task reset_task ;
     begin
         force clk = 0 ;
-        #(0.5);
-        rst_n = 0 ;
         #(2.0);
+        rst_n = 0 ;
+        #(5.0);
         if ((out_valid!==0)||(out!==0))
         begin
             fail;
