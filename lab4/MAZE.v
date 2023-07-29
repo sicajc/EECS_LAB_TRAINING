@@ -67,7 +67,7 @@ module  MAZE(
 
   reg thereIsDeadend_f;
   reg noDeadEnd_f;
-  wire dstFound_f = maze[MAZE_SIZE][MAZE_SIZE] == 0 && state_FIND_PATH;
+  wire dstFound_f = x_ptr == MAZE_SIZE && y_ptr == MAZE_SIZE && state_FIND_PATH;
 
 
   //========================
@@ -225,7 +225,7 @@ module  MAZE(
         end
       end
     end
-    else if(state_FIND_PATH)
+    else if(state_FIND_PATH && ~dstFound_f)
     begin
       if(maze[y_ptr-1][x_ptr] == 1)
       begin
@@ -283,6 +283,7 @@ module  MAZE(
     thereIsDeadend_f = 1'b0;
     noDeadEnd_f = 1'b0;
     counts = 0;
+
     for ( y= 0; y<MAZE_SIZE+2; y=y+1)
       for( x= 0; x<MAZE_SIZE+2;x=x+1)
         maze_wr[y][x] = maze[y][x];
@@ -336,10 +337,18 @@ module  MAZE(
         out_valid <= 1'b0;
         out       <= 0;
     end
-    else if(state_DONE)
+    else if(state_DONE )
     begin
+      if(~fifo_empty_f)
+      begin
         out_valid <= 1'b1;
         out       <= fifo[0][1:0];
+      end
+      else
+      begin
+        out_valid <= 1'b0;
+        out       <= 2'd0;
+      end
     end
     else
     begin

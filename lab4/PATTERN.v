@@ -7,6 +7,7 @@
 //   Module Name : PATTERN
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //############################################################################
+`define RTL
 `ifdef RTL
     `timescale 1ns/10ps
     `include "MAZE.v"
@@ -39,10 +40,14 @@ input [1:0] out;
 //  parameters & integer
 //================================================================
 reg[3:0] gap;
-integer a,c, i,j, pat_input_file,pat_golden_out_file;
+integer a,c, i,j, pat_input_file;
 integer SEED = 1234;
 integer PATNUM;
-integer MAZE_SIZE = 17;
+localparam MAZE_SIZE = 17;
+localparam RIGHT = 0;
+localparam DOWN  = 1;
+localparam LEFT  = 2;
+localparam UP    = 3;
 integer golden_checked_flag;
 integer total_cycles;
 integer total_pat;
@@ -51,10 +56,12 @@ integer cycles;
 integer idx_in_pat;
 integer num_of_value_pat;
 integer color_stage = 0, color, r = 5, g = 0, b = 0;
+integer y,x;
 //================================================================
 //  wire & registers
 //================================================================
 reg [1:0] golden_out;
+reg maze[0:MAZE_SIZE+1][0:MAZE_SIZE+1];
 //================================================================
 //  clock
 //================================================================
@@ -67,7 +74,6 @@ initial
 initial
 begin
     pat_input_file      = $fopen("C:/Users/jacky/Desktop/EECS_LAB_TRAINING/EECS_LAB_TRAINING/lab4/pattern/input.txt", "r");
-    pat_golden_out_file = $fopen("C:/Users/jacky/Desktop/EECS_LAB_TRAINING/EECS_LAB_TRAINING/lab4/pattern/output.txt", "r");
 
     a = $fscanf(pat_input_file, "NUM_OF_PAT: %d\n\n", PATNUM);
 
@@ -84,6 +90,11 @@ begin
     @(negedge clk);
     for( patcount=0 ; patcount<PATNUM ; patcount=patcount+1 )
     begin
+        //Initiaize maze
+        for(i=0;i<MAZE_SIZE+2;i=i+1)
+            for(j=0;j<MAZE_SIZE+2;j=j+1)
+                maze[i][j] = 0;
+
         // $display("maze_task");
         maze_task;
         total_pat = total_pat + 1 ;
@@ -136,40 +147,60 @@ task check_ans ;
         // The answer is valid as long as a person can goes from starting to finish
         if(out_valid===1)
         begin
-            idx_in_pat = 0;
-            c = $fscanf(pat_golden_out_file,"%d\n",num_of_value_pat);
+            //starts from (1,1)
+            y = 1; x = 1;
             // If out valid is high
-            while(out_valid===1 && idx_in_pat !== num_of_value_pat)
+            while(out_valid===1)
             begin
-                c = $fscanf(pat_golden_out_file,"%d\n",golden_out);
+                // Check for the out value. starting from (1,1) to destination (17,17)
+                case(out)
+                UP:begin
+                    y = y-1;
+                    x = x;
+                end
+                LEFT:begin
+                    y = y;
+                    x = x-1;
+                end
+                RIGHT:begin
+                    y = y;
+                    x = x + 1;
+                end
+                DOWN:begin
+                    y = y + 1;
+                    x = x;
+                end
+                default:
+                begin
+                    y=y;
+                    x=x;
+                end
+                endcase
 
-                if (out!==golden_out)
+                if (maze[y][x] === 0)
                 begin
                     fail;
                     // Spec. 7
-                    // When out_valid is pulled up and there exists a solution for the grid, out should be correct, and out_valid is limited to be high for 15 cycles.
                     $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
                     $display ("                                                                SPEC 7 FAIL!                                                                ");
-                    $display ("                                            The out should be Correct when out valid is high                                                ");
-                    $display ("                                            Your output of %d moves is: %d , Golden_ans : %d                                                ",idx_in_pat,out,golden_out);
+                    $display ("                                                   (1) The person should not hit the wall,Current position: (%d,%d)                         ",y,x);
                     $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
                     repeat(5)  @(negedge clk);
                     $finish;
                 end
 
-                idx_in_pat = idx_in_pat + 1;
                 @(negedge clk);
             end
 
-            if(idx_in_pat !== num_of_value_pat)
+            // Once out valid falls off, check if reaches the goal
+            if(y !== MAZE_SIZE || x !== MAZE_SIZE)
             begin
                     fail;
                     // Spec. 7
                     // When out_valid is pulled up and there exists a solution for the grid, out should be correct, and out_valid is limited to be high for 15 cycles.
                     $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
                     $display ("                                                                SPEC 7 FAIL!                                                                ");
-                    $display ("                                      The out should be Correct when out valid is high there should be more moves                           ");
-                    $display ("                                            Your output of %d moves is: %d , Golden_ans : %d                                                ",idx_in_pat,out,golden_out);
+                    $display ("                                           (1) Person does not reaches the goal, Current position: (%d,%d)                                  ",y,x);
                     $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
                     repeat(5)  @(negedge clk);
                     $finish;
@@ -250,6 +281,10 @@ task maze_task ;
                 end
                 //Feed value in at negedge
                 a = $fscanf(pat_input_file, "%d\n",in);
+
+                // Store it into the maze for later path checking
+                maze[i+1][j+1] = in;
+
                 @(negedge clk);
             end
         end
