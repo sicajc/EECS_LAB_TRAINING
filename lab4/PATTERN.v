@@ -7,17 +7,15 @@
 //   Module Name : PATTERN
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //############################################################################
-`define RTL
-
 `ifdef RTL
     `timescale 1ns/10ps
     `include "MAZE.v"
-    `define CYCLE_TIME 7.0
+    `define CYCLE_TIME 10.0
 `endif
 `ifdef GATE
     `timescale 1ns/10ps
     `include "MAZE_SYN.v"
-    `define CYCLE_TIME 7.0
+    `define CYCLE_TIME 10.0
 `endif
 
 module PATTERN(
@@ -40,7 +38,8 @@ input [1:0] out;
 //================================================================
 //  parameters & integer
 //================================================================
-integer a,c, i,j, gap, pat_input_file,pat_golden_out_file;
+reg[3:0] gap;
+integer a,c, i,j, pat_input_file,pat_golden_out_file;
 integer SEED = 1234;
 integer PATNUM;
 integer MAZE_SIZE = 17;
@@ -134,14 +133,15 @@ end
 //================================================================
 task check_ans ;
     begin
-        if (out_valid===1)
+        // The answer is valid as long as a person can goes from starting to finish
+        if(out_valid===1)
         begin
             idx_in_pat = 0;
             c = $fscanf(pat_golden_out_file,"%d\n",num_of_value_pat);
             // If out valid is high
             while(out_valid===1 && idx_in_pat !== num_of_value_pat)
             begin
-                c = $fscanf(pat_golden_out_file,"%d",golden_out);
+                c = $fscanf(pat_golden_out_file,"%d\n",golden_out);
 
                 if (out!==golden_out)
                 begin
@@ -246,7 +246,7 @@ task maze_task ;
                     $display ("                                         The out_valid should not be high when in_valid is high                                             ");
                     $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
                     repeat(5)  @(negedge clk);
-                    $finish;
+                     $finish;
                 end
                 //Feed value in at negedge
                 a = $fscanf(pat_input_file, "%d\n",in);
@@ -289,7 +289,9 @@ endtask
 
 task delay_task ;
     begin
-        gap =  $urandom(SEED) % 3 + 2;
+        // Must assign the random value to gap
+        gap = $random(SEED);
+        gap = gap%3 + 2;
         repeat(gap) @(negedge clk);
     end
 endtask

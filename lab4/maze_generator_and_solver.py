@@ -1,7 +1,7 @@
 import random
 import copy
 MAZE_SIZE = 17
-NUM_OF_MAZE = 250
+NUM_OF_MAZE = 100
 
 def dfs_recursive(src,maze,visited):
     y,x = src
@@ -274,43 +274,67 @@ def maze_solver(maze):
 
     return path,maze_padded
 
-
-
 file_input  = open("./pattern/input.txt","w")
 file_output = open("./pattern/output.txt","w")
 file_maze_result = open("./pattern/maze_result.txt","w")
 
 file_input.write(  "NUM_OF_PAT: "+ str(NUM_OF_MAZE) + "\n\n")
 
-for idx in range(NUM_OF_MAZE):
-    maze = copy.deepcopy(maze_generator())
+maze_0 = [[1,0,1,0,1,0,1,1,1,1,1,1,1,0,1,0,1],
+[1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0],
+[1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+[0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,0],
+[1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+[1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0],
+[1,1,1,0,1,0,1,0,1,0,1,0,1,1,1,1,1],
+[0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1],
+[1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+[1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1],
+[1,0,1,1,1,1,1,0,1,0,1,0,1,0,1,1,1],
+[1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0],
+[1,1,1,0,1,1,1,1,1,1,1,0,1,0,1,1,1],
+[0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1],
+[1,0,1,0,1,1,1,1,1,0,1,1,1,1,1,1,1],
+[0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
+[1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1]]
 
-    # Write into input file
-    for i in range(MAZE_SIZE):
-        for j in range(MAZE_SIZE):
-            file_input.write(str(maze[i][j]))
-            file_input.write(" ")
-
-        file_input.write("\n")
-
-    file_input.write("\n")
+idx = 0
+while idx != NUM_OF_MAZE:
+    if idx == 0:
+        maze = maze_0
+    else:
+        maze = copy.deepcopy(maze_generator())
 
     golden_path,maze_traced = maze_solver(maze)
 
-    file_output.write(str(len(golden_path)) + "\n")
-    for dir in golden_path:
-        file_output.write(str(dir))
-        file_output.write(" ")
+    if len(golden_path) >= 64:
+        # Write into input file
+        for i in range(MAZE_SIZE):
+            for j in range(MAZE_SIZE):
+                file_input.write(str(maze[i][j]))
+                file_input.write(" ")
 
-    file_output.write("\n")
-    file_output.write("\n")
+            file_input.write("\n")
 
-    # Write into maze result
-    for i in range(MAZE_SIZE+2):
-        for j in range(MAZE_SIZE+2):
-            file_maze_result.write(str(maze_traced[i][j]))
-            file_maze_result.write(" ")
+        file_input.write("\n")
+
+        # Write into output file
+        file_output.write(str(len(golden_path)) + "\n")
+        for dir in golden_path:
+            file_output.write(str(dir))
+            file_output.write(" ")
+
+        file_output.write("\n")
+        file_output.write("\n")
+
+        # Write into maze result
+        for i in range(MAZE_SIZE+2):
+            for j in range(MAZE_SIZE+2):
+                file_maze_result.write(str(maze_traced[i][j]))
+                file_maze_result.write(" ")
+
+            file_maze_result.write("\n")
 
         file_maze_result.write("\n")
 
-    file_maze_result.write("\n")
+        idx = idx + 1

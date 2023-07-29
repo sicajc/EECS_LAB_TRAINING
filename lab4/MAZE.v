@@ -1,4 +1,4 @@
-`define C2Q 3.0
+`define C2Q 0.0
 // Revision History
 // VERSION      Date          AUTHOR           DESCRIPTION                                                  PERFORMANCE (AREA + CYCLE)
 // 1.0
@@ -307,7 +307,7 @@ module  MAZE(
             counts = counts + 1;
 
           //This (y,x) is a deadend
-          if ((counts == 3) && (maze[y][x] != 0) && (y!=1 || x!=1) && (y!=MAZE_SIZE || x!=MAZE_SIZE))
+          if ((counts >= 3) && (maze[y][x] != 0) && (y!=1 || x!=1) && (y!=MAZE_SIZE || x!=MAZE_SIZE))
           begin
             thereIsDeadend_f = 1'b1;
             maze_wr[y][x] = 1'b0;

@@ -19,9 +19,9 @@ wire  [1:0]  out;
 
 initial begin
   `ifdef RTL
-    //$fsdbDumpfile("MAZE.fsdb");
-	  //$fsdbDumpvars(0,"+mda");
-    //$fsdbDumpvars();
+    // $fsdbDumpfile("MAZE.fsdb");
+	  // $fsdbDumpvars(0,"+mda");
+    // $fsdbDumpvars();
   `endif
   `ifdef GATE
     $sdf_annotate("MAZE_SYN.sdf", u_MAZE);
