@@ -144,6 +144,7 @@ end
 //================================================================
 task check_ans ;
     begin
+        cycles = 0;
         // The answer is valid as long as a person can goes from starting to finish
         if(out_valid===1)
         begin
@@ -152,6 +153,8 @@ task check_ans ;
             // If out valid is high
             while(out_valid===1)
             begin
+                cycles = cycles + 1;
+
                 // Check for the out value. starting from (1,1) to destination (17,17)
                 case(out)
                 UP:begin
@@ -183,7 +186,7 @@ task check_ans ;
                     // Spec. 7
                     $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
                     $display ("                                                                SPEC 7 FAIL!                                                                ");
-                    $display ("                                                   (1) The person should not hit the wall,Current position: (%d,%d)                         ",y,x);
+                    $display ("                                         (1) The person should not hit the wall,Current position: (%d,%d)                                   ",y,x);
                     $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
                     repeat(5)  @(negedge clk);
                     $finish;
@@ -205,7 +208,23 @@ task check_ans ;
                     repeat(5)  @(negedge clk);
                     $finish;
             end
+
+            if (cycles==3000)
+            begin
+                fail;
+                // Spec. 6
+                // The execution latency is limited in 300 cycles.
+                // The latency is the clock cycles between the falling edge of the last cycle of in_valid and the rising edge of the out_valid.
+                $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
+                $display ("                                                                SPEC 6 FAIL!                                                                ");
+                $display ("                                              The execution latency is limited in 3000 cycles                                               ");
+                $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
+                repeat(5)  @(negedge clk);
+                $finish;
+            end
         end
+        total_cycles = total_cycles + cycles;
+
     end
 endtask
 

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="TESTBED_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="TESTBED" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="507,069.666 ns"></ZoomStartTime>
+      <ZoomEndTime time="507,250.067 ns"></ZoomEndTime>
+      <Cursor1Time time="507,220.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="362"></NameColumnWidth>
+      <ValueColumnWidth column_width="525"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="32" />
+   <wvobject fp_name="/TESTBED/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/rst_n" type="logic">
+      <obj_property name="ElementShortName">rst_n</obj_property>
+      <obj_property name="ObjectShortName">rst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/in_valid" type="logic">
+      <obj_property name="ElementShortName">in_valid</obj_property>
+      <obj_property name="ObjectShortName">in_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/in" type="logic">
+      <obj_property name="ElementShortName">in</obj_property>
+      <obj_property name="ObjectShortName">in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/out_valid" type="logic">
+      <obj_property name="ElementShortName">out_valid</obj_property>
+      <obj_property name="ObjectShortName">out_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/out" type="array">
+      <obj_property name="ElementShortName">out[1:0]</obj_property>
+      <obj_property name="ObjectShortName">out[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/maze" type="array">
+      <obj_property name="ElementShortName">maze[0:18][0:18]</obj_property>
+      <obj_property name="ObjectShortName">maze[0:18][0:18]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/rst_n" type="logic">
+      <obj_property name="ElementShortName">rst_n</obj_property>
+      <obj_property name="ObjectShortName">rst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/in_valid" type="logic">
+      <obj_property name="ElementShortName">in_valid</obj_property>
+      <obj_property name="ObjectShortName">in_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/in" type="logic">
+      <obj_property name="ElementShortName">in</obj_property>
+      <obj_property name="ObjectShortName">in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/out" type="array">
+      <obj_property name="ElementShortName">out[1:0]</obj_property>
+      <obj_property name="ObjectShortName">out[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/out_valid" type="logic">
+      <obj_property name="ElementShortName">out_valid</obj_property>
+      <obj_property name="ObjectShortName">out_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/state_IDLE" type="logic">
+      <obj_property name="ElementShortName">state_IDLE</obj_property>
+      <obj_property name="ObjectShortName">state_IDLE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/state_RD_MAZE" type="logic">
+      <obj_property name="ElementShortName">state_RD_MAZE</obj_property>
+      <obj_property name="ObjectShortName">state_RD_MAZE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/state_FILL_DEADEND" type="logic">
+      <obj_property name="ElementShortName">state_FILL_DEADEND</obj_property>
+      <obj_property name="ObjectShortName">state_FILL_DEADEND</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/state_FIND_PATH" type="logic">
+      <obj_property name="ElementShortName">state_FIND_PATH</obj_property>
+      <obj_property name="ObjectShortName">state_FIND_PATH</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/state_DONE" type="logic">
+      <obj_property name="ElementShortName">state_DONE</obj_property>
+      <obj_property name="ObjectShortName">state_DONE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/fifo_ptr" type="array">
+      <obj_property name="ElementShortName">fifo_ptr[8:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo_ptr[8:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/fifo" type="array">
+      <obj_property name="ElementShortName">fifo[0:149][2:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo[0:149][2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/maze" type="array">
+      <obj_property name="ElementShortName">maze[0:18][0:18]</obj_property>
+      <obj_property name="ObjectShortName">maze[0:18][0:18]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/maze_wr" type="array">
+      <obj_property name="ElementShortName">maze_wr[0:18][0:18]</obj_property>
+      <obj_property name="ObjectShortName">maze_wr[0:18][0:18]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/y_ptr" type="array">
+      <obj_property name="ElementShortName">y_ptr[8:0]</obj_property>
+      <obj_property name="ObjectShortName">y_ptr[8:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/x_ptr" type="array">
+      <obj_property name="ElementShortName">x_ptr[8:0]</obj_property>
+      <obj_property name="ObjectShortName">x_ptr[8:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/counts" type="array">
+      <obj_property name="ElementShortName">counts[2:0]</obj_property>
+      <obj_property name="ObjectShortName">counts[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/fifo_empty_f" type="logic">
+      <obj_property name="ElementShortName">fifo_empty_f</obj_property>
+      <obj_property name="ObjectShortName">fifo_empty_f</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/fifo_full_f" type="logic">
+      <obj_property name="ElementShortName">fifo_full_f</obj_property>
+      <obj_property name="ObjectShortName">fifo_full_f</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/maze_rd_done_f" type="logic">
+      <obj_property name="ElementShortName">maze_rd_done_f</obj_property>
+      <obj_property name="ObjectShortName">maze_rd_done_f</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/thereIsDeadend_f" type="logic">
+      <obj_property name="ElementShortName">thereIsDeadend_f</obj_property>
+      <obj_property name="ObjectShortName">thereIsDeadend_f</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/noDeadEnd_f" type="logic">
+      <obj_property name="ElementShortName">noDeadEnd_f</obj_property>
+      <obj_property name="ObjectShortName">noDeadEnd_f</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_MAZE/dstFound_f" type="logic">
+      <obj_property name="ElementShortName">dstFound_f</obj_property>
+      <obj_property name="ObjectShortName">dstFound_f</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TESTBED/u_PATTERN/maze" type="array">
+      <obj_property name="ElementShortName">maze[0:18][0:18]</obj_property>
+      <obj_property name="ObjectShortName">maze[0:18][0:18]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+</wave_config>

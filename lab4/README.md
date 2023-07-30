@@ -151,8 +151,7 @@ initial begin
 2. Note, preprocessing can be done on the maze to simplify boundary checking condition.
 3. Also remember that the path must be recorded for this maze traveling problem.
 
-
-
 # Bugs
 - Problem occurs in calling $random(SEED), no idea why the value cannot be assigned.
 - Works only for reg gap[3:0], integer is not usable.
+- How to add the path to another file from the current folder in Moba???
