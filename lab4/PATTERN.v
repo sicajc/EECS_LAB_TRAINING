@@ -36,6 +36,7 @@ output reg clk, rst_n, in_valid;
 output reg in;
 input out_valid;
 input [1:0] out;
+
 //================================================================
 //  parameters & integer
 //================================================================
