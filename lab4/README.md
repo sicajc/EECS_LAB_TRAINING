@@ -155,3 +155,8 @@ initial begin
 - Problem occurs in calling $random(SEED), no idea why the value cannot be assigned.
 - Works only for reg gap[3:0], integer is not usable.
 - How to add the path to another file from the current folder in Moba???
+
+# Advanced techniques in reducing area and critical path
+1. The mantissa of floating point can actually be reduced due to the allowable error of 1%.
+2. I.e. one can try to reduce the mantissa bits from 23 to bits less than 23. As long as you still meet the criteria.
+3. Look up table can be used as long as the number of inputs are fixed, simply calculate all possible value and print it out , load the value in as LUT to allow small area fast search.

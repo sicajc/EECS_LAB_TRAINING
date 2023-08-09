@@ -24,7 +24,6 @@
     Mn4  d      B_inv  GND    x  nmos_lvt  m=1
 .ends
 
-
 .subckt oneBitCompBuf A B C
     **  Inverters **
     Ainv1 A     A_inv  inverter
