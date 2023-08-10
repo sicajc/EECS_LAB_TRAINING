@@ -16,30 +16,30 @@
 *****************************
 **   SubCircuits   **
 *****************************
-.subckt INV in out msize=4
+.subckt INV in out msize=1
     **  D    G   S    X **
     Mp  out  in  VDD  VDD  pmos_lvt  m=msize
     Mn  out  in  GND  GND  nmos_lvt  m=msize
 .ends
 
 
-.subckt oneBitComp A B C
+.subckt oneBitComp A B Y
     **  Inverters **
     Xinv1 A A_inv INV
     Xinv2 B B_inv INV msize=1
 
     **  D    G   S    X **
     **  PMOS **
-    Mp1  a           A      VDD    VDD  pmos_lvt  m=1
-    Mp2  C           B      a      VDD  pmos_lvt  m=1
-    Mp4  C           B_inv  b      VDD  pmos_lvt  m=1
-    Mp3  b           A_inv  VDD    VDD  pmos_lvt  m=1
+    Mp1  a           A          VDD    VDD  pmos_lvt  m=1
+    Mp2  Y           B          a      VDD  pmos_lvt  m=1
+    Mp3  b           A_inv      VDD    VDD  pmos_lvt  m=1
+    Mp4  Y           B_inv      b      VDD  pmos_lvt  m=1
 
     **  NMOS **
-    Mn1  C           A          d     GND  nmos_lvt  m=1
-    Mn3  C           B          d     GND  nmos_lvt  m=1
-    Mn2  d           A_inv      GND   GND  nmos_lvt  m=1
-    Mn4  d           B_inv      GND   GND  nmos_lvt  m=1
+    Mn1  Y           A              c     GND  nmos_lvt  m=1
+    Mn3  Y           A_inv          d     GND  nmos_lvt  m=1
+    Mn2  c           B_inv          GND   GND  nmos_lvt  m=1
+    Mn4  d           B              GND   GND  nmos_lvt  m=1
 
 .ends
 
@@ -54,8 +54,6 @@
 
     XcompOut A_inv2 B_inv2 compOut oneBitComp
 
-    XinvOut0 compOut c_inv      INV msize=1
-    XinvOut1 c_inv   C          INV msize=1
 .ends
 
 .subckt and2  A B Y
