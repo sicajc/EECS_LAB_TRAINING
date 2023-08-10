@@ -30,16 +30,16 @@
 
     **  D    G   S    X **
     **  PMOS **
-    Mp1  a           A          VDD    VDD  pmos_lvt  m=1
-    Mp2  Y           B          a      VDD  pmos_lvt  m=1
-    Mp3  b           A_inv      VDD    VDD  pmos_lvt  m=1
-    Mp4  Y           B_inv      b      VDD  pmos_lvt  m=1
+    Mp1  na           A          VDD    VDD  pmos_lvt  m=1
+    Mp2  Y           B          na      VDD  pmos_lvt  m=1
+    Mp3  nb           A_inv      VDD    VDD  pmos_lvt  m=1
+    Mp4  Y           B_inv      nb      VDD  pmos_lvt  m=1
 
     **  NMOS **
-    Mn1  Y           A              c     GND  nmos_lvt  m=1
-    Mn3  Y           A_inv          d     GND  nmos_lvt  m=1
-    Mn2  c           B_inv          GND   GND  nmos_lvt  m=1
-    Mn4  d           B              GND   GND  nmos_lvt  m=1
+    Mn1  Y           A              nc     GND  nmos_lvt  m=1
+    Mn3  Y           A_inv          nd     GND  nmos_lvt  m=1
+    Mn2  nc           B_inv          GND   GND  nmos_lvt  m=1
+    Mn4  nd           B              GND   GND  nmos_lvt  m=1
 
 .ends
 
@@ -52,7 +52,7 @@
     XinvB0 B      B_inv  INV
     XinvB1 B_inv  B_inv2 INV msize=4
 
-    XcompOut A_inv2 B_inv2 compOut oneBitComp
+    XcompOut A_inv2 B_inv2 C oneBitComp
 
 .ends
 
@@ -63,8 +63,8 @@
     Mp2 result B VDD VDD pmos_lvt m=1
 
     **NMOS**
-    Mn1 result A a   GND nmos_lvt m=1
-    Mn2 a      B GND GND nmos_lvt m=1
+    Mn1 result A na   GND nmos_lvt m=1
+    Mn2 na      B GND GND nmos_lvt m=1
 
     *inverter*
     Xinv0 result Y  INV msize=1

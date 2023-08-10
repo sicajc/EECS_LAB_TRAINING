@@ -1,0 +1,4 @@
+$DATA1 SOURCE='PrimeSim HSPICE' VERSION='T-2022.06 linux64' PARAM_COUNT=0
+.TITLE '.title static cmos 64bit comparator'
+ tphh_a0tooutput  static_pwr       temper           alter#
+  5.734e-11        3.803e-06         25.0000        1
