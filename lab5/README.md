@@ -75,12 +75,15 @@ Q: Are there any syntax that mimics things like for loop within verilog?
 # Python script can be used to generate multiple sub circuits.
 1.
 2. Buffers should be inserted to prevent infinite driving circuits.
+3. Useful snippets for sub circuit generation.
 
-```
+```C
 
 .subckt nand2 A B Y
-    Mpa Y A VDD x pmos_lvt m=1
-    Mpb Y B VDD x nmos_lvt m=1
+
+    Mpa Y A VDD VDD pmos_lvt m=1
+    Mpb Y B VDD VDD nmos_lvt m=1
+
     Mna Y A node1 x nmos_lvt m=1
     Mnb node1 B GND x nmos_lvt m=1
 .ends
@@ -88,3 +91,9 @@ Q: Are there any syntax that mimics things like for loop within verilog?
 Xnand2 a1 b1 out nand2
 
 ```
+
+# Debug notes
+1. Within Hspice, there is no upper case and lower case difference, thus when declaring nodes, na should be declared. instead of a.
+2. Hspice coding style should be followed to prevent yourself from connecting circuit onto the same node.
+3. Note the 4th parameter of MOSFET should be connected according to PMOS and NMOS. PMOS's Bulk uses VDD and NMOS Bulk uses GND.
+4. XNOR gate is the 1-bit comparator, using truth table is sometimes a great way to simplify your logic.

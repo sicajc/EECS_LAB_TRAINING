@@ -47,10 +47,10 @@
 .subckt oneBitCompBuf A B C
     **  Inverters **
     XinvA0 A      A_inv  INV
-    XinvA1 A_inv  A_inv2 INV msize=1
+    XinvA1 A_inv  A_inv2 INV msize=4
 
     XinvB0 B      B_inv  INV
-    XinvB1 B_inv  B_inv2 INV msize=1
+    XinvB1 B_inv  B_inv2 INV msize=4
 
     XcompOut A_inv2 B_inv2 compOut oneBitComp
 
@@ -246,11 +246,12 @@ Xand64 c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 c10 c11 c12 c13 c14 c15 c16 c17 c18 c19 c20
 *****************************
 **      Measurement        **
 *****************************
-***.measure tphh_a0toOutput * rising prop delay
-* TRIG v(a0) VAL='0.35' RISE=2
-* TARG v(out_and0to31) VAL='0.35' RISE=2
 
-.measure TRAN Static_pwr  avg POWER from=20.03n to=24.9n
+.measure tphh_a0toOutput
+    + TRIG v(a0)  VAL='0.35' RISE=2
+    + TARG v(out) VAL='0.35' RISE=2
+
+.measure TRAN Static_pwr avg POWER from=0.00n to=80.0n
 
 
 .end
