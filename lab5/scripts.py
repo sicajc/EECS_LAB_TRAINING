@@ -20,6 +20,6 @@ for j in range(STAGES):
 
         # print(f"XoneBitCompBuf{i} a{i} b{i} c{i} oneBitCompBuf")
         if j == 0:
-            print(f"Xnor2_{j}_{i} c{i*2} c{i*2+1} s_{j}_{i} nor2 msize={stage[j]}")
+            print(f"Xand2_{j}_{i} c{i*2} c{i*2+1} s_{j}_{i} and2")
         else:
-            print(f"Xnor2_{j}_{i} s_{j-1}_{i*2} s_{j-1}_{i*2+1} s_{j}_{i} nor2 msize={stage[j]}")
+            print(f"Xand2_{j}_{i} s_{j-1}_{i*2} s_{j-1}_{i*2+1} s_{j}_{i} and2")
