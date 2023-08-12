@@ -160,3 +160,10 @@ initial begin
 1. The mantissa of floating point can actually be reduced due to the allowable error of 1%.
 2. I.e. one can try to reduce the mantissa bits from 23 to bits less than 23. As long as you still meet the criteria.
 3. Look up table can be used as long as the number of inputs are fixed, simply calculate all possible value and print it out , load the value in as LUT to allow small area fast search.
+
+
+# Summary
+1. Jupyter notebook is useful for real-time algorithm implementation.
+2. Must triple check the spec! The testbench must follow the spec, otherwise you might create an incorrect testbench.
+3. Some extreme pattern shall be inserted to the test function s.t. all cases can be covered.
+4. Try to compare your pattern with others patterns to ensure that your algorithm works correctly.
