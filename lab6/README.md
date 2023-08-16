@@ -8,7 +8,6 @@
 # Write operation
 1. We must ensure data arrives before address arrives.
 
-
 # Error
 1. If no intersects in voltage graph, error. So discharge and charge must have intersection.
 
@@ -24,3 +23,7 @@
 
 # SNM
 1. Using the formula created on paper, we can rotates the VTC intersection curves, and get the boxes.
+
+
+# Problem
+1. Why use v(??.BL) here? I dont know why? What should be connected onto ??.BL ? Since I simply connect BL node onto it
