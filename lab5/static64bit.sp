@@ -156,16 +156,16 @@ Vvdd VDD GND 0.7v
 **      Your Circuit       **
 *****************************
 *** Parrallel buffered One bit comparators***
-XoneBitCompBuf0 a0 b0 c0 oneBitCompBuf
-XoneBitCompBuf1 a1 b1 c1 oneBitCompBuf
-XoneBitCompBuf2 a2 b2 c2 oneBitCompBuf
-XoneBitCompBuf3 a3 b3 c3 oneBitCompBuf
-XoneBitCompBuf4 a4 b4 c4 oneBitCompBuf
-XoneBitCompBuf5 a5 b5 c5 oneBitCompBuf
-XoneBitCompBuf6 a6 b6 c6 oneBitCompBuf
-XoneBitCompBuf7 a7 b7 c7 oneBitCompBuf
-XoneBitCompBuf8 a8 b8 c8 oneBitCompBuf
-XoneBitCompBuf9 a9 b9 c9 oneBitCompBuf
+XoneBitCompBuf0  a0 b0 c0 oneBitCompBuf
+XoneBitCompBuf1  a1 b1 c1 oneBitCompBuf
+XoneBitCompBuf2  a2 b2 c2 oneBitCompBuf
+XoneBitCompBuf3  a3 b3 c3 oneBitCompBuf
+XoneBitCompBuf4  a4 b4 c4 oneBitCompBuf
+XoneBitCompBuf5  a5 b5 c5 oneBitCompBuf
+XoneBitCompBuf6  a6 b6 c6 oneBitCompBuf
+XoneBitCompBuf7  a7 b7 c7 oneBitCompBuf
+XoneBitCompBuf8  a8 b8 c8 oneBitCompBuf
+XoneBitCompBuf9  a9 b9 c9 oneBitCompBuf
 XoneBitCompBuf10 a10 b10 c10 oneBitCompBuf
 XoneBitCompBuf11 a11 b11 c11 oneBitCompBuf
 XoneBitCompBuf12 a12 b12 c12 oneBitCompBuf
@@ -250,6 +250,9 @@ Xand64 c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 c10 c11 c12 c13 c14 c15 c16 c17 c18 c19 c20
 .measure tphh_a0toOutput
     + TRIG v(a0)  VAL='0.35' RISE=2
     + TARG v(out) VAL='0.35' RISE=2
+
+** Dynamic power analysis
+.measure TRAN dynamic_pwr avg v(out) from=0n to=80n
 
 .measure TRAN Static_pwr avg POWER from=0.00n to=80.0n
 
