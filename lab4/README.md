@@ -145,6 +145,11 @@ initial begin
 ## TB
 1. Generate the TB structure, follow the rules and refer to senior's design.
 2. Test your testbench against the coded design of seniors. If pass move forward.
+3. Note when reading in string, fscanf actually ignores whitespaces.
+```verilog
+a = $fscanf(pat_input_file, "NUM_OF_PAT: %d\n\n", PATNUM);
+
+```
 
 ## HW architecture
 1. Transform the dead-end filling algorithm into HW architecture.
@@ -153,10 +158,41 @@ initial begin
 
 # Bugs
 - Problem occurs in calling $random(SEED), no idea why the value cannot be assigned.
+- $urandom_range(0,n) is only supported in systemVerilog?
 - Works only for reg gap[3:0], integer is not usable.
 - How to add the path to another file from the current folder in Moba???
 
-# Advanced techniques in reducing area and critical path
-1. The mantissa of floating point can actually be reduced due to the allowable error of 1%.
-2. I.e. one can try to reduce the mantissa bits from 23 to bits less than 23. As long as you still meet the criteria.
-3. Look up table can be used as long as the number of inputs are fixed, simply calculate all possible value and print it out , load the value in as LUT to allow small area fast search.
+# Python for pattern generation
+## Useful tips and structures to learn
+- Declaring all Global variables at the top of the file first.
+```python
+    # Declaring global variables
+    PATNUM = 100
+    NUMBLANK = 15
+    # MAX_BLANK_NUM = 81  # generate blanks in 0~80 grid
+    MAX_BLANK_NUM = 50  # generate blanks in 0~50 grid, increase the chance of needing backtrace
+    FLAG_ILLEGAL = 1    # generate sudoku with solution(FLAG_ILLEGAL=0) or without solution(FLAG_ILLEGAL=1)
+    BASE = 3
+    SIDE = 9
+    f = open("./00_TESTBED/illegal_100.txt", "w")
+```
+
+- Printing out the answer as you are solving the algorithmic problem
+
+```python
+# print golden answer, printing out the golden answer.
+def print_ans(board, blanks) :
+    for r in range(SIDE) :
+        for c in range(SIDE) :
+            # Set operations can be used for checking condition.
+            if ( r*SIDE + c )in blanks :
+                print(board[r][c], end=" ")
+    print("")
+
+```
+- Compact array instantiation and sampling
+
+```python
+    rows = [ g*BASE + r for g in shuffle(rBase) for r in shuffle(rBase) ]
+    rBase = range(BASE)
+```

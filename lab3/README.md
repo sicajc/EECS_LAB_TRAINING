@@ -48,3 +48,12 @@
 
 # When design is large
 1. If the design is way too large, putting the design onto fpga can greatly reduce the simulation time.
+
+# Advanced techniques in reducing area and critical path
+1. The mantissa of floating point can actually be reduced due to the allowable error of 1%.
+2. I.e. one can try to reduce the mantissa bits from 23 to bits less than 23. As long as you still meet the criteria.
+3. Look up table can be used as long as the number of inputs are fixed, simply calculate all possible value and print it out , load the value in as LUT to allow small area fast search.
+
+# Reducing errors
+1. Do proper base case, extreme case and normal case checking with others during algorithm level.
+2. Remember to check your code, see if there are some mapping errors after you first coded it out. Sometimes, bits errors,connections and overflowing errors can be easily spotted.
