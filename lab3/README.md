@@ -47,7 +47,6 @@
 # When design is large
 1. If the design is way too large, putting the design onto fpga can greatly reduce the simulation time.
 
-<<<<<<< HEAD
 # Advanced techniques in reducing area and critical path
 1. The mantissa of floating point can actually be reduced due to the allowable error of 1%.
 2. I.e. one can try to reduce the mantissa bits from 23 to bits less than 23. As long as you still meet the criteria.
@@ -56,10 +55,8 @@
 # Reducing errors
 1. Do proper base case, extreme case and normal case checking with others during algorithm level.
 2. Remember to check your code, see if there are some mapping errors after you first coded it out. Sometimes, bits errors,connections and overflowing errors can be easily spotted.
-=======
 # Summary
 1. Since an error range is allowed within spec, so we can actually adjust the mantissa of our floating point IP. This method can greatly reduce the critical path and area!
 2. When deriving pipelined architecture, first derive a combinational version of your circuit, then start drawing pipeline cutset.
 3. Comparing to the size of designWare IP, pipelined registers are actually cheap.
 4. When working in IC LAB, do not try to rewrite the equation when using IP, otherwise some corner cases cannot pass!!!! This problem arise when I am using the exponential IP.
->>>>>>> a0c4e89bbfe8286576e3ab9e3596f25cdc7447a1
