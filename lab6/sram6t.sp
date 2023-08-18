@@ -59,12 +59,12 @@ VWL  WL  GND  0.7v * ?? need to be edited
 .nodeset V(qb)= 0.0v * ?? need to be edited
 
 * WRITE *
-* .ic V(CBL.BL)= GND * ?? need to be edited
-* .ic V(CBLB.BLB)= VDD * ?? need to be edited
-* VWL  WL  GND  VDD * ?? need to be edited
+.ic V(??.BL)= GND * ?? need to be edited
+.ic V(CBLB.BLB)= VDD * ?? need to be edited
+VWL  WL  GND  VDD * ?? need to be edited
 
-* .nodeset V(q)= VDD * ?? need to be edited
-* .nodeset V(qb)= GND * ?? need to be edited
+.nodeset V(q)= VDD * ?? need to be edited
+.nodeset V(qb)= GND * ?? need to be edited
 
 
 *************************************
