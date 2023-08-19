@@ -55,3 +55,8 @@
 2. After coding out and tested the baseline model, try to optimize it in terms of logic, HW efficiency. Create as many for loops as possible.
 3. Unfolding technique can be used for for loop too, do not forget that, in HW this can achieve great performance. Cross iteration unfolding. An example is for QR cordic, the cordic turns 4 times in a single iteration.
 4. If pattern is provided, one can actually first run through every test case in the given pattern uing high-level language. Things like python or C.
+
+# 01_RTL pass but 03_GATE fail?
+- 01_RTL has no unknown presenteded yet, 03_GATE only propogates unknown!
+
+>>> SOL: Register inputs before you try to process it! So that your circuit would not get contaminated by the inputs. Also do not use inputs as direct condition checks for combinaional logic. Otherwise, unknown might propogate!
