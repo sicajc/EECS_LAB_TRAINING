@@ -52,3 +52,9 @@
     .nodeset V(qb)= xgnd * ?? need to be edited
 
 ```
+
+5. Why sometimes random naming of instance would not work?
+- Some vocabs are already reserved for circuit instantiation, so you should beware of the starting of the letter.
+<p align="center">
+  <img src="./6t_sram_notes/element_instantiation.png" width="500" heigh ="500">
+</p>
