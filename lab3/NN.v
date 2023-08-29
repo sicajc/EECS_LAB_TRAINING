@@ -377,8 +377,6 @@ end
 //=================================
 //   ROW_PTR, COL_PTR, KERNAL_CNT
 //=================================
-
-
 always @(posedge clk or negedge rst_n)
 begin:ALL_IMG_SENT_FF_F
     //synopsys_translate_off
@@ -1125,9 +1123,13 @@ begin:SHUFFLED_IMG_WR
     begin
         shuffled_img_wr = pos_exp_act1_act2_pipe2;
     end
-    else
+    else if(opt_ff == 2'd00 || opt_ff == 2'd00)
     begin
         shuffled_img_wr = fp_act2_div_result;
+    end
+    else
+    begin
+        shuffled_img_wr = 0;
     end
 end
 

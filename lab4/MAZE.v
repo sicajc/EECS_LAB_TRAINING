@@ -337,7 +337,7 @@ module  MAZE(
         out_valid <= 1'b0;
         out       <= 0;
     end
-    else if(state_DONE )
+    else if(state_DONE)
     begin
       if(~fifo_empty_f)
       begin
