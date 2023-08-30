@@ -8,4 +8,4 @@ The training summer vacation training of EECS lab
 5. Hspice usage (Sim of 64-bit comparator) - Design a 64-bit comparator then connect and simulate the design using Hspice.
 6. Stability analysis of 6T-SRAM using Hspice Simulation - Measuring Signal Noise Margin of 6T-SRAM cell
 7. Virtuoso Basics - Building a basic ring oscillator using Finfets.
-8. Midterm_AMBA    - Getting familiar with AMBA architecture. The usage of AXI-4, APB and AXI-4 Lite.
+8. AMBA(APB & AXI-4) - Getting familiar with AMBA architecture. The usage of AXI-4, APB and DRAM data generation
