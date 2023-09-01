@@ -1,0 +1,15 @@
+Vivado Simulator v2021.1
+Copyright 1986-1999, 2001-2021 Xilinx, Inc. All Rights Reserved.
+Running: D:/Vivado/Vivado/2021.1/bin/unwrapped/win64.o/xelab.exe -wto 9cd7a98d7a5349d1984cec9970a0bd79 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L uvm -L unisims_ver -L unimacro_ver -L secureip --snapshot apb_add_master_behav xil_defaultlib.apb_add_master xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4100] "C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/MidTerm_AMBA/APB_EXAMPLE/Basic_apb_adder/Basic_apb_adder.sim/sim_1/behav/xsim/glbl.v" Line 6. Module glbl has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/MidTerm_AMBA/APB_EXAMPLE/Basic_apb_adder/Basic_apb_adder.sim/sim_1/behav/xsim/glbl.v" Line 6. Module glbl has a timescale but at least one module in design doesn't have timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.apb_add_master
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot apb_add_master_behav

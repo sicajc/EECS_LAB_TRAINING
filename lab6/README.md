@@ -1,7 +1,6 @@
 # SRAM
 - Timing units are used to determine when to turn on or off the decoders.
 
-
 # Read operation path
 1. input latch -> Timing units -> row decoder -> SRAM array -> sense amp -> col decoder -> address out latch
 
@@ -58,3 +57,12 @@
 <p align="center">
   <img src="./6t_sram_notes/element_instantiation.png" width="500" heigh ="500">
 </p>
+
+
+6. How to instantiate circuit components in parrallel?
+<p align="center">
+  <img src="./6t_sram_notes/parrallel_subckt_instantiation.png" width="500" heigh ="500">
+</p>
+
+## References
+[1] [HSPICE 入門教學](https://hackmd.io/@azoo/hspice_tutorial)

@@ -1,0 +1,7 @@
+0.7
+2020.2
+Jun 10 2021
+20:04:57
+C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/MidTerm_AMBA/APB_SIM/APB_SIM.sim/sim_1/behav/xsim/glbl.v,1623370582,verilog,,,,glbl,,uvm,,,,,,
+C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/MidTerm_AMBA/apb_add_master.sv,1693481101,systemVerilog,,C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/MidTerm_AMBA/apb_slave_tb.sv,,apb_add_master,,uvm,,,,,,
+C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/MidTerm_AMBA/apb_slave_tb.sv,1693481154,systemVerilog,,,,apb_slave_tb,,uvm,,,,,,
