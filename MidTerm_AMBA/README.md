@@ -39,9 +39,12 @@
 ## AXI implementation details
 1. You should seperate the WRITE FSM for write transactions and READ FSM for read transactions of the AXI master.
 2. WRITE and READ ports can be accessed independently! By different circuit components.
-3. Redeclare and connect the outer world interfaces using registers within to prevent contamination issue.
+3. Redeclaration and connect the outer world interfaces using registers within to prevent contamination issue.
 4. Write and read these registers with your main design block.
 5. Note for a SUCCESS transaction, VALID and READY must be both 1.
+6. Abstraction and interface in verilog, though tedious, works as a powerful tool.
+7. Can modularize DRAM access and DRAM read into different blocks, send an address in,the gets data out.
+8. Cache controller must be implemented if you want to improve performance when access lots of data in DRAM.
 
 # Q&A
 - Why isnt the address of the matrix byte addressable? That is the matrix may start from address 7?
@@ -49,3 +52,4 @@
 # Refernces
 1. [RTL Design of APB](https://www.youtube.com/watch?v=ZtM4H8OCWDI&t=1441s)
 2. [Notion notes](https://www.notion.so/06582258d7f845bc94b2a0919d011789?v=7b865b48469b4ef2b909d6cd4ceeb4a0&p=3c7f403061c247e5af8b6d6a57572edc&pm=s)
+3. [IC_LAB_MIDTERM](https://github.com/mirkat1206/2021_Spring_NCTU_ICLAB/tree/main/Midterm_Project)

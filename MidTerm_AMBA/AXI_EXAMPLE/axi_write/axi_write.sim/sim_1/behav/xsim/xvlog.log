@@ -1,0 +1,5 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/MidTerm_AMBA/AXI_EXAMPLE/axi_write_channel.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axi_write_channel
+WARNING: [VRFC 10-2379] empty port in module declaration [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/MidTerm_AMBA/AXI_EXAMPLE/axi_write_channel.v:49]
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/MidTerm_AMBA/AXI_EXAMPLE/axi_write_channel_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axi_write_channel_tb

@@ -1,0 +1,7 @@
+Running: xsim.dir/axi_write_channel_behav/xsimk.exe -simmode gui -wdb axi_write_channel_behav.wdb -simrunnum 0 -socket 57834
+Design successfully loaded
+Design Loading Memory Usage: 6796 KB (Peak: 6796 KB)
+Design Loading CPU Usage: 0 ms
+Simulation completed
+Simulation Memory Usage: 7408 KB (Peak: 7408 KB)
+Simulation CPU Usage: 61 ms
