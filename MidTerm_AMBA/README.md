@@ -47,6 +47,14 @@
 8. Cache controller must be implemented if you want to improve performance when access lots of data in DRAM.
 9. When the same bus has 2 different part, you had better redclare the bus and connect for better debug experience.
 
+
+## Fast prototyping and implementation
+1. Choose multi-cycle machine first, finish coding it out, at least having a baseline model, then you can try other design choice.
+
+2. Pipelined architecture would require you to seperate AXI_READ and AXI_WRITE into 2 controller.
+
+3. AXI_READ and AXI_WRITE services can be seperated into different modules and test independently to make the code simpler and cleaner.
+
 # Q&A
 - Why isnt the address of the matrix byte addressable? That is the matrix may start from address 7?
 

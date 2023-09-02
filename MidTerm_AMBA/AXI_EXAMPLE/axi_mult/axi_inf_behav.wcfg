@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="axi_inf_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="axi_inf" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="25,415.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="33,730.001 ns"></ZoomEndTime>
+      <Cursor1Time time="29,600.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="340"></NameColumnWidth>
+      <ValueColumnWidth column_width="164"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="68" />
+   <wvobject fp_name="/axi_inf/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/rst_n" type="logic">
+      <obj_property name="ElementShortName">rst_n</obj_property>
+      <obj_property name="ObjectShortName">rst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/start" type="logic">
+      <obj_property name="ElementShortName">start</obj_property>
+      <obj_property name="ObjectShortName">start</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider184">
+      <obj_property name="label">WR_CHANNEL</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/AXI_WR_idle" type="logic">
+      <obj_property name="ElementShortName">AXI_WR_idle</obj_property>
+      <obj_property name="ObjectShortName">AXI_WR_idle</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/AXI_WR_addr" type="logic">
+      <obj_property name="ElementShortName">AXI_WR_addr</obj_property>
+      <obj_property name="ObjectShortName">AXI_WR_addr</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/AXI_WR_write_data" type="logic">
+      <obj_property name="ElementShortName">AXI_WR_write_data</obj_property>
+      <obj_property name="ObjectShortName">AXI_WR_write_data</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/AXI_WR_wait_response" type="logic">
+      <obj_property name="ElementShortName">AXI_WR_wait_response</obj_property>
+      <obj_property name="ObjectShortName">AXI_WR_wait_response</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/burst_done_f" type="logic">
+      <obj_property name="ElementShortName">burst_done_f</obj_property>
+      <obj_property name="ObjectShortName">burst_done_f</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/wr_addr_sent_f" type="logic">
+      <obj_property name="ElementShortName">wr_addr_sent_f</obj_property>
+      <obj_property name="ObjectShortName">wr_addr_sent_f</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/data_wrote_f" type="logic">
+      <obj_property name="ElementShortName">data_wrote_f</obj_property>
+      <obj_property name="ObjectShortName">data_wrote_f</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/write_responed_f" type="logic">
+      <obj_property name="ElementShortName">write_responed_f</obj_property>
+      <obj_property name="ObjectShortName">write_responed_f</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/valid_write_transaction_f" type="logic">
+      <obj_property name="ElementShortName">valid_write_transaction_f</obj_property>
+      <obj_property name="ObjectShortName">valid_write_transaction_f</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider210">
+      <obj_property name="label">WRITE ADDRESS</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/awid_m_inf" type="array">
+      <obj_property name="ElementShortName">awid_m_inf[3:0]</obj_property>
+      <obj_property name="ObjectShortName">awid_m_inf[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/awaddr_m_inf" type="array">
+      <obj_property name="ElementShortName">awaddr_m_inf[31:0]</obj_property>
+      <obj_property name="ObjectShortName">awaddr_m_inf[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/awsize_m_inf" type="array">
+      <obj_property name="ElementShortName">awsize_m_inf[2:0]</obj_property>
+      <obj_property name="ObjectShortName">awsize_m_inf[2:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/awburst_m_inf" type="array">
+      <obj_property name="ElementShortName">awburst_m_inf[1:0]</obj_property>
+      <obj_property name="ObjectShortName">awburst_m_inf[1:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/awlen_m_inf" type="array">
+      <obj_property name="ElementShortName">awlen_m_inf[3:0]</obj_property>
+      <obj_property name="ObjectShortName">awlen_m_inf[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/awvalid_m_inf" type="array">
+      <obj_property name="ElementShortName">awvalid_m_inf[0:0]</obj_property>
+      <obj_property name="ObjectShortName">awvalid_m_inf[0:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/awready_m_inf" type="array">
+      <obj_property name="ElementShortName">awready_m_inf[0:0]</obj_property>
+      <obj_property name="ObjectShortName">awready_m_inf[0:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider211">
+      <obj_property name="label">WRITE DATA</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/wdata_m_inf" type="array">
+      <obj_property name="ElementShortName">wdata_m_inf[31:0]</obj_property>
+      <obj_property name="ObjectShortName">wdata_m_inf[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/wlast_m_inf" type="array">
+      <obj_property name="ElementShortName">wlast_m_inf[0:0]</obj_property>
+      <obj_property name="ObjectShortName">wlast_m_inf[0:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/wvalid_m_inf" type="array">
+      <obj_property name="ElementShortName">wvalid_m_inf[0:0]</obj_property>
+      <obj_property name="ObjectShortName">wvalid_m_inf[0:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/wready_m_inf" type="array">
+      <obj_property name="ElementShortName">wready_m_inf[0:0]</obj_property>
+      <obj_property name="ObjectShortName">wready_m_inf[0:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider212">
+      <obj_property name="label">WRITE RESPONSE</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/bid_m_inf" type="array">
+      <obj_property name="ElementShortName">bid_m_inf[3:0]</obj_property>
+      <obj_property name="ObjectShortName">bid_m_inf[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/bresp_m_inf" type="array">
+      <obj_property name="ElementShortName">bresp_m_inf[1:0]</obj_property>
+      <obj_property name="ObjectShortName">bresp_m_inf[1:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/bvalid_m_inf" type="array">
+      <obj_property name="ElementShortName">bvalid_m_inf[0:0]</obj_property>
+      <obj_property name="ObjectShortName">bvalid_m_inf[0:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/bready_m_inf" type="array">
+      <obj_property name="ElementShortName">bready_m_inf[0:0]</obj_property>
+      <obj_property name="ObjectShortName">bready_m_inf[0:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider185">
+      <obj_property name="label">RD_CHANNEL</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/AXI_RD_idle" type="logic">
+      <obj_property name="ElementShortName">AXI_RD_idle</obj_property>
+      <obj_property name="ObjectShortName">AXI_RD_idle</obj_property>
+      <obj_property name="CustomSignalColor">#F0E68C</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/AXI_RD_addr" type="logic">
+      <obj_property name="ElementShortName">AXI_RD_addr</obj_property>
+      <obj_property name="ObjectShortName">AXI_RD_addr</obj_property>
+      <obj_property name="CustomSignalColor">#F0E68C</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/AXI_RD_data" type="logic">
+      <obj_property name="ElementShortName">AXI_RD_data</obj_property>
+      <obj_property name="ObjectShortName">AXI_RD_data</obj_property>
+      <obj_property name="CustomSignalColor">#F0E68C</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/rd_addr_sent_f" type="logic">
+      <obj_property name="ElementShortName">rd_addr_sent_f</obj_property>
+      <obj_property name="ObjectShortName">rd_addr_sent_f</obj_property>
+      <obj_property name="CustomSignalColor">#F0E68C</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/all_data_received_f" type="logic">
+      <obj_property name="ElementShortName">all_data_received_f</obj_property>
+      <obj_property name="ObjectShortName">all_data_received_f</obj_property>
+      <obj_property name="CustomSignalColor">#F0E68C</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/valid_read_transaction_f" type="logic">
+      <obj_property name="ElementShortName">valid_read_transaction_f</obj_property>
+      <obj_property name="ObjectShortName">valid_read_transaction_f</obj_property>
+      <obj_property name="CustomSignalColor">#F0E68C</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/rd_burst_cnt" type="array">
+      <obj_property name="ElementShortName">rd_burst_cnt[2:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_burst_cnt[2:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="CustomSignalColor">#F0E68C</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider207">
+      <obj_property name="label">READ ADDRESS</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/arid_m_inf" type="array">
+      <obj_property name="ElementShortName">arid_m_inf[3:0]</obj_property>
+      <obj_property name="ObjectShortName">arid_m_inf[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/araddr_m_inf" type="array">
+      <obj_property name="ElementShortName">araddr_m_inf[31:0]</obj_property>
+      <obj_property name="ObjectShortName">araddr_m_inf[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/arlen_m_inf" type="array">
+      <obj_property name="ElementShortName">arlen_m_inf[3:0]</obj_property>
+      <obj_property name="ObjectShortName">arlen_m_inf[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/arsize_m_inf" type="array">
+      <obj_property name="ElementShortName">arsize_m_inf[2:0]</obj_property>
+      <obj_property name="ObjectShortName">arsize_m_inf[2:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/arburst_m_inf" type="array">
+      <obj_property name="ElementShortName">arburst_m_inf[1:0]</obj_property>
+      <obj_property name="ObjectShortName">arburst_m_inf[1:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/arvalid_m_inf" type="array">
+      <obj_property name="ElementShortName">arvalid_m_inf[0:0]</obj_property>
+      <obj_property name="ObjectShortName">arvalid_m_inf[0:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/arready_m_inf" type="array">
+      <obj_property name="ElementShortName">arready_m_inf[0:0]</obj_property>
+      <obj_property name="ObjectShortName">arready_m_inf[0:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider206">
+      <obj_property name="label">READ DATA</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/rid_m_inf" type="array">
+      <obj_property name="ElementShortName">rid_m_inf[3:0]</obj_property>
+      <obj_property name="ObjectShortName">rid_m_inf[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/rdata_m_inf" type="array">
+      <obj_property name="ElementShortName">rdata_m_inf[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rdata_m_inf[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/rresp_m_inf" type="array">
+      <obj_property name="ElementShortName">rresp_m_inf[1:0]</obj_property>
+      <obj_property name="ObjectShortName">rresp_m_inf[1:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/rlast_m_inf" type="array">
+      <obj_property name="ElementShortName">rlast_m_inf[0:0]</obj_property>
+      <obj_property name="ObjectShortName">rlast_m_inf[0:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/rvalid_m_inf" type="array">
+      <obj_property name="ElementShortName">rvalid_m_inf[0:0]</obj_property>
+      <obj_property name="ObjectShortName">rvalid_m_inf[0:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/rready_m_inf" type="array">
+      <obj_property name="ElementShortName">rready_m_inf[0:0]</obj_property>
+      <obj_property name="ObjectShortName">rready_m_inf[0:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider186">
+      <obj_property name="label">MULT</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/ST_IDLE" type="logic">
+      <obj_property name="ElementShortName">ST_IDLE</obj_property>
+      <obj_property name="ObjectShortName">ST_IDLE</obj_property>
+      <obj_property name="CustomSignalColor">#F0E68C</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/ST_RD_DATA" type="logic">
+      <obj_property name="ElementShortName">ST_RD_DATA</obj_property>
+      <obj_property name="ObjectShortName">ST_RD_DATA</obj_property>
+      <obj_property name="CustomSignalColor">#F0E68C</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/ST_CAL" type="logic">
+      <obj_property name="ElementShortName">ST_CAL</obj_property>
+      <obj_property name="ObjectShortName">ST_CAL</obj_property>
+      <obj_property name="CustomSignalColor">#F0E68C</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/ST_WB" type="logic">
+      <obj_property name="ElementShortName">ST_WB</obj_property>
+      <obj_property name="ObjectShortName">ST_WB</obj_property>
+      <obj_property name="CustomSignalColor">#F0E68C</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/ST_DONE" type="logic">
+      <obj_property name="ElementShortName">ST_DONE</obj_property>
+      <obj_property name="ObjectShortName">ST_DONE</obj_property>
+      <obj_property name="CustomSignalColor">#F0E68C</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/rd_cnt" type="logic">
+      <obj_property name="ElementShortName">rd_cnt</obj_property>
+      <obj_property name="ObjectShortName">rd_cnt</obj_property>
+      <obj_property name="CustomSignalColor">#F0E68C</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/timed_out_f" type="logic">
+      <obj_property name="ElementShortName">timed_out_f</obj_property>
+      <obj_property name="ObjectShortName">timed_out_f</obj_property>
+      <obj_property name="CustomSignalColor">#F0E68C</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/mult_in_valid" type="logic">
+      <obj_property name="ElementShortName">mult_in_valid</obj_property>
+      <obj_property name="ObjectShortName">mult_in_valid</obj_property>
+      <obj_property name="CustomSignalColor">#F0E68C</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/a_ff" type="array">
+      <obj_property name="ElementShortName">a_ff[31:0]</obj_property>
+      <obj_property name="ObjectShortName">a_ff[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/b_ff" type="array">
+      <obj_property name="ElementShortName">b_ff[31:0]</obj_property>
+      <obj_property name="ObjectShortName">b_ff[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/out_ff" type="array">
+      <obj_property name="ElementShortName">out_ff[31:0]</obj_property>
+      <obj_property name="ObjectShortName">out_ff[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/addr_ptr" type="array">
+      <obj_property name="ElementShortName">addr_ptr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">addr_ptr[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/axi_inf/done_cnt" type="array">
+      <obj_property name="ElementShortName">done_cnt[2:0]</obj_property>
+      <obj_property name="ObjectShortName">done_cnt[2:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+</wave_config>
