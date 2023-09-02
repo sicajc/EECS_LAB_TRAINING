@@ -55,8 +55,16 @@
 
 3. AXI_READ and AXI_WRITE services can be seperated into different modules and test independently to make the code simpler and cleaner.
 
-# Q&A
-- Why isnt the address of the matrix byte addressable? That is the matrix may start from address 7?
+
+## MultiCycle architecture with AXI-4
+- We simply replace the READ_DATA state and WB state with AXI steps of AXI protocals.
+
+<p align="center">
+  <img src="./6t_sram_notes/parrallel_subckt_instantiation.png" width="500" heigh ="500">
+</p>
+
+## Parrallel AXI-4 protocal
+- Build independent controllers for Write Channel and Read channel, connects only the necessary inputs and outputs to each controllers.
 
 # Refernces
 1. [RTL Design of APB](https://www.youtube.com/watch?v=ZtM4H8OCWDI&t=1441s)

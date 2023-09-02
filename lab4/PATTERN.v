@@ -74,7 +74,7 @@ initial
 //================================================================
 initial
 begin
-    pat_input_file      = $fopen("C:/Users/jacky/Desktop/EECS_LAB_TRAINING/EECS_LAB_TRAINING/lab4/pattern/input.txt", "r");
+    pat_input_file      = $fopen("C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/pattern/input.txt", "r");
 
     a = $fscanf(pat_input_file, "NUM_OF_PAT: %d\n\n", PATNUM);
 
@@ -129,9 +129,9 @@ begin
         endcase
         color = 16 + r*36 + g*6 + b;
         if(color < 100)
-            $display("\033[38;5;%2dmPASS PATTERN NO.%4d\033[00m", color, patcount+1);
+            $display("\033[38;5;%2dmPASS PATTERN NO.%4d\033[00m CYCLE:%4d", color, patcount+1,cycles);
         else
-            $display("\033[38;5;%3dmPASS PATTERN NO.%4d\033[00m", color, patcount+1);
+            $display("\033[38;5;%3dmPASS PATTERN NO.%4d\033[00m CYCLE:%4d", color, patcount+1,cycles);
     end
     #(1000);
     YOU_PASS_task;

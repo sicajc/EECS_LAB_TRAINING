@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:33 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Sat Sep  2 21:55:39 2023
+# Process ID: 4068
+# Current directory: C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/MAZE_DONE_FINDPATH_MERGED/MAZE_DONE_FINDPATH_MERGED.runs/impl_1
+# Command line: vivado.exe -log MAZE.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source MAZE.tcl -notrace
+# Log file: C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/MAZE_DONE_FINDPATH_MERGED/MAZE_DONE_FINDPATH_MERGED.runs/impl_1/MAZE.vdi
+# Journal file: C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/MAZE_DONE_FINDPATH_MERGED/MAZE_DONE_FINDPATH_MERGED.runs/impl_1\vivado.jou
+#-----------------------------------------------------------
+source MAZE.tcl -notrace

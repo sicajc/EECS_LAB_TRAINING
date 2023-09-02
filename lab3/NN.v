@@ -144,7 +144,7 @@ begin:CTR_PIPELINES
         kernalNum_pixelSumACT0_expACT1_pipe <= 0;
         kernalNum_expACT1_wbDivACT2_pipe <= 0;
         kernalNum_expACT1_wbDivACT2_pipe2 <= 0;
-         //w_en
+        //w_en
         w_en_mac0_mac1_pipe          <= 0;
         w_en_mac1_mac2_pipe <= 0;
         w_en_pixelSum_pipe         <= 0;
@@ -867,7 +867,7 @@ begin
     end
     else
     begin
-       mac_result_pipe <= mac_sum;
+        mac_result_pipe <= mac_sum;
     end
 end
 
@@ -1050,7 +1050,8 @@ DW_fp_sub_inst
         .status_inst ( )
     );
 
-always @(posedge clk or negedge rst_n) begin
+always @(posedge clk or negedge rst_n)
+begin
     if(~rst_n)
     begin
         fp_add_result_pipe <= 0;
@@ -1331,45 +1332,54 @@ begin
 end
 
 
+localparam sum3_sig_width = 32;
+localparam sum3_discarded_sig= inst_sig_width - sum3_sig_width;
 
+wire[DATA_WIDTH-1-sum3_discarded_sig:0] partial_sum_wr[0:2];
 
 // 3x 3 inputs fp adders
-DW_fp_sum3_inst #(sig_width,exp_width,ieee_compliance,inst_arch_type)
+DW_fp_sum3_inst #(sum3_sig_width,exp_width,ieee_compliance,inst_arch_type)
                 u_DW_fp_sum3_inst1(
-                    .inst_a   ( mults_result_pipe[0]),
-                    .inst_b   ( mults_result_pipe[1]),
-                    .inst_c   ( mults_result_pipe[2]   ),
+                    .inst_a   ( mults_result_pipe[0][DATA_WIDTH-1:sum3_discarded_sig]),
+                    .inst_b   ( mults_result_pipe[1][DATA_WIDTH-1:sum3_discarded_sig]),
+                    .inst_c   ( mults_result_pipe[2][DATA_WIDTH-1:sum3_discarded_sig]   ),
                     .inst_rnd ( 3'b000 ),
-                    .z_inst   ( partial_sum[0]   ),
+                    .z_inst   ( partial_sum_wr[0]   ),
                     .status_inst  (   )
                 );
 
-DW_fp_sum3_inst #(sig_width,exp_width,ieee_compliance,inst_arch_type)
+DW_fp_sum3_inst #(sum3_sig_width,exp_width,ieee_compliance,inst_arch_type)
                 u_DW_fp_sum3_inst2(
-                    .inst_a   ( mults_result_pipe[3]),
-                    .inst_b   ( mults_result_pipe[4]),
-                    .inst_c   ( mults_result_pipe[5]   ),
+                    .inst_a   ( mults_result_pipe[3][DATA_WIDTH-1:sum3_discarded_sig]),
+                    .inst_b   ( mults_result_pipe[4][DATA_WIDTH-1:sum3_discarded_sig]),
+                    .inst_c   ( mults_result_pipe[5][DATA_WIDTH-1:sum3_discarded_sig]   ),
                     .inst_rnd ( 3'b000 ),
-                    .z_inst   ( partial_sum[1]),
+                    .z_inst   ( partial_sum_wr[1]),
                     .status_inst  (   )
                 );
 
-DW_fp_sum3_inst #(sig_width,exp_width,ieee_compliance,inst_arch_type)
+DW_fp_sum3_inst #(sum3_sig_width,exp_width,ieee_compliance,inst_arch_type)
                 u_DW_fp_sum3_inst3(
-                    .inst_a   ( mults_result_pipe[6]),
-                    .inst_b   ( mults_result_pipe[7]),
-                    .inst_c   ( mults_result_pipe[8]   ),
+                    .inst_a   ( mults_result_pipe[6][DATA_WIDTH-1:sum3_discarded_sig]),
+                    .inst_b   ( mults_result_pipe[7][DATA_WIDTH-1:sum3_discarded_sig]),
+                    .inst_c   ( mults_result_pipe[8][DATA_WIDTH-1:sum3_discarded_sig]   ),
                     .inst_rnd ( 3'b000 ),
-                    .z_inst   ( partial_sum[2]),
+                    .z_inst   ( partial_sum_wr[2]),
                     .status_inst  (   )
                 );
 
-always @(posedge clk or negedge rst_n) begin
+assign partial_sum[0] = {partial_sum_wr[0],{sum3_discarded_sig{1'b0}}};
+assign partial_sum[1] = {partial_sum_wr[1],{sum3_discarded_sig{1'b0}}};
+assign partial_sum[2] = {partial_sum_wr[2],{sum3_discarded_sig{1'b0}}};
+
+
+always @(posedge clk or negedge rst_n)
+begin
     if(~rst_n)
     begin
         for(i=0;i<3;i=i+1)
         begin
-           partial_sum_pipe[i] <= 0;
+            partial_sum_pipe[i] <= 0;
         end
     end
     else
@@ -1381,17 +1391,19 @@ always @(posedge clk or negedge rst_n) begin
     end
 end
 
-
+wire[DATA_WIDTH-1-sum3_discarded_sig:0] mac_result_wr;
 // 3 input fp adders
-DW_fp_sum3_inst #(sig_width,exp_width,ieee_compliance,inst_arch_type)
+DW_fp_sum3_inst #(sum3_sig_width,exp_width,ieee_compliance,inst_arch_type)
                 u_DW_fp_sum3_inst(
-                    .inst_a   ( partial_sum_pipe[0]),
-                    .inst_b   ( partial_sum_pipe[1]),
-                    .inst_c   ( partial_sum_pipe[2]   ),
+                    .inst_a   ( partial_sum_pipe[0][DATA_WIDTH-1:sum3_discarded_sig]),
+                    .inst_b   ( partial_sum_pipe[1][DATA_WIDTH-1:sum3_discarded_sig]),
+                    .inst_c   ( partial_sum_pipe[2][DATA_WIDTH-1:sum3_discarded_sig]   ),
                     .inst_rnd ( 3'b000 ),
-                    .z_inst   ( mac_result  ),
+                    .z_inst   ( mac_result_wr  ),
                     .status_inst  (   )
                 );
+
+assign mac_result = {mac_result_wr[0],{sum3_discarded_sig{1'b0}}};
 
 // Ouput buffer
 always @(posedge clk or negedge rst_n)
