@@ -45,6 +45,7 @@
 6. Abstraction and interface in verilog, though tedious, works as a powerful tool.
 7. Can modularize DRAM access and DRAM read into different blocks, send an address in,the gets data out.
 8. Cache controller must be implemented if you want to improve performance when access lots of data in DRAM.
+9. When the same bus has 2 different part, you had better redclare the bus and connect for better debug experience.
 
 # Q&A
 - Why isnt the address of the matrix byte addressable? That is the matrix may start from address 7?

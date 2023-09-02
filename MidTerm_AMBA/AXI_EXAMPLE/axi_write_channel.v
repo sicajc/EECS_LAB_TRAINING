@@ -4,9 +4,6 @@ module axi_write_channel(
            rst_n,
            //operation
            write_op,
-           //===============================
-           //  PORTS to INTERCONNECT
-           //===============================
            // axi write address channel
            awid_m_inf,
            awaddr_m_inf,
@@ -25,27 +22,6 @@ module axi_write_channel(
            bresp_s_inf,
            bvalid_s_inf,
            bready_m_inf,
-           //===============================
-           //  PORTS to IP
-           //===============================
-           // axi write address channel
-           i_awid_m_inf_wr,
-           i_awaddr_m_inf_wr,
-           i_awsize_m_inf_wr,
-           i_awburst_m_inf_wr,
-           i_awlen_m_inf_wr,
-           i_awvalid_m_inf_wr,
-           o_awready_s_inf_wr,
-           // axi write data channel
-           i_wdata_m_inf_wr,
-           i_wlast_m_inf_wr,
-           i_wvalid_m_inf_wr,
-           o_wready_s_inf_wr,
-           // axi write response channel
-           o_bid_s_inf_wr,
-           o_bresp_s_inf_wr,
-           o_bvalid_s_inf_wr,
-           i_bready_m_inf_wr,
        );
 //================================================================
 //  integer / genvar / parameter

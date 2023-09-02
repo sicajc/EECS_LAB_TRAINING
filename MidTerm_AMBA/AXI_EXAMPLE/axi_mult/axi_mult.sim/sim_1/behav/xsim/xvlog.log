@@ -1,0 +1,4 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/MidTerm_AMBA/AXI_EXAMPLE/axi_inf.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axi_inf
+WARNING: [VRFC 10-3380] identifier 'mult_in_valid' is used before its declaration [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/MidTerm_AMBA/AXI_EXAMPLE/axi_inf.v:443]
+WARNING: [VRFC 10-3380] identifier 'mult_in_valid' is used before its declaration [C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/MidTerm_AMBA/AXI_EXAMPLE/axi_inf.v:511]

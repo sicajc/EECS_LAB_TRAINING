@@ -196,3 +196,7 @@ def print_ans(board, blanks) :
     rows = [ g*BASE + r for g in shuffle(rBase) for r in shuffle(rBase) ]
     rBase = range(BASE)
 ```
+
+# NOTE
+1. Beware of the constraints set by the exercise, it might be a good chance for optimization.
+2. Since after the dead end filling, there would only be 1 optimal path left, thus we can simply output the path after we have only 1 single path left!
