@@ -60,3 +60,13 @@
 2. When deriving pipelined architecture, first derive a combinational version of your circuit, then start drawing pipeline cutset.
 3. Comparing to the size of designWare IP, pipelined registers are actually cheap.
 4. When working in IC LAB, do not try to rewrite the equation when using IP, otherwise some corner cases cannot pass!!!! This problem arise when I am using the exponential IP.
+
+# Steps
+1. First derive a correct functional model at high level language with pipelining in mind.(For loop of one single pixel)
+2. Derive the combinational version of the circuit with FSM in mind.
+3. Draw the pipeline cutset for every circuit components, pipeline registers are cheap compare to IPs.
+4. Implement the circuit.
+5. Test until it works.
+6. Due to an allowable constraint released start playing with the most significant bits of each IEEE components.
+7. Critical path DIV > SUM3 > SUM > MULT > CMP
+8. Note the bit width of EXP cannot be modified, DIV can be modified drastically, SUM3 however only has a 1 bit tolerance.

@@ -37,6 +37,11 @@
 - The receive would give the receiptent to the postman, the postman would send the receipent back to the post office. Then post office would send it back to you.
 
 ## AXI implementation details
+
+<p align="center">
+  <img src="./AXI-STREAM-RULE.jpg" width="500" heigh ="500">
+</p>
+
 1. You should seperate the WRITE FSM for write transactions and READ FSM for read transactions of the AXI master.
 2. WRITE and READ ports can be accessed independently! By different circuit components.
 3. Redeclaration and connect the outer world interfaces using registers within to prevent contamination issue.
@@ -60,13 +65,16 @@
 - We simply replace the READ_DATA state and WB state with AXI steps of AXI protocals.
 
 <p align="center">
-  <img src="./6t_sram_notes/parrallel_subckt_instantiation.png" width="500" heigh ="500">
+  <img src="./MultiCycle_AXI.jpg" width="500" heigh ="500">
 </p>
 
 ## Parrallel AXI-4 protocal
 - Build independent controllers for Write Channel and Read channel, connects only the necessary inputs and outputs to each controllers.
 
+- ASMD is within the PDF.
+
 # Refernces
-1. [RTL Design of APB](https://www.youtube.com/watch?v=ZtM4H8OCWDI&t=1441s)
+1. [RTL Design Example of APB](https://www.youtube.com/watch?v=ZtM4H8OCWDI&t=1441s)
 2. [Notion notes](https://www.notion.so/06582258d7f845bc94b2a0919d011789?v=7b865b48469b4ef2b909d6cd4ceeb4a0&p=3c7f403061c247e5af8b6d6a57572edc&pm=s)
 3. [IC_LAB_MIDTERM](https://github.com/mirkat1206/2021_Spring_NCTU_ICLAB/tree/main/Midterm_Project)
+4. [SOC-101 Bus architecture](https://www.youtube.com/watch?v=EZrl33ZeOKI&list=PLZU5hLL_713ygweO3b_9KiZUJuEI7I5yK&t=456s)
