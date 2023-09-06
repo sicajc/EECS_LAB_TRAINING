@@ -55,11 +55,13 @@
 # Reducing errors
 1. Do proper base case, extreme case and normal case checking with others during algorithm level.
 2. Remember to check your code, see if there are some mapping errors after you first coded it out. Sometimes, bits errors,connections and overflowing errors can be easily spotted.
+
 # Summary
 1. Since an error range is allowed within spec, so we can actually adjust the mantissa of our floating point IP. This method can greatly reduce the critical path and area!
 2. When deriving pipelined architecture, first derive a combinational version of your circuit, then start drawing pipeline cutset.
 3. Comparing to the size of designWare IP, pipelined registers are actually cheap.
 4. When working in IC LAB, do not try to rewrite the equation when using IP, otherwise some corner cases cannot pass!!!! This problem arise when I am using the exponential IP.
+5. Some cycles can actually be stolen during the read data stage. Since we can start processing the image after we have enough data in the buffers.
 
 # Steps
 1. First derive a correct functional model at high level language with pipelining in mind.(For loop of one single pixel)

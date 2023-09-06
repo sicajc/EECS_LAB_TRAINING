@@ -257,4 +257,54 @@ Time resolution is 1 ps
 [38;5;166mPASS PATTERN NO. 256[00m CYCLE: 100
 [38;5;136mPASS PATTERN NO. 257[00m CYCLE:  64
 [38;5;106mPASS PATTERN NO. 258[00m CYCLE:  96
-[38;5;76mPASS PATTERN NO. 259[0
+[38;5;76mPASS PATTERN NO. 259[00m CYCLE:  48
+[38;5;46mPASS PATTERN NO. 260[00m CYCLE:  56
+[38;5;41mPASS PATTERN NO. 261[00m CYCLE:  52
+[38;5;36mPASS PATTERN NO. 262[00m CYCLE: 104
+[38;5;31mPASS PATTERN NO. 263[00m CYCLE: 120
+[38;5;26mPASS PATTERN NO. 264[00m CYCLE: 144
+[38;5;21mPASS PATTERN NO. 265[00m CYCLE:  96
+[38;5;56mPASS PATTERN NO. 266[00m CYCLE:  48
+[38;5;91mPASS PATTERN NO. 267[00m CYCLE:  44
+[38;5;126mPASS PATTERN NO. 268[00m CYCLE:  48
+[38;5;161mPASS PATTERN NO. 269[00m CYCLE:  36
+[38;5;196mPASS PATTERN NO. 270[00m CYCLE:  92
+[38;5;166mPASS PATTERN NO. 271[00m CYCLE:  76
+[38;5;136mPASS PATTERN NO. 272[00m CYCLE:  92
+[38;5;106mPASS PATTERN NO. 273[00m CYCLE: 108
+[38;5;76mPASS PATTERN NO. 274[00m CYCLE: 100
+[38;5;46mPASS PATTERN NO. 275[00m CYCLE:  92
+[38;5;41mPASS PATTERN NO. 276[00m CYCLE:  96
+[38;5;36mPASS PATTERN NO. 277[00m CYCLE:  88
+[38;5;31mPASS PATTERN NO. 278[00m CYCLE:  52
+[38;5;26mPASS PATTERN NO. 279[00m CYCLE: 104
+[38;5;21mPASS PATTERN NO. 280[00m CYCLE:  64
+[38;5;56mPASS PATTERN NO. 281[00m CYCLE:  88
+[38;5;91mPASS PATTERN NO. 282[00m CYCLE:  56
+[38;5;126mPASS PATTERN NO. 283[00m CYCLE: 100
+[38;5;161mPASS PATTERN NO. 284[00m CYCLE: 116
+[38;5;196mPASS PATTERN NO. 285[00m CYCLE:  80
+[38;5;166mPASS PATTERN NO. 286[00m CYCLE: 116
+[38;5;136mPASS PATTERN NO. 287[00m CYCLE:  64
+[38;5;106mPASS PATTERN NO. 288[00m CYCLE:  56
+[38;5;76mPASS PATTERN NO. 289[00m CYCLE:  68
+[38;5;46mPASS PATTERN NO. 290[00m CYCLE: 104
+[38;5;41mPASS PATTERN NO. 291[00m CYCLE: 104
+[38;5;36mPASS PATTERN NO. 292[00m CYCLE: 100
+[38;5;31mPASS PATTERN NO. 293[00m CYCLE:  96
+[38;5;26mPASS PATTERN NO. 294[00m CYCLE:  96
+[38;5;21mPASS PATTERN NO. 295[00m CYCLE: 100
+[38;5;56mPASS PATTERN NO. 296[00m CYCLE:  76
+[38;5;91mPASS PATTERN NO. 297[00m CYCLE:  84
+[38;5;126mPASS PATTERN NO. 298[00m CYCLE: 120
+[38;5;161mPASS PATTERN NO. 299[00m CYCLE:  36
+[38;5;196mPASS PATTERN NO. 300[00m CYCLE:  68
+----------------------------------------------------------------------------------------------------------------------
+                                                  Congratulations!                                                    
+                                           You have passed all patterns!                                              
+                                                                                                                      
+                                        Your execution cycles   = 28897 cycles                                          
+                                        Your clock period       = 10.0 ns                                             
+                                        Total latency           = 291970.0 ns                                             
+----------------------------------------------------------------------------------------------------------------------
+$finish called at time : 1165620 ns : File "C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/PATTERN.v" Line 368

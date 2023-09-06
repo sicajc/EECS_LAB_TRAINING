@@ -1,0 +1,1 @@
+print(f"Current board = {print_sudoku(board)}")
