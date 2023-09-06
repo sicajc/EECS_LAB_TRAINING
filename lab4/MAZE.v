@@ -69,8 +69,6 @@ reg thereIsDeadend_f;
 reg noDeadEnd_f;
 wire dstFound_f = x_ptr == MAZE_SIZE && y_ptr == MAZE_SIZE && state_DONE;
 
-
-
 //========================
 //   CTR
 //========================
@@ -304,7 +302,8 @@ begin
                 counts = counts + 1;
 
             //This (y,x) is a deadend
-            if ((counts >= 3) && (maze[y][x] != 0) && (y!=1 || x!=1) && (y!=MAZE_SIZE || x!=MAZE_SIZE))
+            if ((counts >= 3) && (maze[y][x] != 0) &&
+                    (y!=1 || x!=1) && (y!=MAZE_SIZE || x!=MAZE_SIZE))
             begin
                 thereIsDeadend_f = 1'b1;
                 maze_wr[y][x] = 1'b0;
