@@ -1,0 +1,8 @@
+0.7
+2020.2
+Jun 10 2021
+20:04:57
+C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/MAZE.v,1694246979,verilog,,C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/PATTERN.v,,MAZE,,,,,,,,
+C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/PATTERN.v,1694246939,verilog,,C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/TESTBED.v,C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/MAZE.v,PATTERN,,,,,,,,
+C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/TESTBED.v,1691642374,verilog,,,C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/PATTERN.v;C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/MAZE.v,TESTBED,,,,,,,,
+C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/maze_ASMD/maze_ASMD.sim/sim_1/behav/xsim/glbl.v,1623370582,verilog,,,,glbl,,,,,,,,

@@ -150,7 +150,8 @@ task check_ans ;
         if(out_valid===1)
         begin
             //starts from (1,1)
-            y = 1; x = 1;
+            y = 1;
+            x = 1;
             // If out valid is high
             while(out_valid===1)
             begin
@@ -158,27 +159,31 @@ task check_ans ;
 
                 // Check for the out value. starting from (1,1) to destination (17,17)
                 case(out)
-                UP:begin
-                    y = y-1;
-                    x = x;
-                end
-                LEFT:begin
-                    y = y;
-                    x = x-1;
-                end
-                RIGHT:begin
-                    y = y;
-                    x = x + 1;
-                end
-                DOWN:begin
-                    y = y + 1;
-                    x = x;
-                end
-                default:
-                begin
-                    y=y;
-                    x=x;
-                end
+                    UP:
+                    begin
+                        y = y-1;
+                        x = x;
+                    end
+                    LEFT:
+                    begin
+                        y = y;
+                        x = x-1;
+                    end
+                    RIGHT:
+                    begin
+                        y = y;
+                        x = x + 1;
+                    end
+                    DOWN:
+                    begin
+                        y = y + 1;
+                        x = x;
+                    end
+                    default:
+                    begin
+                        y=y;
+                        x=x;
+                    end
                 endcase
 
                 if (maze[y][x] === 0)
@@ -193,32 +198,32 @@ task check_ans ;
                     $finish;
                 end
 
+                if (cycles==3000)
+                begin
+                    fail;
+                    // Spec. 6
+                    // The execution latency is limited in 300 cycles.
+                    // The latency is the clock cycles between the falling edge of the last cycle of in_valid and the rising edge of the out_valid.
+                    $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
+                    $display ("                                                                SPEC 6 FAIL!                                                                ");
+                    $display ("                                              The execution latency is limited in 3000 cycles                                               ");
+                    $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
+                    repeat(5)  @(negedge clk);
+                    $finish;
+                end
+
                 @(negedge clk);
             end
 
             // Once out valid falls off, check if reaches the goal
             if(y !== MAZE_SIZE || x !== MAZE_SIZE)
             begin
-                    fail;
-                    // Spec. 7
-                    // When out_valid is pulled up and there exists a solution for the grid, out should be correct, and out_valid is limited to be high for 15 cycles.
-                    $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
-                    $display ("                                                                SPEC 7 FAIL!                                                                ");
-                    $display ("                                           (1) Person does not reaches the goal, Current position: (%d,%d)                                  ",y,x);
-                    $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
-                    repeat(5)  @(negedge clk);
-                    $finish;
-            end
-
-            if (cycles==3000)
-            begin
                 fail;
-                // Spec. 6
-                // The execution latency is limited in 300 cycles.
-                // The latency is the clock cycles between the falling edge of the last cycle of in_valid and the rising edge of the out_valid.
+                // Spec. 7
+                // When out_valid is pulled up and there exists a solution for the grid, out should be correct, and out_valid is limited to be high for 15 cycles.
                 $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
-                $display ("                                                                SPEC 6 FAIL!                                                                ");
-                $display ("                                              The execution latency is limited in 3000 cycles                                               ");
+                $display ("                                                                SPEC 7 FAIL!                                                                ");
+                $display ("                                           (1) Person does not reaches the goal, Current position: (%d,%d)                                  ",y,x);
                 $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
                 repeat(5)  @(negedge clk);
                 $finish;
@@ -297,7 +302,7 @@ task maze_task ;
                     $display ("                                         The out_valid should not be high when in_valid is high                                             ");
                     $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
                     repeat(5)  @(negedge clk);
-                     $finish;
+                    $finish;
                 end
                 //Feed value in at negedge
                 a = $fscanf(pat_input_file, "%d\n",in);

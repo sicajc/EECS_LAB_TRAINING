@@ -157,32 +157,28 @@ def wallPadding(maze):
 
 def SearchDeadEndsAndFill(maze_padded):
     # Search for dead ends then fill it
-    for z in range(0, 1):
-        for y in range(1, (MAZE_SIZE+1)//2):
-            for x in range(1, (MAZE_SIZE+1)):
-                y_idx = z * (MAZE_SIZE+1)//2+y
-                x_idx = x
+    for y in range(1, (MAZE_SIZE+1)):
+        for x in range(1, (MAZE_SIZE+1)):
+            cnt = 0
 
-                cnt = 0
+            # Try all directions
+            if (maze_padded[y-1][x] == 0):
+                # north
+                cnt = cnt + 1
+            if (maze_padded[y+1][x] == 0):
+                # south
+                cnt = cnt + 1
+            if (maze_padded[y][x+1] == 0):
+                # east
+                cnt = cnt + 1
+            if (maze_padded[y][x-1] == 0):
+                # west
+                cnt = cnt + 1
 
-                # Try all directions
-                if (maze_padded[y-1][x] == 0):
-                    # north
-                    cnt = cnt + 1
-                if (maze_padded[y+1][x] == 0):
-                    # south
-                    cnt = cnt + 1
-                if (maze_padded[y][x+1] == 0):
-                    # east
-                    cnt = cnt + 1
-                if (maze_padded[y][x-1] == 0):
-                    # west
-                    cnt = cnt + 1
+            if (cnt == 3 or cnt == 4) and maze_padded[y][x] != 0 and (x != 1 or y != 1) \
+                    and (x != MAZE_SIZE or y != MAZE_SIZE):
 
-                if (cnt == 3 or cnt == 4) and maze_padded[y][x] != 0 and (x != 1 or y != 1) \
-                        and (x != MAZE_SIZE or y != MAZE_SIZE):
-
-                    maze_padded[y][x] = 0
+                maze_padded[y][x] = 0
 
 
 def maze_solver(maze):

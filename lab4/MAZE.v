@@ -1,4 +1,3 @@
-`define C2Q 0.0
 // Revision History
 // VERSION      Date          AUTHOR           DESCRIPTION                                                  PERFORMANCE (AREA + CYCLE)
 // 1.0       CYCLES = 28897 , AREA =
@@ -13,7 +12,6 @@ module  MAZE(
 //===============================
 //   PARAMETER
 //===============================
-parameter FIFO_DEPTH      = 150;
 parameter MAZE_SIZE       = 17;
 
 localparam RIGHT = 0;
@@ -28,23 +26,15 @@ integer i,j,x,y;
 //===============================
 reg[4:0] currentState, nextState;
 
-localparam IDLE                     = 5'b00001;
-localparam RD_MAZE                  = 5'b00010;
-localparam FILL_DEADEND             = 5'b00100;
-localparam FIND_PATH                = 5'b01000;
-localparam DONE                     = 5'b10000;
+localparam IDLE                     = 4'b0001;
+localparam RD_MAZE                  = 4'b0010;
+localparam FILL_DEADEND             = 4'b0100;
+localparam OUTPUT                   = 4'b1000;
 
 wire state_IDLE                              = currentState[0];
 wire state_RD_MAZE                           = currentState[1];
 wire state_FILL_DEADEND                      = currentState[2];
-wire state_FIND_PATH                         = currentState[3];
-wire state_DONE                              = currentState[4];
-
-//============================
-//  FIFO
-//============================
-reg[8:0] fifo_ptr;
-reg[2:0] fifo[0:FIFO_DEPTH-1];
+wire state_OUTPUT                            = currentState[3];
 
 //============================
 //   WIRE & FFs
@@ -61,22 +51,16 @@ reg[2:0] counts;
 //========================
 //   FLAGS
 //========================
-wire fifo_empty_f             = fifo_ptr == 0 && state_DONE;
-wire fifo_full_f              = fifo_ptr == FIFO_DEPTH-1;
-wire maze_rd_done_f           = (x_ptr == 16 && y_ptr == 16) && state_RD_MAZE;
-
+wire maze_rd_done_f           = (x_ptr == 17 && y_ptr == 17) && state_RD_MAZE;
 reg thereIsDeadend_f;
 reg noDeadEnd_f;
-wire dstFound_f = x_ptr == MAZE_SIZE && y_ptr == MAZE_SIZE && state_DONE;
+wire dstFound_f = x_ptr == MAZE_SIZE && y_ptr == MAZE_SIZE && state_OUTPUT;
 
 //========================
-//   CTR
+//   FSM
 //========================
 always @(posedge clk or negedge rst_n)
 begin:CUR_STATE
-    //synopsys_translate_off
-    # `C2Q;
-    //synopsys_translate_on
     if(~rst_n)
     begin
         currentState <= IDLE;
@@ -100,15 +84,11 @@ begin: NXT_STATE
         end
         FILL_DEADEND:
         begin
-            nextState            = noDeadEnd_f ? DONE : FILL_DEADEND;
+            nextState            = noDeadEnd_f ? OUTPUT : FILL_DEADEND;
         end
-        // FIND_PATH:
-        // begin
-        //   nextState            = dstFound_f  ? DONE : FIND_PATH;
-        // end
-        DONE:
+        OUTPUT:
         begin
-            nextState            = dstFound_f ? IDLE : DONE;
+            nextState            = dstFound_f ? IDLE : OUTPUT;
         end
         default :
         begin
@@ -118,155 +98,118 @@ begin: NXT_STATE
 end
 
 //=============================
-//   MAZE
+//   DATAPATH
 //=============================
 always @(posedge clk or negedge rst_n)
-begin:MAZE
-    //synopsys_translate_off
-    # `C2Q;
-    //synopsys_translate_on
+begin
     if(~rst_n)
     begin
         for(i= 0; i < MAZE_SIZE+2;i=i+1)
-        begin
             for(j=0;j<MAZE_SIZE+2;j=j+1)
-            begin
                 maze[i][j] <= 1'b0;
-            end
-        end
-    end
-    else if(state_IDLE)
-    begin
-        if(in_valid)
-        begin
-            maze[1][1] <= 1'b1;
-        end
-        else
-        begin
-            for(i= 0; i < MAZE_SIZE+2;i=i+1)
-                for(j=0;j<MAZE_SIZE+2;j=j+1)
-                    maze[i][j] <= 1'b0;
-        end
-    end
-    else if(state_RD_MAZE && in_valid)
-    begin
-        maze[y_ptr+1][x_ptr+1]        <= in;
-    end
-    else if(state_FILL_DEADEND)
-    begin
-        for(i=0;i<MAZE_SIZE+2;i=i+1)
-        begin
-            for(j=0;j<MAZE_SIZE+2;j=j+1)
-            begin
-                maze[i][j] <= maze_wr[i][j];
-            end
-        end
-    end
-    else if(state_DONE)
-    begin
-        maze[y_ptr][x_ptr] <= 1'b0;
-    end
-end
-//======================================
-//   x_ptr,y_ptr,fifo
-//======================================
-always @(posedge clk or negedge rst_n)
-begin:PTRS
-    //synopsys_translate_off
-    # `C2Q;
-    //synopsys_translate_on
-    if(~rst_n)
-    begin
-        x_ptr <= 0;
-        y_ptr <= 0;
-        out   <= 0;
 
-        // fifo_ptr <= 0;
-        // for(j=0;j<FIFO_DEPTH;j=j+1)
-        // begin
-        //     fifo[j] <= NONE;
-        // end
+        x_ptr     <= 1;
+        y_ptr     <= 1;
+        out       <= 0;
+        out_valid <= 0;
     end
-    else if(state_IDLE)
+    else
     begin
-        if(in_valid)
-        begin
-            x_ptr <= x_ptr + 1;
-        end
-        else
-        begin
-            x_ptr <= 0;
-            y_ptr <= 0;
-        end
-        out <= 0;
-
-        // fifo_ptr <= 0;
-        // for(j=0;j<FIFO_DEPTH;j=j+1)
-        // begin
-        //     fifo[j] <= NONE;
-        // end
-    end
-    else if(state_RD_MAZE)
-    begin
-        if(in_valid)
-        begin
-            if(maze_rd_done_f)
+        case(currentState)
+            IDLE:
             begin
-                x_ptr <= 1;
+                if(in_valid)
+                begin
+                    maze[1][1] <= 1;
+                    x_ptr <= 2;
+                end
+                else
+                begin
+                    for(i= 0; i < MAZE_SIZE+2;i=i+1)
+                        for(j=0;j<MAZE_SIZE+2;j=j+1)
+                            maze[i][j] <= 1'b0;
+                end
+
                 y_ptr <= 1;
+                out       <= 0;
+                out_valid <= 0;
             end
-            else if(x_ptr == 16)
+            RD_MAZE:
             begin
-                x_ptr <= 0;
-                y_ptr <= y_ptr + 1;
+                if(maze_rd_done_f)
+                begin
+                    maze[y_ptr][x_ptr] <= in;
+                    x_ptr <= 1;
+                    y_ptr <= 1;
+                end
+                else if(in_valid)
+                begin
+                    maze[y_ptr][x_ptr] <= in;
+
+                    if(x_ptr == 17)
+                    begin
+                        y_ptr <= y_ptr + 1;
+                        x_ptr <= 1;
+                    end
+                    else
+                    begin
+                        x_ptr <= x_ptr + 1;
+                    end
+                end
             end
-            else
+            FILL_DEADEND:
             begin
-                x_ptr<=x_ptr+1;
+                for(i=0;i<MAZE_SIZE+2;i=i+1)
+                    for(j=0;j<MAZE_SIZE+2;j=j+1)
+                        maze[i][j] <= maze_wr[i][j];
             end
-        end
-    end
-    else if(state_DONE && ~dstFound_f)
-    begin
-        if(maze[y_ptr-1][x_ptr] == 1)
-        begin
-            //UP
-            y_ptr <= y_ptr - 1;
-            x_ptr <= x_ptr;
-            // fifo_ptr <= fifo_ptr + 1;
-            // fifo[fifo_ptr] <= UP;
-            out <= UP;
-        end
-        else if(maze[y_ptr + 1][x_ptr] == 1)
-        begin
-            //DOWN
-            y_ptr <= y_ptr + 1;
-            x_ptr <= x_ptr;
-            // fifo_ptr <= fifo_ptr + 1;
-            // fifo[fifo_ptr] <= DOWN;
-            out <= DOWN;
-        end
-        else if(maze[y_ptr][x_ptr+1] == 1)
-        begin
-            //RIGHT
-            y_ptr <= y_ptr;
-            x_ptr <= x_ptr + 1;
-            // fifo_ptr <= fifo_ptr + 1;
-            // fifo[fifo_ptr] <= RIGHT;
-            out <= RIGHT;
-        end
-        else if(maze[y_ptr][x_ptr-1] == 1)
-        begin
-            // LEFT
-            y_ptr <= y_ptr;
-            x_ptr <= x_ptr - 1;
-            // fifo_ptr <= fifo_ptr + 1;
-            // fifo[fifo_ptr] <= LEFT;
-            out <= LEFT;
-        end
+            OUTPUT:
+            begin
+                maze[y_ptr][x_ptr] <= 0;
+
+                if(dstFound_f)
+                begin
+                    out<=0;
+                    out_valid<=0;
+                end
+                else
+                begin
+                    out_valid <= 1;
+
+                    if(maze[y_ptr-1][x_ptr] == 1)
+                    begin
+                        //UP
+                        y_ptr <= y_ptr - 1;
+                        x_ptr <= x_ptr;
+                        out <= UP;
+                    end
+                    else if(maze[y_ptr + 1][x_ptr] == 1)
+                    begin
+                        //DOWN
+                        y_ptr <= y_ptr + 1;
+                        x_ptr <= x_ptr;
+                        out <= DOWN;
+                    end
+                    else if(maze[y_ptr][x_ptr+1] == 1)
+                    begin
+                        //RIGHT
+                        y_ptr <= y_ptr;
+                        x_ptr <= x_ptr + 1;
+                        out <= RIGHT;
+                    end
+                    else if(maze[y_ptr][x_ptr-1] == 1)
+                    begin
+                        // LEFT
+                        y_ptr <= y_ptr;
+                        x_ptr <= x_ptr - 1;
+                        out <= LEFT;
+                    end
+                end
+            end
+
+        endcase
     end
 end
-
 
 //======================================
 //   maze_wr & checks if deadends exists
@@ -277,13 +220,12 @@ begin
     thereIsDeadend_f = 1'b0;
     noDeadEnd_f = 1'b0;
     counts = 0;
-
     for ( y= 0; y<MAZE_SIZE+2; y=y+1)
         for( x= 0; x<MAZE_SIZE+2;x=x+1)
             maze_wr[y][x] = maze[y][x];
 
+    //DeadEnd filling
     for(y=1;y<MAZE_SIZE+1;y=y+1)
-    begin
         for(x=1;x<MAZE_SIZE+1;x=x+1)
         begin
             counts = 0;
@@ -302,49 +244,15 @@ begin
                 counts = counts + 1;
 
             //This (y,x) is a deadend
-            if ((counts >= 3) && (maze[y][x] != 0) &&
+            if (((counts == 3) || (counts == 4)) && (maze[y][x] != 0) &&
                     (y!=1 || x!=1) && (y!=MAZE_SIZE || x!=MAZE_SIZE))
             begin
                 thereIsDeadend_f = 1'b1;
                 maze_wr[y][x] = 1'b0;
             end
         end
-    end
 
     noDeadEnd_f = ~thereIsDeadend_f;
-end
-
-//======================================
-//   DONE
-//======================================
-always @(posedge clk or negedge rst_n)
-begin:OUTPUT
-    //synopsys_translate_off
-    # `C2Q;
-    //synopsys_translate_on
-    if(~rst_n)
-    begin
-        out_valid <= 1'b0;
-    end
-    else if(state_IDLE)
-    begin
-        out_valid <= 1'b0;
-    end
-    else if(state_DONE)
-    begin
-        if(~dstFound_f)
-        begin
-            out_valid <= 1'b1;
-        end
-        else
-        begin
-            out_valid <= 1'b0;
-        end
-    end
-    else
-    begin
-
-    end
 end
 
 endmodule
