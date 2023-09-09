@@ -1,6 +1,7 @@
 // Revision History
-// VERSION      Date          AUTHOR           DESCRIPTION                                                  PERFORMANCE (AREA + CYCLE)
-// 1.0       CYCLES = 28897 , AREA =
+// VERSION      Date          AUTHOR                DESCRIPTION                                                  PERFORMANCE (AREA + CYCLE)
+// 1.0       CYCLES = 28897 , AREA = 102,800
+// 1.1
 module  MAZE(
             input clk,
             input rst_n,
