@@ -145,7 +145,6 @@ end
 //================================================================
 task check_ans ;
     begin
-        cycles = 0;
         // The answer is valid as long as a person can goes from starting to finish
         if(out_valid===1)
         begin
@@ -367,7 +366,7 @@ task YOU_PASS_task;
         $display ("                                                                                                                      ");
         $display ("                                        Your execution cycles   = %5d cycles                                          ", total_cycles);
         $display ("                                        Your clock period       = %.1f ns                                             ", `CYCLE_TIME);
-        $display ("                                        Total latency           = %.1f ns                                             ", (total_cycles + total_pat)*`CYCLE_TIME);
+        $display ("                                        Total latency           = %.1f ns                                             ", total_cycles*`CYCLE_TIME);
         $display ("----------------------------------------------------------------------------------------------------------------------");
 
         $finish;
