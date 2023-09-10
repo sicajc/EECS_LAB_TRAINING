@@ -159,23 +159,37 @@ def SearchDeadEndsAndFill(maze_padded):
     # Search for dead ends then fill it
     for y in range(1, (MAZE_SIZE+1)):
         for x in range(1, (MAZE_SIZE+1)):
-            cnt = 0
 
+            north,south,east,west = False, False, False, False
+            deadend  = False
+            # cnt = 0
             # Try all directions
-            if (maze_padded[y-1][x] == 0):
+            if (maze_padded[y-1][x] == 1):
                 # north
-                cnt = cnt + 1
-            if (maze_padded[y+1][x] == 0):
+                north = True
+            if (maze_padded[y+1][x] == 1):
                 # south
-                cnt = cnt + 1
-            if (maze_padded[y][x+1] == 0):
+                south = True
+            if (maze_padded[y][x+1] == 1):
                 # east
-                cnt = cnt + 1
-            if (maze_padded[y][x-1] == 0):
+                east  = True
+            if (maze_padded[y][x-1] == 1):
                 # west
-                cnt = cnt + 1
+                west  = True
 
-            if (cnt == 3 or cnt == 4) and maze_padded[y][x] != 0 and (x != 1 or y != 1) \
+            # Since only 5 possibility for being dead end
+            if(north == True and south == False and west == False and east == False):
+                deadend = True
+            if(north == False and south == True and west == False and east == False):
+                deadend = True
+            if(north == False and south == False and west == True and east == False):
+                deadend = True
+            if(north == False and south == False and west == False and east == True):
+                deadend = True
+            if(north == False and south == False and west == False and east == False):
+                deadend = True
+
+            if deadend == True and maze_padded[y][x] != 0 and (x != 1 or y != 1) \
                     and (x != MAZE_SIZE or y != MAZE_SIZE):
 
                 maze_padded[y][x] = 0
@@ -227,9 +241,9 @@ def maze_solver(maze):
     return path, maze_padded
 
 
-file_input = open("./pattern/input.txt", "w")
-file_output = open("./pattern/golden.txt", "w")
-file_maze_result = open("./pattern/maze_result.txt", "w")
+file_input = open("lab4/pattern/input.txt", "w")
+file_output = open("lab4/pattern/golden.txt", "w")
+file_maze_result = open("lab4/pattern/maze_result.txt", "w")
 
 file_input.write("NUM_OF_PAT: " + str(NUM_OF_MAZE) + "\n\n")
 

@@ -2,8 +2,8 @@
 # Webtalk v2021.1 (64-bit)
 # SW Build 3247384 on Thu Jun 10 19:36:33 MDT 2021
 # IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
-# Start of session at: Sun Sep 10 08:17:37 2023
-# Process ID: 25680
+# Start of session at: Sun Sep 10 08:16:31 2023
+# Process ID: 12284
 # Current directory: C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/MAZE_DONE_FINDPATH_MERGED/MAZE_DONE_FINDPATH_MERGED.sim/sim_1/behav/xsim
 # Command line: wbtcv.exe -mode batch -source C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/MAZE_DONE_FINDPATH_MERGED/MAZE_DONE_FINDPATH_MERGED.sim/sim_1/behav/xsim/xsim.dir/TESTBED_behav/webtalk/xsim_webtalk.tcl -notrace
 # Log file: C:/Users/HIBIKI/Desktop/EECS_LAB_TRAINING/lab4/MAZE_DONE_FINDPATH_MERGED/MAZE_DONE_FINDPATH_MERGED.sim/sim_1/behav/xsim/webtalk.log

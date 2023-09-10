@@ -1,7 +1,7 @@
 // Revision History
 // VERSION      Date          AUTHOR                DESCRIPTION                                                  PERFORMANCE (AREA + CYCLE)
-// 1.0       CYCLES = 28897 , AREA = 102,800
-// 1.1
+// 1.0       CYCLES = 28897 , AREA = 102,800        Adder trees for each dead-end filling
+// 1.1       CYCLES = 28897 , AREA = 71,011         Listing out all cases for dead-end filling and remove (1,1) and (17,17)
 module  MAZE(
             input clk,
             input rst_n,
@@ -43,9 +43,8 @@ wire state_OUTPUT                            = currentState[3];
 //maze starts at (1,1), ends at (17,17) = (MAZE_SIZE,MAZE_SIZE)
 reg maze[0:MAZE_SIZE+1][0:MAZE_SIZE+1];// This is a padded maze to handle boundary condition
 reg maze_wr[0:MAZE_SIZE+1][0:MAZE_SIZE+1];
-reg[8:0] y_ptr,x_ptr;
+reg[4:0] y_ptr,x_ptr;
 
-reg[2:0] counts;
 //================================================================
 //   DESIGN
 //================================================================
@@ -212,6 +211,13 @@ begin
     end
 end
 
+reg north_f ;
+reg south_f ;
+reg east_f  ;
+reg west_f  ;
+reg is_deadend_f ;
+
+
 //======================================
 //   maze_wr & checks if deadends exists
 //======================================
@@ -220,7 +226,11 @@ begin
     // Initilization
     thereIsDeadend_f = 1'b0;
     noDeadEnd_f = 1'b0;
-    counts = 0;
+    north_f = 0;
+    south_f = 0;
+    east_f  = 0;
+    west_f  = 0;
+    is_deadend_f = 0;
     for ( y= 0; y<MAZE_SIZE+2; y=y+1)
         for( x= 0; x<MAZE_SIZE+2;x=x+1)
             maze_wr[y][x] = maze[y][x];
@@ -229,27 +239,48 @@ begin
     for(y=1;y<MAZE_SIZE+1;y=y+1)
         for(x=1;x<MAZE_SIZE+1;x=x+1)
         begin
-            counts = 0;
-
-            //UP
-            if(maze[y-1][x] == 0)
-                counts = counts + 1;
-            //DOWN
-            if(maze[y+1][x] == 0)
-                counts = counts + 1;
-            //RIGHT
-            if(maze[y][x+1] == 0)
-                counts = counts + 1;
-            //LEFT
-            if(maze[y][x-1] == 0)
-                counts = counts + 1;
-
-            //This (y,x) is a deadend
-            if (((counts == 3) || (counts == 4)) && (maze[y][x] != 0) &&
-                    (y!=1 || x!=1) && (y!=MAZE_SIZE || x!=MAZE_SIZE))
+            if((y!=1 || x!=1) && (y!=MAZE_SIZE || x!=MAZE_SIZE))
             begin
-                thereIsDeadend_f = 1'b1;
-                maze_wr[y][x] = 1'b0;
+                north_f = 0;
+                south_f = 0;
+                east_f  = 0;
+                west_f  = 0;
+                is_deadend_f = 0;
+
+                //UP
+                if(maze[y-1][x] == 1)
+                    north_f = 1;
+                //DOWN
+                if(maze[y+1][x] == 1)
+                    south_f = 1;
+                //RIGHT
+                if(maze[y][x+1] == 1)
+                    east_f = 1;
+                //LEFT
+                if(maze[y][x-1] == 1)
+                    west_f = 1;
+
+                case({north_f,south_f,east_f,west_f})
+                    4'b1000:
+                        is_deadend_f = 1;
+                    4'b0100:
+                        is_deadend_f = 1;
+                    4'b0010:
+                        is_deadend_f = 1;
+                    4'b0001:
+                        is_deadend_f = 1;
+                    4'b0000:
+                        is_deadend_f = 1;
+                    default:
+                        is_deadend_f = 0;
+                endcase
+
+                //This (y,x) is a deadend
+                if ((is_deadend_f==1) && (maze[y][x] != 0))
+                begin
+                    thereIsDeadend_f = 1'b1;
+                    maze_wr[y][x] = 1'b0;
+                end
             end
         end
 

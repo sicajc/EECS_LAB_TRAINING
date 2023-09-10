@@ -86,8 +86,8 @@ IKI_DLLESPEC extern void execute_42(char*, char *);
 IKI_DLLESPEC extern void execute_43(char*, char *);
 IKI_DLLESPEC extern void execute_44(char*, char *);
 IKI_DLLESPEC extern void vlog_transfunc_eventcallback(char*, char*, unsigned, unsigned, unsigned, char *);
-IKI_DLLESPEC extern void transaction_27(char*, char*, unsigned, unsigned, unsigned);
-funcp funcTab[33] = {(funcp)execute_2, (funcp)execute_33, (funcp)execute_34, (funcp)execute_35, (funcp)execute_36, (funcp)execute_37, (funcp)execute_38, (funcp)execute_4, (funcp)execute_6, (funcp)execute_8, (funcp)execute_9, (funcp)execute_27, (funcp)execute_28, (funcp)execute_29, (funcp)execute_30, (funcp)execute_31, (funcp)execute_32, (funcp)execute_11, (funcp)execute_12, (funcp)execute_13, (funcp)execute_21, (funcp)execute_23, (funcp)execute_24, (funcp)execute_25, (funcp)execute_26, (funcp)execute_39, (funcp)execute_40, (funcp)execute_41, (funcp)execute_42, (funcp)execute_43, (funcp)execute_44, (funcp)vlog_transfunc_eventcallback, (funcp)transaction_27};
+IKI_DLLESPEC extern void transaction_32(char*, char*, unsigned, unsigned, unsigned);
+funcp funcTab[33] = {(funcp)execute_2, (funcp)execute_33, (funcp)execute_34, (funcp)execute_35, (funcp)execute_36, (funcp)execute_37, (funcp)execute_38, (funcp)execute_4, (funcp)execute_6, (funcp)execute_8, (funcp)execute_9, (funcp)execute_27, (funcp)execute_28, (funcp)execute_29, (funcp)execute_30, (funcp)execute_31, (funcp)execute_32, (funcp)execute_11, (funcp)execute_12, (funcp)execute_13, (funcp)execute_21, (funcp)execute_23, (funcp)execute_24, (funcp)execute_25, (funcp)execute_26, (funcp)execute_39, (funcp)execute_40, (funcp)execute_41, (funcp)execute_42, (funcp)execute_43, (funcp)execute_44, (funcp)vlog_transfunc_eventcallback, (funcp)transaction_32};
 const int NumRelocateId= 33;
 
 void relocate(char *dp)
